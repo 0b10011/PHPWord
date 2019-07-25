@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 use PhpOffice\PhpWord\PhpWord;
 use PhpOffice\PhpWord\SimpleType\VerticalJc;
 use PhpOffice\PhpWord\Style\Colors\Hex;

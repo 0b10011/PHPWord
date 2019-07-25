@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 use PhpOffice\PhpWord\Style\Font;
 use PhpOffice\PhpWord\Style\Lengths\Absolute;
 

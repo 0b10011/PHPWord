@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of PHPWord - A pure PHP library for reading and writing
  * word processing documents.
@@ -55,8 +56,6 @@ class TOC extends Tab
 
     /**
      * Get Tab Position
-     *
-     * @return Absolute
      */
     public function getTabPos(): Absolute
     {
@@ -65,9 +64,6 @@ class TOC extends Tab
 
     /**
      * Set Tab Position
-     *
-     * @param Absolute $value
-     * @return self
      */
     public function setTabPos(Absolute $value): self
     {
@@ -97,8 +93,6 @@ class TOC extends Tab
 
     /**
      * Get Indent
-     *
-     * @return Absolute
      */
     public function getIndent(): Absolute
     {
@@ -107,9 +101,6 @@ class TOC extends Tab
 
     /**
      * Set Indent
-     *
-     * @param Absolute $value
-     * @return self
      */
     public function setIndent(Absolute $value): self
     {

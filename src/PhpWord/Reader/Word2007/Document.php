@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of PHPWord - A pure PHP library for reading and writing
  * word processing documents.
@@ -38,8 +39,6 @@ class Document extends AbstractPart
 
     /**
      * Read document.xml.
-     *
-     * @param \PhpOffice\PhpWord\PhpWord $phpWord
      */
     public function read(PhpWord $phpWord)
     {
@@ -97,8 +96,6 @@ class Document extends AbstractPart
     /**
      * Read w:sectPr
      *
-     * @param \PhpOffice\Common\XMLReader $xmlReader
-     * @param \DOMElement $domNode
      * @ignoreScrutinizerPatch
      * @return array
      */
@@ -141,8 +138,6 @@ class Document extends AbstractPart
     /**
      * Read w:p node.
      *
-     * @param \PhpOffice\Common\XMLReader $xmlReader
-     * @param \DOMElement $node
      * @param \PhpOffice\PhpWord\Element\Section &$section
      *
      * @todo <w:lastRenderedPageBreak>
@@ -170,8 +165,6 @@ class Document extends AbstractPart
     /**
      * Read w:sectPr node.
      *
-     * @param \PhpOffice\Common\XMLReader $xmlReader
-     * @param \DOMElement $node
      * @param \PhpOffice\PhpWord\Element\Section &$section
      */
     private function readWSectPrNode(XMLReader $xmlReader, \DOMElement $node, Section &$section)

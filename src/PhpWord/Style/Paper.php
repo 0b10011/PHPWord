@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of PHPWord - A pure PHP library for reading and writing
  * word processing documents.
@@ -169,8 +170,6 @@ class Paper extends AbstractStyle
 
     /**
      * Get width
-     *
-     * @return Absolute
      */
     public function getWidth(): Absolute
     {
@@ -179,8 +178,6 @@ class Paper extends AbstractStyle
 
     /**
      * Get height
-     *
-     * @return Absolute
      */
     public function getHeight(): Absolute
     {

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of PHPWord - A pure PHP library for reading and writing
  * word processing documents.
@@ -251,8 +252,8 @@ final class TemplateProcessorTest extends \PHPUnit\Framework\TestCase
         );
 
         $values = array(
-            array('userId' => 1, 'userName' => 'Batman', 'userLocation' => 'Gotham City'),
-            array('userId' => 2, 'userName' => 'Superman', 'userLocation' => 'Metropolis'),
+            array('userId' => '1', 'userName' => 'Batman', 'userLocation' => 'Gotham City'),
+            array('userId' => '2', 'userName' => 'Superman', 'userLocation' => 'Metropolis'),
         );
         $templateProcessor->setValue('tableHeader', 'My clonable table');
         $templateProcessor->cloneRowAndSetValues('userId', $values);
@@ -394,7 +395,7 @@ final class TemplateProcessorTest extends \PHPUnit\Framework\TestCase
         $variablesReplace = array(
                                 'headerValue'       => $imagePath,
                                 'documentContent'   => array('path' => $imagePath, 'width' => 500, 'height' => 500),
-                                'footerValue'       => array('path' => $imagePath, 'width' => 100, 'height' => 50, 'ratio' => false),
+                                'footerValue'       => array('path' => $imagePath, 'width' => 100, 'height' => 50, 'ratio' => null),
         );
         $templateProcessor->setImageValue(array_keys($variablesReplace), $variablesReplace);
 

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of PHPWord - A pure PHP library for reading and writing
  * word processing documents.
@@ -320,17 +321,11 @@ class Settings
         $this->doNotTrackFormatting = $doNotTrackFormatting === null ? true : $doNotTrackFormatting;
     }
 
-    /**
-     * @return mixed
-     */
     public function getZoom()
     {
         return $this->zoom;
     }
 
-    /**
-     * @param mixed $zoom
-     */
     public function setZoom($zoom)
     {
         if (is_numeric($zoom)) {

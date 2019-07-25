@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of PHPWord - A pure PHP library for reading and writing
  * word processing documents.
@@ -106,8 +107,6 @@ class Shading extends AbstractStyle
 
     /**
      * Get color
-     *
-     * @return ColorInterface
      */
     public function getColor(): ColorInterface
     {
@@ -116,9 +115,6 @@ class Shading extends AbstractStyle
 
     /**
      * Set pattern
-     *
-     * @param ColorInterface $value
-     * @return self
      */
     public function setColor(ColorInterface $value): self
     {
@@ -129,8 +125,6 @@ class Shading extends AbstractStyle
 
     /**
      * Get fill
-     *
-     * @return ColorInterface
      */
     public function getFill(): ColorInterface
     {
@@ -139,9 +133,6 @@ class Shading extends AbstractStyle
 
     /**
      * Set fill
-     *
-     * @param ColorInterface $value
-     * @return self
      */
     public function setFill(ColorInterface $value): self
     {

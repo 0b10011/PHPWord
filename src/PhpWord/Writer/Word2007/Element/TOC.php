@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of PHPWord - A pure PHP library for reading and writing
  * word processing documents.
@@ -64,8 +65,6 @@ class TOC extends AbstractElement
     /**
      * Write title
      *
-     * @param \PhpOffice\Common\XMLWriter $xmlWriter
-     * @param \PhpOffice\PhpWord\Element\TOC $element
      * @param \PhpOffice\PhpWord\Element\Title $title
      * @param bool $writeFieldMark
      */
@@ -132,8 +131,6 @@ class TOC extends AbstractElement
     /**
      * Write style
      *
-     * @param \PhpOffice\Common\XMLWriter $xmlWriter
-     * @param \PhpOffice\PhpWord\Element\TOC $element
      * @param int $indent
      */
     private function writeStyle(XMLWriter $xmlWriter, TOCElement $element, $indent)
@@ -177,9 +174,6 @@ class TOC extends AbstractElement
 
     /**
      * Write TOC Field.
-     *
-     * @param \PhpOffice\Common\XMLWriter $xmlWriter
-     * @param \PhpOffice\PhpWord\Element\TOC $element
      */
     private function writeFieldMark(XMLWriter $xmlWriter, TOCElement $element)
     {

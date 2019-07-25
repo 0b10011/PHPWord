@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of PHPWord - A pure PHP library for reading and writing
  * word processing documents.
@@ -109,8 +110,6 @@ class Frame extends AbstractStyle
     /**
      * Write wrap.
      *
-     * @param \PhpOffice\Common\XMLWriter $xmlWriter
-     * @param \PhpOffice\PhpWord\Style\Frame $style
      * @param string $wrap
      */
     private function writeWrap(XMLWriter $xmlWriter, FrameStyle $style, $wrap)
@@ -150,7 +149,6 @@ class Frame extends AbstractStyle
     /**
      * Get style values in associative array
      *
-     * @param \PhpOffice\PhpWord\Style\Frame $style
      * @param array $properties
      * @return array
      */
@@ -172,7 +170,6 @@ class Frame extends AbstractStyle
     /**
      * Get style values in associative array
      *
-     * @param \PhpOffice\PhpWord\Style\Frame $style
      * @param array $properties
      * @return array
      */

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of PHPWord - A pure PHP library for reading and writing
  * word processing documents.
@@ -72,8 +73,6 @@ class TextBox extends Image
 
     /**
      * Set margin top.
-     *
-     * @param Absolute $value
      */
     public function setInnerMarginTop(Absolute $value): self
     {
@@ -84,8 +83,6 @@ class TextBox extends Image
 
     /**
      * Get margin top
-     *
-     * @return Absolute
      */
     public function getInnerMarginTop(): Absolute
     {
@@ -98,8 +95,6 @@ class TextBox extends Image
 
     /**
      * Set margin left.
-     *
-     * @param Absolute $value
      */
     public function setInnerMarginLeft(Absolute $value): self
     {
@@ -110,8 +105,6 @@ class TextBox extends Image
 
     /**
      * Get margin left
-     *
-     * @return Absolute
      */
     public function getInnerMarginLeft(): Absolute
     {
@@ -124,8 +117,6 @@ class TextBox extends Image
 
     /**
      * Set margin right.
-     *
-     * @param Absolute $value
      */
     public function setInnerMarginRight(Absolute $value): self
     {
@@ -136,8 +127,6 @@ class TextBox extends Image
 
     /**
      * Get margin right
-     *
-     * @return Absolute
      */
     public function getInnerMarginRight(): Absolute
     {
@@ -150,8 +139,6 @@ class TextBox extends Image
 
     /**
      * Set margin bottom.
-     *
-     * @param Absolute $value
      */
     public function setInnerMarginBottom(Absolute $value): self
     {
@@ -162,8 +149,6 @@ class TextBox extends Image
 
     /**
      * Get margin bottom
-     *
-     * @return Absolute
      */
     public function getInnerMarginBottom(): Absolute
     {
@@ -222,7 +207,6 @@ class TextBox extends Image
      * Set border size.
      *
      * @param Absolute $value Size
-     * @return self
      */
     public function setBorderSize(Absolute $value): self
     {
@@ -233,8 +217,6 @@ class TextBox extends Image
 
     /**
      * Get border size
-     *
-     * @return Absolute
      */
     public function getBorderSize(): Absolute
     {
@@ -247,8 +229,6 @@ class TextBox extends Image
 
     /**
      * Set border color.
-     *
-     * @param ColorInterface $value
      */
     public function setBorderColor(ColorInterface $value)
     {
@@ -257,8 +237,6 @@ class TextBox extends Image
 
     /**
      * Get border color
-     *
-     * @return ColorInterface
      */
     public function getBorderColor(): ColorInterface
     {

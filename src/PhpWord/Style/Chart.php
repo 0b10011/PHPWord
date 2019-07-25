@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of PHPWord - A pure PHP library for reading and writing
  * word processing documents.
@@ -373,7 +374,6 @@ class Chart extends AbstractStyle
      * "low" - labels on the left side of the graph
      * "high" - labels on the right side of the graph
      *
-     * @param mixed $labelPosition
      * @return self
      */
     public function setCategoryLabelPosition($labelPosition)
@@ -402,7 +402,6 @@ class Chart extends AbstractStyle
      * "high" - sets labels above the graph
      *
      * @param string
-     * @param mixed $labelPosition
      */
     public function setValueLabelPosition($labelPosition)
     {

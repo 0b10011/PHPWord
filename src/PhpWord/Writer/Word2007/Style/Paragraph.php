@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of PHPWord - A pure PHP library for reading and writing
  * word processing documents.
@@ -146,7 +147,6 @@ class Paragraph extends AbstractStyle
     /**
      * Write tabs.
      *
-     * @param \PhpOffice\Common\XMLWriter $xmlWriter
      * @param \PhpOffice\PhpWord\Style\Tab[] $tabs
      */
     private function writeTabs(XMLWriter $xmlWriter, $tabs)
@@ -164,7 +164,6 @@ class Paragraph extends AbstractStyle
     /**
      * Write numbering.
      *
-     * @param \PhpOffice\Common\XMLWriter $xmlWriter
      * @param array $numbering
      */
     private function writeNumbering(XMLWriter $xmlWriter, $numbering)

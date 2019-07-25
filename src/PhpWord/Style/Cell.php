@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of PHPWord - A pure PHP library for reading and writing
  * word processing documents.
@@ -184,8 +185,6 @@ class Cell extends Border
 
     /**
      * Get background
-     *
-     * @return ColorInterface
      */
     public function getBgColor(): ColorInterface
     {
@@ -200,7 +199,6 @@ class Cell extends Border
      * Set background
      *
      * @param string $value
-     * @return self
      */
     public function setBgColor(ColorInterface $value): self
     {
@@ -266,9 +264,7 @@ class Cell extends Border
 
     /**
      * Set shading
-     *
-     * @param mixed $value
-     * @return self
+     * @param null|mixed $value
      */
     public function setShading($value = null): self
     {
@@ -279,8 +275,6 @@ class Cell extends Border
 
     /**
      * Get cell width
-     *
-     * @return Length
      */
     public function getWidth(): Length
     {
@@ -293,9 +287,6 @@ class Cell extends Border
 
     /**
      * Set cell width
-     *
-     * @param Length $value
-     * @return self
      */
     public function setWidth(Length $value): self
     {

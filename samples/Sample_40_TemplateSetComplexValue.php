@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 use PhpOffice\PhpWord\Element\Field;
 use PhpOffice\PhpWord\Element\Table;
 use PhpOffice\PhpWord\Element\TextRun;

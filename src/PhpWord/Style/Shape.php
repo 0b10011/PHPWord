@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of PHPWord - A pure PHP library for reading and writing
  * word processing documents.
@@ -151,7 +152,7 @@ class Shape extends AbstractStyle
     /**
      * Set frame
      *
-     * @param mixed $value
+     * @param null|mixed $value
      * @return self
      */
     public function setFrame($value = null)
@@ -174,7 +175,7 @@ class Shape extends AbstractStyle
     /**
      * Set fill
      *
-     * @param mixed $value
+     * @param null|mixed $value
      * @return self
      */
     public function setFill($value = null)
@@ -197,7 +198,7 @@ class Shape extends AbstractStyle
     /**
      * Set outline
      *
-     * @param mixed $value
+     * @param null|mixed $value
      * @return self
      */
     public function setOutline($value = null)
@@ -220,7 +221,7 @@ class Shape extends AbstractStyle
     /**
      * Set shadow
      *
-     * @param mixed $value
+     * @param null|mixed $value
      * @return self
      */
     public function setShadow($value = null)
@@ -243,7 +244,7 @@ class Shape extends AbstractStyle
     /**
      * Set 3D extrusion
      *
-     * @param mixed $value
+     * @param null|mixed $value
      * @return self
      */
     public function setExtrusion($value = null)

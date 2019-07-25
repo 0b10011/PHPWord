@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of PHPWord - A pure PHP library for reading and writing
  * word processing documents.
@@ -109,8 +110,6 @@ abstract class AbstractPart
     /**
      * Read w:p.
      *
-     * @param \PhpOffice\Common\XMLReader $xmlReader
-     * @param DOMElement $domNode
      * @param \PhpOffice\PhpWord\Element\AbstractContainer $parent
      * @param string $docPart
      *
@@ -216,11 +215,9 @@ abstract class AbstractPart
     /**
      * Read w:r.
      *
-     * @param \PhpOffice\Common\XMLReader $xmlReader
-     * @param DOMElement $domNode
      * @param \PhpOffice\PhpWord\Element\AbstractContainer $parent
      * @param string $docPart
-     * @param mixed $paragraphStyle
+     * @param null|mixed $paragraphStyle
      *
      * @todo Footnote paragraph style
      */
@@ -243,12 +240,9 @@ abstract class AbstractPart
     /**
      * Parses nodes under w:r
      *
-     * @param XMLReader $xmlReader
-     * @param DOMElement $node
-     * @param AbstractContainer $parent
      * @param string $docPart
-     * @param mixed $paragraphStyle
-     * @param mixed $fontStyle
+     * @param null|mixed $paragraphStyle
+     * @param null|mixed $fontStyle
      */
     protected function readRunChild(XMLReader $xmlReader, DOMElement $node, AbstractContainer $parent, $docPart, $paragraphStyle = null, $fontStyle = null)
     {
@@ -330,9 +324,6 @@ abstract class AbstractPart
     /**
      * Read w:tbl.
      *
-     * @param \PhpOffice\Common\XMLReader $xmlReader
-     * @param DOMElement $domNode
-     * @param mixed $parent
      * @param string $docPart
      */
     protected function readTable(XMLReader $xmlReader, DOMElement $domNode, $parent, $docPart = 'document')
@@ -358,10 +349,6 @@ abstract class AbstractPart
     /**
      * Reads row properties and cells
      * @todo Add tests
-     * @param XmlReader $xmlReader
-     * @param Table $table
-     * @param DOMElement $tblNode
-     * @param mixed $docPart
      */
     protected function readTableRow(XmlReader $xmlReader, Table $table, DOMElement $tblNode, $docPart)
     {
@@ -388,10 +375,6 @@ abstract class AbstractPart
     /**
      * Reads table cell
      * @todo Add tests
-     * @param XmlReader $xmlReader
-     * @param Row $row
-     * @param DOMElement $rowNode
-     * @param mixed $docPart
      */
     protected function readTableCell(XmlReader $xmlReader, Row $row, DOMElement $rowNode, $docPart)
     {
@@ -426,8 +409,6 @@ abstract class AbstractPart
     /**
      * Read w:pPr.
      *
-     * @param \PhpOffice\Common\XMLReader $xmlReader
-     * @param DOMElement $domNode
      * @return array|null
      */
     protected function readParagraphStyle(XMLReader $xmlReader, DOMElement $domNode)
@@ -461,8 +442,6 @@ abstract class AbstractPart
     /**
      * Read w:rPr
      *
-     * @param \PhpOffice\Common\XMLReader $xmlReader
-     * @param DOMElement $domNode
      * @return array|null
      */
     protected function readFontStyle(XMLReader $xmlReader, DOMElement $domNode)
@@ -507,8 +486,6 @@ abstract class AbstractPart
     /**
      * Read w:tblPr
      *
-     * @param \PhpOffice\Common\XMLReader $xmlReader
-     * @param DOMElement $domNode
      * @return string|array|null
      * @todo Capture w:tblStylePr w:type="firstRow"
      */
@@ -557,8 +534,6 @@ abstract class AbstractPart
     /**
      * Read w:tblpPr
      *
-     * @param \PhpOffice\Common\XMLReader $xmlReader
-     * @param DOMElement $domNode
      * @return array
      */
     private function readTablePosition(XMLReader $xmlReader, DOMElement $domNode)
@@ -583,9 +558,6 @@ abstract class AbstractPart
      * Read w:tblInd
      *
      * @see http://officeopenxml.com/WPtableIndent.php
-     * @param \PhpOffice\Common\XMLReader $xmlReader
-     * @param DOMElement $domNode
-     * @return Length
      */
     private function readTableIndent(XMLReader $xmlReader, DOMElement $domNode): Length
     {
@@ -595,7 +567,7 @@ abstract class AbstractPart
         );
         $defs = $this->readStyleDefs($xmlReader, $domNode, $styleDefs);
         if ($defs['type'] === 'dxa') {
-            return Absolute::from('twip', $defs['value']);
+            return Absolute::from('twip', (float) $defs['value']);
         } elseif ($defs['type'] === 'nil') {
             return Absolute::from('twip', 0);
         } elseif ($defs['type'] === 'pct') {
@@ -612,8 +584,6 @@ abstract class AbstractPart
     /**
      * Read w:tcPr
      *
-     * @param \PhpOffice\Common\XMLReader $xmlReader
-     * @param DOMElement $domNode
      * @return array
      */
     private function readCellStyle(XMLReader $xmlReader, DOMElement $domNode)
@@ -632,7 +602,6 @@ abstract class AbstractPart
     /**
      * Returns the first child element found
      *
-     * @param XMLReader $xmlReader
      * @param DOMElement $parentNode
      * @param string|array $elements
      * @return string|null
@@ -656,8 +625,6 @@ abstract class AbstractPart
     /**
      * Returns the first attribute found
      *
-     * @param XMLReader $xmlReader
-     * @param DOMElement $node
      * @param string|array $attributes
      * @return string|null
      */
@@ -680,7 +647,6 @@ abstract class AbstractPart
     /**
      * Read style definition
      *
-     * @param \PhpOffice\Common\XMLReader $xmlReader
      * @param DOMElement $parentNode
      * @param array $styleDefs
      * @ignoreScrutinizerPatch
@@ -723,8 +689,6 @@ abstract class AbstractPart
      * @param string $method
      * @ignoreScrutinizerPatch
      * @param string|null $attributeValue
-     * @param mixed $expected
-     * @return mixed
      */
     private function readStyleDef($method, $attributeValue, $expected)
     {

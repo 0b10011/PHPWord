@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of PHPWord - A pure PHP library for reading and writing
  * word processing documents.
@@ -365,8 +366,6 @@ class Settings
 
     /**
      * Get default font size
-     *
-     * @return Absolute
      */
     public static function getDefaultFontSize(): Absolute
     {
@@ -381,18 +380,14 @@ class Settings
      * Set default font size
      *
      * @param float|int|null $value
-     * @return bool
      */
     public static function setDefaultFontSizeFromConfig($value): bool
     {
-        return self::setDefaultFontSize(Absolute::from('pt', $value));
+        return self::setDefaultFontSize(Absolute::from('pt', (float) $value));
     }
 
     /**
      * Set default font size
-     *
-     * @param Absolute $value
-     * @return bool
      */
     public static function setDefaultFontSize(Absolute $value): bool
     {

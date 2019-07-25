@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of PHPWord - A pure PHP library for reading and writing
  * word processing documents.
@@ -70,8 +71,6 @@ class Cell extends AbstractContainer
 
     /**
      * Get cell width
-     *
-     * @return Absolute
      */
     public function getWidth(): Absolute
     {

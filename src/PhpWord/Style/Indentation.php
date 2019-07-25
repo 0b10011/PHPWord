@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of PHPWord - A pure PHP library for reading and writing
  * word processing documents.
@@ -71,8 +72,6 @@ class Indentation extends AbstractStyle
 
     /**
      * Get left
-     *
-     * @return Absolute
      */
     public function getLeft(): Absolute
     {
@@ -81,9 +80,6 @@ class Indentation extends AbstractStyle
 
     /**
      * Set left
-     *
-     * @param Absolute $value
-     * @return self
      */
     public function setLeft(Absolute $value): self
     {
@@ -94,8 +90,6 @@ class Indentation extends AbstractStyle
 
     /**
      * Get right
-     *
-     * @return Absolute
      */
     public function getRight(): Absolute
     {
@@ -104,9 +98,6 @@ class Indentation extends AbstractStyle
 
     /**
      * Set right
-     *
-     * @param Absolute $value
-     * @return self
      */
     public function setRight(Absolute $value): self
     {
@@ -117,8 +108,6 @@ class Indentation extends AbstractStyle
 
     /**
      * Get first line
-     *
-     * @return Absolute
      */
     public function getFirstLine(): Absolute
     {
@@ -129,7 +118,6 @@ class Indentation extends AbstractStyle
      * Set first line
      *
      * @param int|float $value
-     * @return self
      */
     public function setFirstLine(Absolute $value = null): self
     {
@@ -140,8 +128,6 @@ class Indentation extends AbstractStyle
 
     /**
      * Get hanging
-     *
-     * @return Absolute
      */
     public function getHanging(): Absolute
     {
@@ -150,9 +136,6 @@ class Indentation extends AbstractStyle
 
     /**
      * Set hanging
-     *
-     * @param Absolute $value
-     * @return self
      */
     public function setHanging(Absolute $value): self
     {

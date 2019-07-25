@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of PHPWord - A pure PHP library for reading and writing
  * word processing documents.
@@ -268,8 +269,6 @@ class Frame extends AbstractStyle
 
     /**
      * Get width
-     *
-     * @return Absolute
      */
     public function getWidth(): Absolute
     {
@@ -278,9 +277,6 @@ class Frame extends AbstractStyle
 
     /**
      * Set width
-     *
-     * @param Absolute $value
-     * @return self
      */
     public function setWidth(Absolute $value): self
     {
@@ -291,8 +287,6 @@ class Frame extends AbstractStyle
 
     /**
      * Get height
-     *
-     * @return Absolute
      */
     public function getHeight(): Absolute
     {
@@ -301,9 +295,6 @@ class Frame extends AbstractStyle
 
     /**
      * Set height
-     *
-     * @param Absolute $value
-     * @return self
      */
     public function setHeight(Absolute $value): self
     {
@@ -314,8 +305,6 @@ class Frame extends AbstractStyle
 
     /**
      * Get left
-     *
-     * @return Absolute
      */
     public function getLeft(): Absolute
     {
@@ -324,9 +313,6 @@ class Frame extends AbstractStyle
 
     /**
      * Set left
-     *
-     * @param Absolute $value
-     * @return self
      */
     public function setLeft(Absolute $value): self
     {
@@ -337,8 +323,6 @@ class Frame extends AbstractStyle
 
     /**
      * Get topmost position
-     *
-     * @return Absolute
      */
     public function getTop(): Absolute
     {
@@ -347,9 +331,6 @@ class Frame extends AbstractStyle
 
     /**
      * Set topmost position
-     *
-     * @param Absolute $value
-     * @return self
      */
     public function setTop(Absolute $value): self
     {
@@ -551,8 +532,6 @@ class Frame extends AbstractStyle
 
     /**
      * Get top distance from text wrap
-     *
-     * @return Absolute
      */
     public function getWrapDistanceTop(): Absolute
     {
@@ -562,7 +541,6 @@ class Frame extends AbstractStyle
     /**
      * Set top distance from text wrap
      *
-     * @param Absolute $value
      * @return self
      */
     public function setWrapDistanceTop(Absolute $value)
@@ -574,8 +552,6 @@ class Frame extends AbstractStyle
 
     /**
      * Get bottom distance from text wrap
-     *
-     * @return Absolute
      */
     public function getWrapDistanceBottom(): Absolute
     {
@@ -584,9 +560,6 @@ class Frame extends AbstractStyle
 
     /**
      * Set bottom distance from text wrap
-     *
-     * @param Absolute $value
-     * @return self
      */
     public function setWrapDistanceBottom(Absolute $value): self
     {
@@ -597,8 +570,6 @@ class Frame extends AbstractStyle
 
     /**
      * Get left distance from text wrap
-     *
-     * @return Absolute
      */
     public function getWrapDistanceLeft(): Absolute
     {
@@ -607,9 +578,6 @@ class Frame extends AbstractStyle
 
     /**
      * Set left distance from text wrap
-     *
-     * @param Absolute $value
-     * @return self
      */
     public function setWrapDistanceLeft(Absolute $value): self
     {
@@ -620,8 +588,6 @@ class Frame extends AbstractStyle
 
     /**
      * Get right distance from text wrap
-     *
-     * @return Absolute
      */
     public function getWrapDistanceRight(): Absolute
     {
@@ -630,9 +596,6 @@ class Frame extends AbstractStyle
 
     /**
      * Set right distance from text wrap
-     *
-     * @param Absolute $value
-     * @return self
      */
     public function setWrapDistanceRight(Absolute $value): self
     {
@@ -643,8 +606,6 @@ class Frame extends AbstractStyle
 
     /**
      * Get position
-     *
-     * @return Absolute
      */
     public function getPosition(): Absolute
     {
@@ -653,9 +614,6 @@ class Frame extends AbstractStyle
 
     /**
      * Set position
-     *
-     * @param Absolute $value
-     * @return self
      */
     public function setPosition(Absolute $value): self
     {

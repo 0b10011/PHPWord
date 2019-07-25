@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of PHPWord - A pure PHP library for reading and writing
  * word processing documents.
@@ -53,7 +54,7 @@ class Row extends AbstractElement
      * Create a new table row
      *
      * @param Absolute $height
-     * @param mixed $style
+     * @param null|mixed $style
      */
     public function __construct(Absolute $height = null, $style = null)
     {
@@ -65,7 +66,7 @@ class Row extends AbstractElement
      * Add a cell
      *
      * @param Length $width
-     * @param mixed $style
+     * @param null|mixed $style
      * @return \PhpOffice\PhpWord\Element\Cell
      */
     public function addCell(Length $width = null, $style = null)
@@ -99,8 +100,6 @@ class Row extends AbstractElement
 
     /**
      * Get row height
-     *
-     * @return Absolute
      */
     public function getHeight(): Absolute
     {

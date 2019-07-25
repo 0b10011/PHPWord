@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of PHPWord - A pure PHP library for reading and writing
  * word processing documents.
@@ -181,9 +182,8 @@ class Table extends Border
 
     /**
      * Create new table style
-     *
-     * @param mixed $tableStyle
-     * @param mixed $firstRowStyle
+     * @param null|mixed $tableStyle
+     * @param null|mixed $firstRowStyle
      */
     public function __construct($tableStyle = null, $firstRowStyle = null)
     {
@@ -216,10 +216,6 @@ class Table extends Border
         }
     }
 
-    /**
-     * @param Absolute $cellSpacing
-     * @return self
-     */
     public function setCellSpacing(Absolute $cellSpacing): self
     {
         $this->cellSpacing = $cellSpacing;
@@ -227,9 +223,6 @@ class Table extends Border
         return $this;
     }
 
-    /**
-     * @return Absolute
-     */
     public function getCellSpacing(): Absolute
     {
         return $this->cellSpacing;
@@ -247,8 +240,6 @@ class Table extends Border
 
     /**
      * Get background
-     *
-     * @return ColorInterface
      */
     public function getBgColor(): ColorInterface
     {
@@ -262,7 +253,6 @@ class Table extends Border
     /**
      * Set background
      *
-     * @param ColorInterface $value
      * @return self
      */
     public function setBgColor(ColorInterface $value)
@@ -327,7 +317,6 @@ class Table extends Border
     /**
      * Set TLRBHV Border Color
      *
-     * @param ColorInterface $value
      * @return self
      */
     public function setBorderColor(ColorInterface $value)
@@ -379,8 +368,6 @@ class Table extends Border
 
     /**
      * Get border size inside horizontal
-     *
-     * @return Absolute
      */
     public function getBorderInsideHSize(): Absolute
     {
@@ -389,9 +376,6 @@ class Table extends Border
 
     /**
      * Set border size inside horizontal
-     *
-     * @param Absolute $value
-     * @return self
      */
     public function setBorderInsideHSize(Absolute $value): self
     {
@@ -404,8 +388,6 @@ class Table extends Border
 
     /**
      * Get border color inside horizontal
-     *
-     * @return ColorInterface
      */
     public function getBorderInsideHColor(): ColorInterface
     {
@@ -414,9 +396,6 @@ class Table extends Border
 
     /**
      * Set border color inside horizontal
-     *
-     * @param ColorInterface $value
-     * @return self
      */
     public function setBorderInsideHColor(ColorInterface $value): self
     {
@@ -429,8 +408,6 @@ class Table extends Border
 
     /**
      * Get border style inside horizontal
-     *
-     * @return BorderStyle
      */
     public function getBorderInsideHStyle(): BorderStyle
     {
@@ -439,9 +416,6 @@ class Table extends Border
 
     /**
      * Set border style inside horizontal
-     *
-     * @param BorderStyle $value
-     * @return self
      */
     public function setBorderInsideHStyle(BorderStyle $value): self
     {
@@ -454,8 +428,6 @@ class Table extends Border
 
     /**
      * Get border size inside vertical
-     *
-     * @return Absolute
      */
     public function getBorderInsideVSize(): Absolute
     {
@@ -464,9 +436,6 @@ class Table extends Border
 
     /**
      * Set border size inside vertical
-     *
-     * @param Absolute $value
-     * @return self
      */
     public function setBorderInsideVSize(Absolute $value): self
     {
@@ -479,8 +448,6 @@ class Table extends Border
 
     /**
      * Get border color inside vertical
-     *
-     * @return ColorInterface
      */
     public function getBorderInsideVColor(): ColorInterface
     {
@@ -489,9 +456,6 @@ class Table extends Border
 
     /**
      * Set border color inside vertical
-     *
-     * @param ColorInterface $value
-     * @return self
      */
     public function setBorderInsideVColor(ColorInterface $value): self
     {
@@ -504,8 +468,6 @@ class Table extends Border
 
     /**
      * Get border style inside vertical
-     *
-     * @return BorderStyle
      */
     public function getBorderInsideVStyle(): BorderStyle
     {
@@ -515,7 +477,6 @@ class Table extends Border
     /**
      * Set border style inside vertical
      *
-     * @param BorderStyle $value
      * @return self
      */
     public function setBorderInsideVStyle(BorderStyle $value)
@@ -529,8 +490,6 @@ class Table extends Border
 
     /**
      * Get cell margin top
-     *
-     * @return Absolute
      */
     public function getCellMarginTop(): Absolute
     {
@@ -539,9 +498,6 @@ class Table extends Border
 
     /**
      * Set cell margin top
-     *
-     * @param Absolute $value
-     * @return self
      */
     public function setCellMarginTop(Absolute $value): self
     {
@@ -554,8 +510,6 @@ class Table extends Border
 
     /**
      * Get cell margin left
-     *
-     * @return Absolute
      */
     public function getCellMarginLeft(): Absolute
     {
@@ -564,9 +518,6 @@ class Table extends Border
 
     /**
      * Set cell margin left
-     *
-     * @param Absolute $value
-     * @return self
      */
     public function setCellMarginLeft(Absolute $value): self
     {
@@ -579,8 +530,6 @@ class Table extends Border
 
     /**
      * Get cell margin right
-     *
-     * @return Absolute
      */
     public function getCellMarginRight(): Absolute
     {
@@ -589,9 +538,6 @@ class Table extends Border
 
     /**
      * Set cell margin right
-     *
-     * @param Absolute $value
-     * @return self
      */
     public function setCellMarginRight(Absolute $value): self
     {
@@ -604,8 +550,6 @@ class Table extends Border
 
     /**
      * Get cell margin bottom
-     *
-     * @return Absolute
      */
     public function getCellMarginBottom(): Absolute
     {
@@ -614,9 +558,6 @@ class Table extends Border
 
     /**
      * Set cell margin bottom
-     *
-     * @param Absolute $value
-     * @return self
      */
     public function setCellMarginBottom(Absolute $value): self
     {
@@ -683,7 +624,7 @@ class Table extends Border
     /**
      * Set shading
      *
-     * @param mixed $value
+     * @param null|mixed $value
      * @return self
      */
     public function setShading($value = null)
@@ -747,8 +688,6 @@ class Table extends Border
 
     /**
      * Get width
-     *
-     * @return Length
      */
     public function getWidth(): Length
     {
@@ -757,9 +696,6 @@ class Table extends Border
 
     /**
      * Set width
-     *
-     * @param Length $value
-     * @return self
      */
     public function setWidth(Length $value): self
     {
@@ -805,7 +741,7 @@ class Table extends Border
     /**
      * Set position
      *
-     * @param mixed $value
+     * @param null|mixed $value
      * @return self
      */
     public function setPosition($value = null)
@@ -815,16 +751,12 @@ class Table extends Border
         return $this;
     }
 
-    /**
-     * @return Length
-     */
     public function getIndent(): Length
     {
         return $this->indent;
     }
 
     /**
-     * @param Length $indent
      * @return self
      * @see http://www.datypic.com/sc/ooxml/e-w_tblInd-1.html
      */
@@ -847,8 +779,6 @@ class Table extends Border
 
     /**
      * The column widths
-     *
-     * @param Length[] $value
      */
     public function setColumnWidths(array $values = null)
     {

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of PHPWord - A pure PHP library for reading and writing
  * word processing documents.
@@ -74,9 +75,6 @@ class Table extends AbstractElement
      * Write column.
      *
      * @see http://officeopenxml.com/WPtableGrid.php
-     *
-     * @param \PhpOffice\Common\XMLWriter $xmlWriter
-     * @param \PhpOffice\PhpWord\Element\Table $element
      */
     private function writeColumns(XMLWriter $xmlWriter, TableElement $element)
     {
@@ -96,9 +94,6 @@ class Table extends AbstractElement
      * Write row.
      *
      * @see http://officeopenxml.com/WPtableRowProperties.php
-     *
-     * @param \PhpOffice\Common\XMLWriter $xmlWriter
-     * @param \PhpOffice\PhpWord\Element\Row $row
      */
     private function writeRow(XMLWriter $xmlWriter, RowElement $row)
     {
@@ -124,9 +119,6 @@ class Table extends AbstractElement
      * Write cell.
      *
      * @see http://officeopenxml.com/WPtableCellProperties-Width.php
-     *
-     * @param \PhpOffice\Common\XMLWriter $xmlWriter
-     * @param \PhpOffice\PhpWord\Element\Cell $cell
      */
     private function writeCell(XMLWriter $xmlWriter, CellElement $cell)
     {

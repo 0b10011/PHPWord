@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of PHPWord - A pure PHP library for reading and writing
  * word processing documents.
@@ -85,9 +86,7 @@ class MarginBorder extends AbstractStyle
     /**
      * Write side.
      *
-     * @param \PhpOffice\Common\XMLWriter $xmlWriter
      * @param string $side
-     * @param Absolute $width
      * @param string $color
      * @param string $borderStyle
      */
@@ -122,9 +121,6 @@ class MarginBorder extends AbstractStyle
 
     /**
      * Set sizes.
-     *
-     * @param Absolute[] $value
-     * @param mixed $values
      */
     public function setSizes($values)
     {
@@ -138,8 +134,6 @@ class MarginBorder extends AbstractStyle
 
     /**
      * Set colors.
-     *
-     * @param ColorInterface[] $value
      */
     public function setColors(array $values): self
     {

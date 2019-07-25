@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of PHPWord - A pure PHP library for reading and writing
  * word processing documents.
@@ -131,7 +132,6 @@ class Document
      * - Builds control words and control symbols
      * - Pushes every other character into the text queue
      *
-     * @param \PhpOffice\PhpWord\PhpWord $phpWord
      * @todo Use `fread` stream for scalability
      */
     public function read(PhpWord $phpWord)
@@ -368,7 +368,7 @@ class Document
     {
         list($style, $property, $value) = $directives;
         if ($style === 'font' && $property === 'size') {
-            $value = Absolute::from('pt', $value);
+            $value = Absolute::from('pt', (float) $value);
         }
         $this->flags['styles'][$style][$property] = $value;
     }

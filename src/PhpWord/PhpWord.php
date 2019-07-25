@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of PHPWord - A pure PHP library for reading and writing
  * word processing documents.
@@ -13,7 +14,7 @@
  * @see         https://github.com/PHPOffice/PHPWord
  * @copyright   2010-2018 PHPWord contributors
  * @license     http://www.gnu.org/licenses/lgpl.txt LGPL version 3
-*/
+ */
 
 namespace PhpOffice\PhpWord;
 
@@ -119,12 +120,8 @@ class PhpWord
      *
      * @since 0.12.0
      *
-     * @param mixed $function
-     * @param mixed $args
      *
      * @throws \BadMethodCallException
-     *
-     * @return mixed
      */
     public function __call($function, $args)
     {
@@ -289,8 +286,6 @@ class PhpWord
 
     /**
      * Get default font size
-     *
-     * @return Absolute
      */
     public function getDefaultFontSize(): Absolute
     {
@@ -299,8 +294,6 @@ class PhpWord
 
     /**
      * Set default font size.
-     *
-     * @param Absolute $fontSize
      */
     public function setDefaultFontSize(Absolute $fontSize)
     {

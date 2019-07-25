@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of PHPWord - A pure PHP library for reading and writing
  * word processing documents.
@@ -64,8 +65,6 @@ class Styles extends AbstractPart
 
     /**
      * Write default styles.
-     *
-     * @param \PhpOffice\Common\XMLWriter $xmlWriter
      */
     private function writeDefault(XMLWriter $xmlWriter)
     {
@@ -113,8 +112,6 @@ class Styles extends AbstractPart
 
     /**
      * Write named styles.
-     *
-     * @param \PhpOffice\Common\XMLWriter $xmlWriter
      */
     private function writeNamed(XMLWriter $xmlWriter)
     {
@@ -135,8 +132,6 @@ class Styles extends AbstractPart
 
     /**
      * Write page layout styles.
-     *
-     * @param \PhpOffice\Common\XMLWriter $xmlWriter
      */
     private function writePageLayout(XMLWriter $xmlWriter)
     {
@@ -186,8 +181,6 @@ class Styles extends AbstractPart
 
     /**
      * Write master style.
-     *
-     * @param \PhpOffice\Common\XMLWriter $xmlWriter
      */
     private function writeMaster(XMLWriter $xmlWriter)
     {

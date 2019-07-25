@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of PHPWord - A pure PHP library for reading and writing
  * word processing documents.
@@ -49,7 +50,6 @@ abstract class AbstractStyle
     /**
      * Create new instance.
      *
-     * @param \PhpOffice\Common\XMLWriter $xmlWriter
      * @param string|\PhpOffice\PhpWord\Style\AbstractStyle $style
      */
     public function __construct(XMLWriter $xmlWriter, $style = null)
@@ -106,9 +106,7 @@ abstract class AbstractStyle
     /**
      * Write child style.
      *
-     * @param \PhpOffice\Common\XMLWriter $xmlWriter
      * @param string $name
-     * @param mixed $value
      */
     protected function writeChildStyle(XMLWriter $xmlWriter, $name, $value)
     {

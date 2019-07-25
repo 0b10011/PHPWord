@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of PHPWord - A pure PHP library for reading and writing
  * word processing documents.
@@ -270,8 +271,7 @@ class Settings extends AbstractPart
 
     /**
      * Set the magnification
-     *
-     * @param mixed $zoom
+     * @param null|mixed $zoom
      */
     private function setZoom($zoom = null)
     {

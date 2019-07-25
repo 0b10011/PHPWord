@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of PHPWord - A pure PHP library for reading and writing
  * word processing documents.
@@ -77,9 +78,7 @@ class AbstractStyleTest extends \PHPUnit\Framework\TestCase
     /**
      * Helper function to call protected method
      *
-     * @param mixed $object
      * @param string $method
-     * @param array $args
      */
     public static function callProtectedMethod($object, $method, array $args = array())
     {

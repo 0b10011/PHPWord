@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of PHPWord - A pure PHP library for reading and writing
  * word processing documents.
@@ -231,7 +232,6 @@ class Section extends Border
      * Set orientation
      *
      * @param string $value
-     * @return self
      */
     public function setOrientation($value = null): self
     {
@@ -285,7 +285,6 @@ class Section extends Border
     /**
      * Get Page Size Width
      *
-     * @return Absolute
      *
      * @since 0.12.0
      */
@@ -336,8 +335,6 @@ class Section extends Border
 
     /**
      * Get Margin Top
-     *
-     * @return Absolute
      */
     public function getMarginTop(): Absolute
     {
@@ -350,9 +347,6 @@ class Section extends Border
 
     /**
      * Set Margin Top
-     *
-     * @param Absolute $value
-     * @return self
      */
     public function setMarginTop(Absolute $value): self
     {
@@ -363,8 +357,6 @@ class Section extends Border
 
     /**
      * Get Margin Left
-     *
-     * @return Absolute
      */
     public function getMarginLeft(): Absolute
     {
@@ -377,9 +369,6 @@ class Section extends Border
 
     /**
      * Set Margin Left
-     *
-     * @param Absolute $value
-     * @return self
      */
     public function setMarginLeft(Absolute $value): self
     {
@@ -390,8 +379,6 @@ class Section extends Border
 
     /**
      * Get Margin Right
-     *
-     * @return Absolute
      */
     public function getMarginRight(): Absolute
     {
@@ -406,7 +393,6 @@ class Section extends Border
      * Set Margin Right
      *
      * @param int|float $value
-     * @return self
      */
     public function setMarginRight(Absolute $value): self
     {
@@ -417,8 +403,6 @@ class Section extends Border
 
     /**
      * Get Margin Bottom
-     *
-     * @return Absolute
      */
     public function getMarginBottom(): Absolute
     {
@@ -433,7 +417,6 @@ class Section extends Border
      * Set Margin Bottom
      *
      * @param int|float $value
-     * @return self
      */
     public function setMarginBottom(Absolute $value): self
     {
@@ -444,8 +427,6 @@ class Section extends Border
 
     /**
      * Get gutter
-     *
-     * @return Absolute
      */
     public function getGutter(): Absolute
     {
@@ -460,7 +441,6 @@ class Section extends Border
      * Set gutter
      *
      * @param int|float $value
-     * @return self
      */
     public function setGutter(Absolute $value): self
     {
@@ -471,8 +451,6 @@ class Section extends Border
 
     /**
      * Get Header Height
-     *
-     * @return Absolute
      */
     public function getHeaderHeight(): Absolute
     {
@@ -487,7 +465,6 @@ class Section extends Border
      * Set Header Height
      *
      * @param int|float $value
-     * @return self
      */
     public function setHeaderHeight(Absolute $value): self
     {
@@ -498,8 +475,6 @@ class Section extends Border
 
     /**
      * Get Footer Height
-     *
-     * @return Absolute
      */
     public function getFooterHeight(): Absolute
     {
@@ -513,7 +488,6 @@ class Section extends Border
     /**
      * Set Footer Height
      *
-     * @param Absolute $value
      * @return self
      */
     public function setFooterHeight(Absolute $value)
@@ -571,8 +545,6 @@ class Section extends Border
 
     /**
      * Get Section Space Between Columns
-     *
-     * @return Absolute
      */
     public function getColsSpace(): Absolute
     {
@@ -585,9 +557,6 @@ class Section extends Border
 
     /**
      * Set Section Space Between Columns
-     *
-     * @param Absolute $value
-     * @return self
      */
     public function setColsSpace(Absolute $value): self
     {
@@ -632,7 +601,7 @@ class Section extends Border
     /**
      * Set line numbering
      *
-     * @param mixed $value
+     * @param null|mixed $value
      * @return self
      */
     public function setLineNumbering($value = null)

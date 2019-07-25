@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of PHPWord - A pure PHP library for reading and writing
  * word processing documents.
@@ -136,9 +137,6 @@ class Border extends AbstractStyle
 
     /**
      * Set border size
-     *
-     * @param Absolute $value
-     * @return self
      */
     public function setBorderSize(Absolute $value): self
     {
@@ -169,7 +167,6 @@ class Border extends AbstractStyle
     /**
      * Set border color
      *
-     * @param ColorInterface $value
      * @return self
      */
     public function setBorderColor(ColorInterface $value)
@@ -200,7 +197,6 @@ class Border extends AbstractStyle
     /**
      * Set border style
      *
-     * @param BorderStyle $value
      * @return self
      */
     public function setBorderStyle(BorderStyle $value)
@@ -215,8 +211,6 @@ class Border extends AbstractStyle
 
     /**
      * Get border top size
-     *
-     * @return Absolute
      */
     public function getBorderTopSize(): Absolute
     {
@@ -225,9 +219,6 @@ class Border extends AbstractStyle
 
     /**
      * Set border top size
-     *
-     * @param Absolute $value
-     * @return self
      */
     public function setBorderTopSize(Absolute $value): self
     {
@@ -238,8 +229,6 @@ class Border extends AbstractStyle
 
     /**
      * Get border top color
-     *
-     * @return ColorInterface
      */
     public function getBorderTopColor(): ColorInterface
     {
@@ -249,7 +238,6 @@ class Border extends AbstractStyle
     /**
      * Set border top color
      *
-     * @param ColorInterface $value
      * @return self
      */
     public function setBorderTopColor(ColorInterface $value)
@@ -261,8 +249,6 @@ class Border extends AbstractStyle
 
     /**
      * Get border top style
-     *
-     * @return BorderStyle
      */
     public function getBorderTopStyle(): BorderStyle
     {
@@ -272,7 +258,6 @@ class Border extends AbstractStyle
     /**
      * Set border top style
      *
-     * @param BorderStyle $value
      * @return self
      */
     public function setBorderTopStyle(BorderStyle $value)
@@ -284,8 +269,6 @@ class Border extends AbstractStyle
 
     /**
      * Get border left size
-     *
-     * @return Absolute
      */
     public function getBorderLeftSize(): Absolute
     {
@@ -294,9 +277,6 @@ class Border extends AbstractStyle
 
     /**
      * Set border left size
-     *
-     * @param Absolute $value
-     * @return self
      */
     public function setBorderLeftSize(Absolute $value): self
     {
@@ -307,8 +287,6 @@ class Border extends AbstractStyle
 
     /**
      * Get border left color
-     *
-     * @return ColorInterface
      */
     public function getBorderLeftColor(): ColorInterface
     {
@@ -318,7 +296,6 @@ class Border extends AbstractStyle
     /**
      * Set border left color
      *
-     * @param ColorInterface $value
      * @return self
      */
     public function setBorderLeftColor(ColorInterface $value)
@@ -330,8 +307,6 @@ class Border extends AbstractStyle
 
     /**
      * Get border left style
-     *
-     * @return BorderStyle
      */
     public function getBorderLeftStyle(): BorderStyle
     {
@@ -341,7 +316,6 @@ class Border extends AbstractStyle
     /**
      * Set border left style
      *
-     * @param BorderStyle $value
      * @return self
      */
     public function setBorderLeftStyle(BorderStyle $value)
@@ -353,8 +327,6 @@ class Border extends AbstractStyle
 
     /**
      * Get border right size
-     *
-     * @return Absolute
      */
     public function getBorderRightSize(): Absolute
     {
@@ -363,9 +335,6 @@ class Border extends AbstractStyle
 
     /**
      * Set border right size
-     *
-     * @param Absolute $value
-     * @return self
      */
     public function setBorderRightSize(Absolute $value): self
     {
@@ -376,8 +345,6 @@ class Border extends AbstractStyle
 
     /**
      * Get border right color
-     *
-     * @return ColorInterface
      */
     public function getBorderRightColor(): ColorInterface
     {
@@ -387,7 +354,6 @@ class Border extends AbstractStyle
     /**
      * Set border right color
      *
-     * @param ColorInterface $value
      * @return self
      */
     public function setBorderRightColor(ColorInterface $value)
@@ -399,8 +365,6 @@ class Border extends AbstractStyle
 
     /**
      * Get border right style
-     *
-     * @return BorderStyle
      */
     public function getBorderRightStyle(): BorderStyle
     {
@@ -410,7 +374,6 @@ class Border extends AbstractStyle
     /**
      * Set border right style
      *
-     * @param BorderStyle $value
      * @return self
      */
     public function setBorderRightStyle(BorderStyle $value)
@@ -422,8 +385,6 @@ class Border extends AbstractStyle
 
     /**
      * Get border bottom size
-     *
-     * @return Absolute
      */
     public function getBorderBottomSize(): Absolute
     {
@@ -432,9 +393,6 @@ class Border extends AbstractStyle
 
     /**
      * Set border bottom size
-     *
-     * @param Absolute $value
-     * @return self
      */
     public function setBorderBottomSize(Absolute $value): self
     {
@@ -445,8 +403,6 @@ class Border extends AbstractStyle
 
     /**
      * Get border bottom color
-     *
-     * @return ColorInterface
      */
     public function getBorderBottomColor(): ColorInterface
     {
@@ -456,7 +412,6 @@ class Border extends AbstractStyle
     /**
      * Set border bottom color
      *
-     * @param ColorInterface $value
      * @return self
      */
     public function setBorderBottomColor(ColorInterface $value)
@@ -468,8 +423,6 @@ class Border extends AbstractStyle
 
     /**
      * Get border bottom style
-     *
-     * @return BorderStyle
      */
     public function getBorderBottomStyle(): BorderStyle
     {
@@ -479,7 +432,6 @@ class Border extends AbstractStyle
     /**
      * Set border bottom style
      *
-     * @param BorderStyle $value
      * @return self
      */
     public function setBorderBottomStyle(BorderStyle $value)
@@ -491,8 +443,6 @@ class Border extends AbstractStyle
 
     /**
      * Check if any of the border is not null
-     *
-     * @return bool
      */
     public function hasBorder(): bool
     {

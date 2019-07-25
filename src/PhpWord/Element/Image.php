@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of PHPWord - A pure PHP library for reading and writing
  * word processing documents.
@@ -133,15 +134,14 @@ class Image extends AbstractElement
     /**
      * Create new image element
      *
-     * @param string $source
-     * @param mixed $style
      * @param bool $watermark
      * @param string $name
+     * @param null|mixed $style
      *
      * @throws \PhpOffice\PhpWord\Exception\InvalidImageException
      * @throws \PhpOffice\PhpWord\Exception\UnsupportedImageTypeException
      */
-    public function __construct($source, $style = null, $watermark = false, $name = null)
+    public function __construct(string $source, $style = null, $watermark = false, $name = null)
     {
         $this->source = $source;
         $this->style = $this->setNewStyle(new ImageStyle(), $style, true);
@@ -163,10 +163,8 @@ class Image extends AbstractElement
 
     /**
      * Get image source
-     *
-     * @return string
      */
-    public function getSource()
+    public function getSource(): string
     {
         return $this->source;
     }
@@ -465,7 +463,7 @@ class Image extends AbstractElement
             } else {
                 $this->sourceType = self::SOURCE_GD;
             }
-        } elseif (@file_exists($this->source)) {
+        } elseif (strpos($this->source, "\0") === false && file_exists($this->source)) {
             $this->memoryImage = false;
             $this->sourceType = self::SOURCE_LOCAL;
         } else {
@@ -567,9 +565,6 @@ class Image extends AbstractElement
 
     /**
      * Set proportional width/height if one dimension not available.
-     *
-     * @param Absolute $actualWidth
-     * @param Absolute $actualHeight
      */
     private function setProportionalSize(Absolute $actualWidth, Absolute $actualHeight)
     {

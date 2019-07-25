@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of PHPWord - A pure PHP library for reading and writing
  * word processing documents.
@@ -152,8 +153,6 @@ class Tab extends AbstractStyle
 
     /**
      * Get position
-     *
-     * @return Absolute
      */
     public function getPosition(): Absolute
     {
@@ -162,9 +161,6 @@ class Tab extends AbstractStyle
 
     /**
      * Set position
-     *
-     * @param Absolute $value
-     * @return self
      */
     public function setPosition(Absolute $value): self
     {

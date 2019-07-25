@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of PHPWord - A pure PHP library for reading and writing
  * word processing documents.
@@ -70,8 +71,6 @@ class Spacing extends AbstractStyle
 
     /**
      * Get before
-     *
-     * @return Absolute
      */
     public function getBefore(): Absolute
     {
@@ -80,9 +79,6 @@ class Spacing extends AbstractStyle
 
     /**
      * Set before
-     *
-     * @param Absolute $value
-     * @return self
      */
     public function setBefore(Absolute $value): self
     {
@@ -93,8 +89,6 @@ class Spacing extends AbstractStyle
 
     /**
      * Get after
-     *
-     * @return Absolute
      */
     public function getAfter(): Absolute
     {
@@ -103,9 +97,6 @@ class Spacing extends AbstractStyle
 
     /**
      * Set after
-     *
-     * @param Absolute $value
-     * @return self
      */
     public function setAfter(Absolute $value): self
     {
@@ -128,7 +119,6 @@ class Spacing extends AbstractStyle
      * Set distance
      *
      * @param int|float $value
-     * @return self
      */
     public function setLine($value): self
     {

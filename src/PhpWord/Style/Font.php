@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of PHPWord - A pure PHP library for reading and writing
  * word processing documents.
@@ -373,8 +374,6 @@ class Font extends AbstractStyle
 
     /**
      * Get font size
-     *
-     * @return Absolute
      */
     public function getSize(): Absolute
     {
@@ -383,9 +382,6 @@ class Font extends AbstractStyle
 
     /**
      * Set font size
-     *
-     * @param Absolute $value
-     * @return self
      */
     public function setSize(Absolute $value): self
     {
@@ -396,8 +392,6 @@ class Font extends AbstractStyle
 
     /**
      * Get font color
-     *
-     * @return ColorInterface
      */
     public function getColor(): ColorInterface
     {
@@ -406,9 +400,6 @@ class Font extends AbstractStyle
 
     /**
      * Set font color
-     *
-     * @param ColorInterface $value
-     * @return self
      */
     public function setColor(ColorInterface $value): self
     {
@@ -625,7 +616,6 @@ class Font extends AbstractStyle
     /**
      * Set foreground/highlight color
      *
-     * @param ForegroundColor $value
      * @return self
      */
     public function setFgColor(ForegroundColor $value)
@@ -649,7 +639,6 @@ class Font extends AbstractStyle
      * Set background
      *
      * @param ColorInterface $value
-     * @return self
      */
     public function setBgColor(ColorInterface $value = null): self
     {
@@ -683,8 +672,6 @@ class Font extends AbstractStyle
 
     /**
      * Get font spacing
-     *
-     * @return Absolute
      */
     public function getSpacing(): Absolute
     {
@@ -693,9 +680,6 @@ class Font extends AbstractStyle
 
     /**
      * Set font spacing
-     *
-     * @param Absolute $value
-     * @return self
      */
     public function setSpacing(Absolute $value): self
     {
@@ -786,7 +770,7 @@ class Font extends AbstractStyle
     /**
      * Set Paragraph
      *
-     * @param mixed $value
+     * @param null|mixed $value
      * @return self
      */
     public function setParagraph($value = null)
@@ -832,7 +816,7 @@ class Font extends AbstractStyle
     /**
      * Set shading
      *
-     * @param mixed $value
+     * @param null|mixed $value
      * @return self
      */
     public function setShading($value = null)
@@ -855,7 +839,7 @@ class Font extends AbstractStyle
     /**
      * Set language
      *
-     * @param mixed $value
+     * @param null|mixed $value
      * @return self
      */
     public function setLang($value = null)
@@ -965,8 +949,6 @@ class Font extends AbstractStyle
 
     /**
      * Get position
-     *
-     * @return Absolute
      */
     public function getPosition(): Absolute
     {
@@ -979,9 +961,6 @@ class Font extends AbstractStyle
 
     /**
      * Set position
-     *
-     * @param Absolute $value
-     * @return self
      */
     public function setPosition(Absolute $value): self
     {

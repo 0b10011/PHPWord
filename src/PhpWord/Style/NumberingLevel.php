@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of PHPWord - A pure PHP library for reading and writing
  * word processing documents.
@@ -399,7 +400,6 @@ class NumberingLevel extends AbstractStyle
     /**
      * Set tab
      *
-     * @param int $value
      * @return self
      */
     public function setTab(int $value)

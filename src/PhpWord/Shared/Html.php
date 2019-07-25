@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of PHPWord - A pure PHP library for reading and writing
  * word processing documents.
@@ -55,9 +56,7 @@ class Html
      * @param string $html The code to parse
      * @param bool $fullHTML If it's a full HTML, no need to add 'body' tag
      * @param bool $preserveWhiteSpace If false, the whitespaces between nodes will be removed
-     * @param array $options:
-     *                + IMG_SRC_SEARCH: optional to speed up images loading from remote url when files can be found locally
-     *                + IMG_SRC_REPLACE: optional to speed up images loading from remote url when files can be found locally
+     * @param null|mixed $options
      */
     public static function addHtml($element, $html, $fullHTML = false, $preserveWhiteSpace = true, $options = null)
     {
@@ -400,7 +399,6 @@ class Html
     /**
      * Checks if $node contains an HTML element that cannot be added to TextRun
      *
-     * @param \DOMNode $node
      * @return bool Returns true if the node contains an HTML element that cannot be added to TextRun
      */
     protected static function shouldAddTextRun(\DOMNode $node)
@@ -417,7 +415,6 @@ class Html
      * Recursively parses styles on parent nodes
      * TODO if too slow, add caching of parent nodes, !! everything is static here so watch out for concurrency !!
      *
-     * @param \DOMNode $node
      * @param array &$styles
      */
     protected static function recursiveParseStylesInHierarchy(\DOMNode $node, array $style)
@@ -668,10 +665,10 @@ class Html
                     $src = $attribute->value;
                     break;
                 case 'width':
-                    $style['width'] = Absolute::fromPixels(new Dpi(), $attribute->value);
+                    $style['width'] = Absolute::fromPixels(new Dpi(), (float) $attribute->value);
                     break;
                 case 'height':
-                    $style['height'] = Absolute::fromPixels(new Dpi(), $attribute->value);
+                    $style['height'] = Absolute::fromPixels(new Dpi(), (float) $attribute->value);
                     break;
                 case 'style':
                     $styleattr = explode(';', $attribute->value);
@@ -753,9 +750,6 @@ class Html
 
     /**
      * Transforms a CSS border style into a word border style
-     *
-     * @param string $cssBorderStyle
-     * @return BorderStyle
      */
     protected static function mapBorderStyle(string $cssBorderStyle): BorderStyle
     {
@@ -842,19 +836,16 @@ class Html
 
     /**
      * Transforms a size in CSS format (eg. 10px, 10cm, ...) to Length
-     *
-     * @param string $value
-     * @return Length
      */
     public static function cssToLength(string $value): Length
     {
-        if ($value == '0') {
+        if ($value === '0') {
             return new Absolute(0);
         }
 
         $matches = array();
         if (preg_match('/^[+-]?([0-9]+\.?[0-9]*)?(px|em|ex|%|in|cm|mm|pt|pc)$/i', $value, $matches)) {
-            $size = $matches[1];
+            $size = (float) $matches[1];
             $unit = $matches[2];
 
             switch ($unit) {
@@ -883,7 +874,6 @@ class Html
     /**
      * Transforms a size in CSS format (eg. 10px, 10cm, ...) to Absolute
      *
-     * @param string $value
      * @return Absolute
      */
     public static function cssToAbsolute(string $value): Length

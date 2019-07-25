@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of PHPWord - A pure PHP library for reading and writing
  * word processing documents.
@@ -192,7 +193,6 @@ class Paragraph extends Border
      * Set Style value
      *
      * @param string $key
-     * @param mixed $value
      * @return self
      */
     public function setStyleValue($key, $value)
@@ -353,7 +353,7 @@ class Paragraph extends Border
     /**
      * Set shading
      *
-     * @param mixed $value
+     * @param null|mixed $value
      * @return self
      */
     public function setIndentation($value = null)
@@ -365,8 +365,6 @@ class Paragraph extends Border
 
     /**
      * Get indentation
-     *
-     * @return Absolute
      */
     public function getIndent(): Absolute
     {
@@ -376,7 +374,6 @@ class Paragraph extends Border
     /**
      * Set indentation
      *
-     * @param Absolute $value
      * @return self
      */
     public function setIndent(Absolute $value)
@@ -419,9 +416,9 @@ class Paragraph extends Border
     /**
      * Set spacing
      *
-     * @param mixed $value
-     * @return self
      * @todo Rename to setSpacing in 1.0
+     * @param null|mixed $value
+     * @return self
      */
     public function setSpace($value = null)
     {
@@ -432,8 +429,6 @@ class Paragraph extends Border
 
     /**
      * Get space before paragraph
-     *
-     * @return Absolute
      */
     public function getSpaceBefore(): Absolute
     {
@@ -442,9 +437,6 @@ class Paragraph extends Border
 
     /**
      * Set space before paragraph
-     *
-     * @param Absolute $value
-     * @return self
      */
     public function setSpaceBefore(Absolute $value): self
     {
@@ -453,8 +445,6 @@ class Paragraph extends Border
 
     /**
      * Get space after paragraph
-     *
-     * @return Absolute
      */
     public function getSpaceAfter(): Absolute
     {
@@ -486,7 +476,6 @@ class Paragraph extends Border
      * Set spacing between lines
      *
      * @param int|float $value
-     * @return self
      */
     public function setSpacing($value = null): self
     {
@@ -773,7 +762,7 @@ class Paragraph extends Border
     /**
      * Set shading
      *
-     * @param mixed $value
+     * @param null|mixed $value
      * @return self
      */
     public function setShading($value = null)
