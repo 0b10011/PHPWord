@@ -17,6 +17,7 @@
 
 namespace PhpOffice\PhpWord\Writer\RTF;
 
+use PhpOffice\PhpWord\Style\Lengths\Absolute;
 use PhpOffice\PhpWord\Writer\RTF;
 use PhpOffice\PhpWord\Writer\RTF\Style\Border;
 use PHPUnit\Framework\Assert;
@@ -61,9 +62,9 @@ class StyleTest extends \PHPUnit\Framework\TestCase
     public function testIndentation()
     {
         $indentation = new \PhpOffice\PhpWord\Style\Indentation();
-        $indentation->setLeft(1);
-        $indentation->setRight(2);
-        $indentation->setFirstLine(3);
+        $indentation->setLeft(Absolute::from('twip', 1));
+        $indentation->setRight(Absolute::from('twip', 2));
+        $indentation->setFirstLine(Absolute::from('twip', 3));
 
         $indentWriter = new \PhpOffice\PhpWord\Writer\RTF\Style\Indentation($indentation);
         $indentWriter->setParentWriter(new RTF());
@@ -76,7 +77,7 @@ class StyleTest extends \PHPUnit\Framework\TestCase
     {
         $tabRight = new \PhpOffice\PhpWord\Style\Tab();
         $tabRight->setType(\PhpOffice\PhpWord\Style\Tab::TAB_STOP_RIGHT);
-        $tabRight->setPosition(5);
+        $tabRight->setPosition(Absolute::from('twip', 5));
 
         $tabWriter = new \PhpOffice\PhpWord\Writer\RTF\Style\Tab($tabRight);
         $tabWriter->setParentWriter(new RTF());

@@ -18,7 +18,11 @@
 namespace PhpOffice\PhpWord\Writer\Word2007\Style;
 
 use PhpOffice\Common\XMLWriter;
-use PhpOffice\PhpWord\SimpleType\TblWidth;
+use PhpOffice\PhpWord\Exception\Exception;
+use PhpOffice\PhpWord\Style\Lengths\Absolute;
+use PhpOffice\PhpWord\Style\Lengths\Auto;
+use PhpOffice\PhpWord\Style\Lengths\Length;
+use PhpOffice\PhpWord\Style\Lengths\Percent;
 use PhpOffice\PhpWord\Style\Table as TableStyle;
 use PhpOffice\PhpWord\Writer\Word2007\Element\TableAlignment;
 
@@ -30,7 +34,7 @@ use PhpOffice\PhpWord\Writer\Word2007\Element\TableAlignment;
 class Table extends AbstractStyle
 {
     /**
-     * @var int Table width
+     * @var Length Table width
      */
     private $width;
 
@@ -50,7 +54,7 @@ class Table extends AbstractStyle
             $xmlWriter->writeAttribute('w:val', $style);
             $xmlWriter->endElement();
             if (null !== $this->width) {
-                $this->writeTblWidth($xmlWriter, 'w:tblW', TblWidth::PERCENT, $this->width);
+                $this->writeTblWidth($xmlWriter, 'w:tblW', $this->width);
             }
             $xmlWriter->endElement();
         }
@@ -77,8 +81,8 @@ class Table extends AbstractStyle
             $xmlWriter->endElement();
         }
 
-        $this->writeTblWidth($xmlWriter, 'w:tblW', $style->getUnit(), $style->getWidth());
-        $this->writeTblWidth($xmlWriter, 'w:tblCellSpacing', TblWidth::TWIP, $style->getCellSpacing());
+        $this->writeTblWidth($xmlWriter, 'w:tblW', $style->getWidth());
+        $this->writeTblWidth($xmlWriter, 'w:tblCellSpacing', $style->getCellSpacing());
         $this->writeIndent($xmlWriter, $style);
         $this->writeLayout($xmlWriter, $style->getLayout());
 
@@ -160,14 +164,30 @@ class Table extends AbstractStyle
      *
      * @param \PhpOffice\Common\XMLWriter $xmlWriter
      * @param string $elementName
-     * @param string $unit
-     * @param int|float $width
+     * @param Length $width
      */
-    private function writeTblWidth(XMLWriter $xmlWriter, $elementName, $unit, $width = null)
+    private function writeTblWidth(XMLWriter $xmlWriter, $elementName, Length $width)
     {
-        if (null === $width) {
-            return;
+        if ($width instanceof Absolute) {
+            $width = $width->toFloat('twip');
+            $unit = 'dxa';
+        } elseif ($width instanceof Percent) {
+            $width = $width->toFloat();
+            $unit = 'pct';
+        } elseif ($width instanceof Auto) {
+            $width = null;
+            $unit = 'auto';
+        } else {
+            throw new Exception('Unsupported width `' . get_class($width) . '` provided');
         }
+
+        if ($width === null && $unit !== 'auto') {
+            return;
+        } elseif ($width !== null && $width == 0) {
+            $width = null;
+            $unit = 'nil';
+        }
+
         $xmlWriter->startElement($elementName);
         $xmlWriter->writeAttributeIf(null !== $width, 'w:w', $width);
         $xmlWriter->writeAttribute('w:type', $unit);
@@ -214,9 +234,9 @@ class Table extends AbstractStyle
     /**
      * Set width.
      *
-     * @param int $value
+     * @param Length $value
      */
-    public function setWidth($value = null)
+    public function setWidth(Length $value)
     {
         $this->width = $value;
     }
@@ -233,6 +253,6 @@ class Table extends AbstractStyle
             return;
         }
 
-        $this->writeTblWidth($xmlWriter, 'w:tblInd', $indent->getType(), $indent->getValue());
+        $this->writeTblWidth($xmlWriter, 'w:tblInd', $indent);
     }
 }

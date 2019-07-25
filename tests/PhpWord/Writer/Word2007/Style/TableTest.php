@@ -17,8 +17,7 @@
 
 namespace PhpOffice\PhpWord\Writer\Word2007\Style;
 
-use PhpOffice\PhpWord\ComplexType\TblWidth as TblWidthComplexType;
-use PhpOffice\PhpWord\SimpleType\TblWidth;
+use PhpOffice\PhpWord\Style\Lengths\Absolute;
 use PhpOffice\PhpWord\Style\Table;
 use PhpOffice\PhpWord\Style\TablePosition;
 use PhpOffice\PhpWord\TestHelperDOCX;
@@ -65,7 +64,7 @@ class TableTest extends \PHPUnit\Framework\TestCase
     public function testCellSpacing()
     {
         $tableStyle = new Table();
-        $tableStyle->setCellSpacing(10.3);
+        $tableStyle->setCellSpacing(Absolute::from('twip', 10.3));
 
         $phpWord = new \PhpOffice\PhpWord\PhpWord();
         $section = $phpWord->addSection();
@@ -77,7 +76,6 @@ class TableTest extends \PHPUnit\Framework\TestCase
         $path = '/w:document/w:body/w:tbl/w:tblPr/w:tblCellSpacing';
         $this->assertTrue($doc->elementExists($path));
         $this->assertEquals(10.3, $doc->getElementAttribute($path, 'w:w'));
-        $this->assertEquals(TblWidth::TWIP, $doc->getElementAttribute($path, 'w:type'));
     }
 
     /**
@@ -124,10 +122,9 @@ class TableTest extends \PHPUnit\Framework\TestCase
     public function testIndent()
     {
         $value = 100;
-        $type = TblWidth::TWIP;
 
         $tableStyle = new Table();
-        $tableStyle->setIndent(new TblWidthComplexType($value, $type));
+        $tableStyle->setIndent(Absolute::from('twip', $value));
 
         $phpWord = new \PhpOffice\PhpWord\PhpWord();
         $section = $phpWord->addSection();
@@ -139,10 +136,10 @@ class TableTest extends \PHPUnit\Framework\TestCase
         $path = '/w:document/w:body/w:tbl/w:tblPr/w:tblInd';
         $this->assertTrue($doc->elementExists($path));
         $this->assertSame($value, (int) $doc->getElementAttribute($path, 'w:w'));
-        $this->assertSame($type, $doc->getElementAttribute($path, 'w:type'));
+        $this->assertSame('dxa', $doc->getElementAttribute($path, 'w:type'));
     }
 
-    public function testRigthToLeft()
+    public function testRightToLeft()
     {
         $tableStyle = new Table();
         $tableStyle->setBidiVisual(true);

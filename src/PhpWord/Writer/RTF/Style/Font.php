@@ -52,8 +52,8 @@ class Font extends AbstractStyle
         $content .= '\cf' . $this->colorIndex;
         $content .= '\f' . $this->nameIndex;
 
-        $size = $style->getSize();
-        $content .= $this->getValueIf(is_numeric($size), '\fs' . round($size * 2));
+        $size = $style->getSize()->toInt('pt');
+        $content .= $this->getValueIf($size !== null, '\fs' . $size);
 
         $content .= $this->getValueIf($style->isBold(), '\b');
         $content .= $this->getValueIf($style->isItalic(), '\i');

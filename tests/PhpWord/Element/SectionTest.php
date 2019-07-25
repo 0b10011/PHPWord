@@ -19,6 +19,7 @@ namespace PhpOffice\PhpWord\Element;
 
 use PhpOffice\PhpWord\PhpWord;
 use PhpOffice\PhpWord\Style;
+use PhpOffice\PhpWord\Style\Lengths\Absolute;
 use PhpOffice\PhpWord\Style\Section as SectionStyle;
 
 /**
@@ -56,7 +57,7 @@ class SectionTest extends \PHPUnit\Framework\TestCase
     {
         $expected = 'landscape';
         $object = new Section(0);
-        $object->setStyle(array('orientation' => $expected, 'foo' => null));
+        $object->setStyle(array('orientation' => $expected));
         $this->assertEquals($expected, $object->getStyle()->getOrientation());
     }
 
@@ -125,7 +126,7 @@ class SectionTest extends \PHPUnit\Framework\TestCase
      */
     public function testAddTitleWithStyle()
     {
-        Style::addTitleStyle(1, array('size' => 14));
+        Style::addTitleStyle(1, array('size' => Absolute::from('pt', 14)));
         $section = new Section(0);
         $section->setPhpWord(new PhpWord());
         $section->addTitle('Test', 1);

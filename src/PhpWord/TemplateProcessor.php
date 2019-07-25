@@ -462,8 +462,8 @@ class TemplateProcessor
             $imgPath = $replaceImage;
         }
 
-        $width = $this->chooseImageDimension($width, isset($varInlineArgs['width']) ? $varInlineArgs['width'] : null, 115);
-        $height = $this->chooseImageDimension($height, isset($varInlineArgs['height']) ? $varInlineArgs['height'] : null, 70);
+        $width = $this->chooseImageDimension($width, $varInlineArgs['width'] ?? null, 115);
+        $height = $this->chooseImageDimension($height, $varInlineArgs['height'] ?? null, 70);
 
         $imageData = @getimagesize($imgPath);
         if (!is_array($imageData)) {
@@ -559,7 +559,7 @@ class TemplateProcessor
 
         $searchReplace = array();
         foreach ($search as $searchIdx => $searchString) {
-            $searchReplace[$searchString] = isset($replacesList[$searchIdx]) ? $replacesList[$searchIdx] : $replacesList[0];
+            $searchReplace[$searchString] = $replacesList[$searchIdx] ?? $replacesList[0];
         }
 
         // collect document parts

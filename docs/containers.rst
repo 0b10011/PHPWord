@@ -25,7 +25,7 @@ section. Example:
 
     $sectionStyle = array(
         'orientation' => 'landscape',
-        'marginTop' => 600,
+        'marginTop' => Absolute::from('twip', 600),
         'colsNum' => 2,
     );
 

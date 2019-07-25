@@ -19,6 +19,7 @@ namespace PhpOffice\PhpWord\Style;
 
 use PhpOffice\PhpWord\PhpWord;
 use PhpOffice\PhpWord\SimpleType\LineSpacingRule;
+use PhpOffice\PhpWord\Style\Lengths\Absolute;
 use PhpOffice\PhpWord\TestHelperDOCX;
 
 /**
@@ -67,11 +68,11 @@ class ParagraphTest extends \PHPUnit\Framework\TestCase
         $object = new Paragraph();
 
         $attributes = array(
-            'spaceAfter'          => 240,
-            'spaceBefore'         => 240,
-            'indent'              => 1,
-            'hanging'             => 1,
-            'spacing'             => 120,
+            'spaceAfter'          => Absolute::from('twip', 240),
+            'spaceBefore'         => Absolute::from('twip', 240),
+            'indent'              => Absolute::from('twip', 1),
+            'hanging'             => Absolute::from('twip', 1),
+            'spacing'             => Absolute::from('twip', 120),
             'spacingLineRule'     => LineSpacingRule::AT_LEAST,
             'basedOn'             => 'Normal',
             'next'                => 'Normal',
@@ -88,11 +89,13 @@ class ParagraphTest extends \PHPUnit\Framework\TestCase
         );
         foreach ($attributes as $key => $value) {
             $get = $this->findGetter($key, $value, $object);
-            $object->setStyleValue("$key", $value);
-            if ('indent' == $key || 'hanging' == $key) {
-                $value = $value * 720;
+            $object->setStyleValue($key, $value);
+            $result = $object->$get();
+            if ($value instanceof Absolute) {
+                $result = $result->toInt('twip');
+                $value = $value->toInt('twip');
             }
-            $this->assertEquals($value, $object->$get());
+            $this->assertEquals($value, $result);
         }
     }
 
@@ -119,7 +122,11 @@ class ParagraphTest extends \PHPUnit\Framework\TestCase
         $attributes = array('spacing', 'indent', 'hanging', 'spaceBefore', 'spaceAfter', 'textAlignment');
         foreach ($attributes as $key) {
             $get = $this->findGetter($key, null, $object);
-            $this->assertNull($object->$get());
+            $result = $object->$get();
+            if ($result instanceof Absolute) {
+                $result = $result->toInt('twip');
+            }
+            $this->assertNull($result);
         }
     }
 
@@ -129,7 +136,7 @@ class ParagraphTest extends \PHPUnit\Framework\TestCase
     public function testTabs()
     {
         $object = new Paragraph();
-        $object->setTabs(array(new Tab('left', 1550), new Tab('right', 5300)));
+        $object->setTabs(array(new Tab('left', Absolute::from('twip', 1550)), new Tab('right', Absolute::from('twip', 5300))));
         $this->assertCount(2, $object->getTabs());
     }
 

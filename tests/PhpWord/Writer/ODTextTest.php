@@ -19,6 +19,7 @@ namespace PhpOffice\PhpWord\Writer;
 
 use PhpOffice\PhpWord\PhpWord;
 use PhpOffice\PhpWord\SimpleType\Jc;
+use PhpOffice\PhpWord\Style\Lengths\Absolute;
 
 /**
  * Test class for PhpOffice\PhpWord\Writer\ODText
@@ -71,7 +72,7 @@ class ODTextTest extends \PHPUnit\Framework\TestCase
         $file = __DIR__ . '/../_files/temp.odt';
 
         $phpWord = new PhpWord();
-        $phpWord->addFontStyle('Font', array('size' => 11));
+        $phpWord->addFontStyle('Font', array('size' => Absolute::from('pt', 11)));
         $phpWord->addParagraphStyle('Paragraph', array('alignment' => Jc::CENTER));
         $section = $phpWord->addSection();
         $section->addText('Test 1', 'Font');

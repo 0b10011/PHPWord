@@ -18,6 +18,7 @@
 namespace PhpOffice\PhpWord;
 
 use PhpOffice\PhpWord\SimpleType\Jc;
+use PhpOffice\PhpWord\Style\Colors\Hex;
 
 /**
  * Test class for PhpOffice\PhpWord\Style
@@ -46,7 +47,7 @@ class StyleTest extends \PHPUnit\Framework\TestCase
     {
         $paragraph = array('alignment' => Jc::CENTER);
         $font = array('italic' => true, '_bold' => true);
-        $table = array('bgColor' => 'CCCCCC');
+        $table = array('bgColor' => new Hex('CCCCCC'));
         $styles = array(
             'Paragraph' => 'Paragraph',
             'Font'      => 'Font',

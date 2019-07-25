@@ -17,6 +17,8 @@
 
 namespace PhpOffice\PhpWord\Element;
 
+use PhpOffice\PhpWord\Style\Lengths\Absolute;
+use PhpOffice\PhpWord\Style\Lengths\Length;
 use PhpOffice\PhpWord\Style\Row as RowStyle;
 
 /**
@@ -29,9 +31,9 @@ class Row extends AbstractElement
     /**
      * Row height
      *
-     * @var int
+     * @var Absolute
      */
-    private $height = null;
+    private $height;
 
     /**
      * Row style
@@ -50,23 +52,23 @@ class Row extends AbstractElement
     /**
      * Create a new table row
      *
-     * @param int $height
+     * @param Absolute $height
      * @param mixed $style
      */
-    public function __construct($height = null, $style = null)
+    public function __construct(Absolute $height = null, $style = null)
     {
-        $this->height = $height;
+        $this->height = $height ?? new Absolute(null);
         $this->style = $this->setNewStyle(new RowStyle(), $style, true);
     }
 
     /**
      * Add a cell
      *
-     * @param int $width
+     * @param Length $width
      * @param mixed $style
      * @return \PhpOffice\PhpWord\Element\Cell
      */
-    public function addCell($width = null, $style = null)
+    public function addCell(Length $width = null, $style = null)
     {
         $cell = new Cell($width, $style);
         $cell->setParentContainer($this);
@@ -98,9 +100,9 @@ class Row extends AbstractElement
     /**
      * Get row height
      *
-     * @return int
+     * @return Absolute
      */
-    public function getHeight()
+    public function getHeight(): Absolute
     {
         return $this->height;
     }

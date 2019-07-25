@@ -17,6 +17,8 @@
 
 namespace PhpOffice\PhpWord\Writer\HTML\Style;
 
+use PhpOffice\PhpWord\Shared\HtmlDpi as Dpi;
+
 /**
  * Paragraph style HTML writer
  *
@@ -37,8 +39,9 @@ class Image extends AbstractStyle
         }
         $css = array();
 
-        $width = $style->getWidth();
-        $height = $style->getHeight();
+        $dpi = new Dpi();
+        $width = $style->getWidth()->toPixels($dpi);
+        $height = $style->getHeight()->toPixels($dpi);
         $css['width'] = $this->getValueIf(is_numeric($width), $width . 'px');
         $css['height'] = $this->getValueIf(is_numeric($height), $height . 'px');
 

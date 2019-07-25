@@ -19,6 +19,10 @@ namespace PhpOffice\PhpWord\Style;
 
 use PhpOffice\PhpWord\PhpWord;
 use PhpOffice\PhpWord\SimpleType\Jc;
+use PhpOffice\PhpWord\Style\Colors\ColorInterface;
+use PhpOffice\PhpWord\Style\Colors\ForegroundColor;
+use PhpOffice\PhpWord\Style\Colors\Hex;
+use PhpOffice\PhpWord\Style\Lengths\Absolute;
 use PhpOffice\PhpWord\TestHelperDOCX;
 
 /**
@@ -49,17 +53,17 @@ class FontTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * Test setting style values with null or empty value
+     * Test setting style values with null value
      */
-    public function testSetStyleValueWithNullOrEmpty()
+    public function testSetStyleValueWithNull()
     {
         $object = new Font();
 
         $attributes = array(
             'name'                => null,
-            'size'                => null,
+            'size'                => new Absolute(null),
             'hint'                => null,
-            'color'               => null,
+            'color'               => new Hex(null),
             'bold'                => false,
             'italic'              => false,
             'underline'           => Font::UNDERLINE_NONE,
@@ -70,21 +74,28 @@ class FontTest extends \PHPUnit\Framework\TestCase
             'smallCaps'           => false,
             'allCaps'             => false,
             'rtl'                 => false,
-            'fgColor'             => null,
-            'bgColor'             => null,
+            'fgColor'             => new ForegroundColor(null),
+            'bgColor'             => new Hex(null),
             'scale'               => null,
-            'spacing'             => null,
+            'spacing'             => new Absolute(null),
             'kerning'             => null,
             'lang'                => null,
             'hidden'              => false,
         );
         foreach ($attributes as $key => $default) {
             $get = is_bool($default) ? "is{$key}" : "get{$key}";
-            $this->assertEquals($default, $object->$get());
-            $object->setStyleValue($key, null);
-            $this->assertEquals($default, $object->$get());
-            $object->setStyleValue($key, '');
-            $this->assertEquals($default, $object->$get());
+            $result = $object->$get();
+            $new = $default;
+            if ($result instanceof ColorInterface) {
+                $default = $default->getColor();
+                $result = $result->getColor();
+            } elseif ($result instanceof Absolute) {
+                $default = $default->toInt('pt');
+                $result = $result->toInt('pt');
+            }
+            $this->assertEquals($default, $result, "Attribute `$key` should start at default");
+            $object->setStyleValue($key, $new);
+            $this->assertEquals($default, $result, "Attribute `$key` should remain at default if set to `null`");
         }
     }
 
@@ -97,8 +108,8 @@ class FontTest extends \PHPUnit\Framework\TestCase
 
         $attributes = array(
             'name'                => 'Times New Roman',
-            'size'                => 9,
-            'color'               => '999999',
+            'size'                => Absolute::from('pt', 9),
+            'color'               => new Hex('999999'),
             'hint'                => 'eastAsia',
             'bold'                => true,
             'italic'              => true,
@@ -109,11 +120,11 @@ class FontTest extends \PHPUnit\Framework\TestCase
             'doubleStrikethrough' => false,
             'smallCaps'           => true,
             'allCaps'             => false,
-            'fgColor'             => Font::FGCOLOR_YELLOW,
-            'bgColor'             => 'FFFF00',
+            'fgColor'             => new ForegroundColor('yellow'),
+            'bgColor'             => new Hex('FFFF00'),
             'lineHeight'          => 2,
             'scale'               => 150,
-            'spacing'             => 240,
+            'spacing'             => Absolute::from('twip', 240),
             'kerning'             => 10,
             'rtl'                 => true,
             'noProof'             => true,
@@ -123,7 +134,18 @@ class FontTest extends \PHPUnit\Framework\TestCase
         $object->setStyleByArray($attributes);
         foreach ($attributes as $key => $value) {
             $get = is_bool($value) ? "is{$key}" : "get{$key}";
-            $this->assertEquals($value, $object->$get());
+            $result = $object->$get();
+            if ($result instanceof ForegroundColor) {
+                $result = $result->getColor();
+                $value = $value->getColor();
+            } elseif ($result instanceof ColorInterface) {
+                $result = $result->toHex();
+                $value = $value->toHex();
+            } elseif ($result instanceof Absolute) {
+                $result = $result->toInt('hpt');
+                $value = $value->toInt('hpt');
+            }
+            $this->assertEquals($value, $result);
         }
     }
 

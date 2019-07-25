@@ -86,7 +86,7 @@ class Head extends AbstractPart
         $defaultStyles = array(
             '*' => array(
                 'font-family' => Settings::getDefaultFontName(),
-                'font-size'   => Settings::getDefaultFontSize() . 'pt',
+                'font-size'   => Settings::getDefaultFontSize()->toInt('pt') . 'pt',
             ),
             'a.NoteRef' => array(
                 'text-decoration' => 'none',

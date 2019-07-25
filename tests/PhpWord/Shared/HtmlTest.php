@@ -605,16 +605,61 @@ class HtmlTest extends AbstractWebServerEmbeddedTest
     /**
      * Tests parsing hidden text
      */
-    public function testParseHiddenText()
+    public function testParseDisplayNone()
     {
         $phpWord = new \PhpOffice\PhpWord\PhpWord();
         $section = $phpWord->addSection();
-        $html = '<p style="display: hidden">This is some hidden text.</p>';
+        $html = '<p style="display: none">This is some hidden text.</p>';
         Html::addHtml($section, $html);
 
         $doc = TestHelperDOCX::getDocument($phpWord, 'Word2007');
 
         $this->assertTrue($doc->elementExists('/w:document/w:body/w:p/w:r/w:rPr/w:vanish'));
+    }
+
+    /**
+     * Tests parsing hidden text
+     */
+    public function testParseDisplayFoo()
+    {
+        $phpWord = new \PhpOffice\PhpWord\PhpWord();
+        $section = $phpWord->addSection();
+        $html = '<p style="display: foo">This is some hidden text.</p>';
+        Html::addHtml($section, $html);
+
+        $doc = TestHelperDOCX::getDocument($phpWord, 'Word2007');
+
+        $this->assertFalse($doc->elementExists('/w:document/w:body/w:p/w:r/w:rPr/w:vanish'));
+    }
+
+    /**
+     * Tests parsing hidden text
+     */
+    public function testParseVisibilityHidden()
+    {
+        $phpWord = new \PhpOffice\PhpWord\PhpWord();
+        $section = $phpWord->addSection();
+        $html = '<p style="visibility: hidden">This is some hidden text.</p>';
+        Html::addHtml($section, $html);
+
+        $doc = TestHelperDOCX::getDocument($phpWord, 'Word2007');
+
+        $this->assertTrue($doc->elementExists('/w:document/w:body/w:p/w:r/w:rPr/w:vanish'));
+    }
+
+    /**
+     * Tests parsing unrecognized visibility values
+     */
+    public function testParseVisibilityFoo()
+    {
+        $phpWord = new \PhpOffice\PhpWord\PhpWord();
+        $section = $phpWord->addSection();
+        $html = '<p style="visibility: foo">This is some hidden text.</p>';
+        Html::addHtml($section, $html);
+
+        $doc = TestHelperDOCX::getDocument($phpWord, 'Word2007');
+
+        $this->assertFalse($doc->elementExists('/w:document/w:body/w:p/w:r/w:rPr/w:vanish'));
     }
 
     /**
@@ -631,5 +676,21 @@ class HtmlTest extends AbstractWebServerEmbeddedTest
 
         $this->assertTrue($doc->elementExists('/w:document/w:body/w:p/w:r/w:rPr/w:spacing'));
         $this->assertEquals(150 * 15, $doc->getElement('/w:document/w:body/w:p/w:r/w:rPr/w:spacing')->getAttribute('w:val'));
+    }
+
+    /**
+     * Test css size to point
+     */
+    public function testCssSizeParser()
+    {
+        $this->assertNull(Html::cssToAbsolute('10em')->toFloat('pt'));
+        $this->assertEquals(0, Html::cssToAbsolute('0')->toFloat('pt'));
+        $this->assertEquals(10, Html::cssToAbsolute('10pt')->toFloat('pt'));
+        $this->assertEquals(7.5, Html::cssToAbsolute('10px')->toFloat('pt'));
+        $this->assertEquals(720, Html::cssToAbsolute('10in')->toFloat('pt'));
+        $this->assertEquals(7.2, Html::cssToAbsolute('0.1in')->toFloat('pt'));
+        $this->assertEquals(120, Html::cssToAbsolute('10pc')->toFloat('pt'));
+        $this->assertEquals(28.346457, Html::cssToAbsolute('10mm')->toFloat('pt'), '', .00001);
+        $this->assertEquals(283.464567, Html::cssToAbsolute('10cm')->toFloat('pt'), '', .0000001);
     }
 }

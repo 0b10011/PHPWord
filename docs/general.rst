@@ -41,14 +41,14 @@ folder <https://github.com/PHPOffice/PHPWord/tree/master/samples/>`__.
         '"Great achievement is usually born of great sacrifice, '
             . 'and is never the result of selfishness." '
             . '(Napoleon Hill)',
-        array('name' => 'Tahoma', 'size' => 10)
+        array('name' => 'Tahoma', 'size' => Absolute::from('pt', 10))
     );
 
     // Adding Text element with font customized using named font style...
     $fontStyleName = 'oneUserDefinedStyle';
     $phpWord->addFontStyle(
         $fontStyleName,
-        array('name' => 'Tahoma', 'size' => 10, 'color' => '1B2232', 'bold' => true)
+        array('name' => 'Tahoma', 'size' => Absolute::from('pt', 10), 'color' => new Hex('1B2232'), 'bold' => true)
     );
     $section->addText(
         '"The greatest accomplishment is not in never falling, '
@@ -61,7 +61,7 @@ folder <https://github.com/PHPOffice/PHPWord/tree/master/samples/>`__.
     $fontStyle = new \PhpOffice\PhpWord\Style\Font();
     $fontStyle->setBold(true);
     $fontStyle->setName('Tahoma');
-    $fontStyle->setSize(13);
+    $fontStyle->setSize(Absolute::from('pt', 13));
     $myTextElement = $section->addText('"Believe you can and you\'re halfway there." (Theodor Roosevelt)');
     $myTextElement->setFontStyle($fontStyle);
 
@@ -139,7 +139,7 @@ default font by using the following two functions:
 .. code-block:: php
 
     $phpWord->setDefaultFontName('Times New Roman');
-    $phpWord->setDefaultFontSize(12);
+    $phpWord->setDefaultFontSize(Absolute::from('pt', 12));
 
 Document settings
 -----------------
@@ -251,25 +251,34 @@ name. Use the following functions:
 Measurement units
 -----------------
 
-The base length unit in Open Office XML is twip. Twip means "TWentieth
-of an Inch Point", i.e. 1 twip = 1/1440 inch.
+While Open Office XML uses twentieths of a point ("twips" or 1/1440 inch)
+for most of its measurements,
+all lengths in PHPWord use an instance of ``\PhpOffice\PhpWord\Style\Lengths\Length``.
+Most measurements are limited to absolute units
+(rather than percent or "auto" values),
+so those use ``\PhpOffice\PhpWord\Style\Lengths\Absolute`` exclusively.
+Methods are typehinted to ensure the right measurement is provided.
 
-You can use PHPWord helper functions to convert inches, centimeters, or
-points to twip.
+You can use ``\PhpOffice\PhpWord\Style\Lengths\Absolute``
+to specify lengths in units you're comfortable with (eg, "pt"),
+and PHPWord will automatically convert those lengths
+to the appropriate ones for the format being exported to.
 
 .. code-block:: php
 
+    use PhpOffice\PhpWord\Style\Lengths\Absolute;
+
     // Paragraph with 6 points space after
     $phpWord->addParagraphStyle('My Style', array(
-        'spaceAfter' => \PhpOffice\PhpWord\Shared\Converter::pointToTwip(6))
+        'spaceAfter' => Absolute::from('pt', 6))
     );
 
     $section = $phpWord->addSection();
     $sectionStyle = $section->getStyle();
     // half inch left margin
-    $sectionStyle->setMarginLeft(\PhpOffice\PhpWord\Shared\Converter::inchToTwip(.5));
+    $sectionStyle->setMarginLeft(Absolute::from('in', .5);
     // 2 cm right margin
-    $sectionStyle->setMarginRight(\PhpOffice\PhpWord\Shared\Converter::cmToTwip(2));
+    $sectionStyle->setMarginRight(Absolute::from('cm', 2);
 
 Document protection
 -------------------
@@ -317,12 +326,12 @@ There is no limit if the option is not set or the provided value is ``0``.
 Hyphenation Zone
 ~~~~~~~~~~~~~~~~
 
-The hyphenation zone (in *twip*) is the allowed amount of whitespace before hyphenation is applied.
+The hyphenation zone is the allowed amount of whitespace before hyphenation is applied.
 The smaller the hyphenation zone the more words are hyphenated. Or in other words, the wider the hyphenation zone the less words are hyphenated.
 
 .. code-block:: php
 
-    $phpWord->getSettings()->setHyphenationZone(\PhpOffice\PhpWord\Shared\Converter::cmToTwip(1));
+    $phpWord->getSettings()->setHyphenationZone(\PhpOffice\PhpWord\Style\Lengths\Absolute::from('cm', 1));
 
 Hyphenate Caps
 ~~~~~~~~~~~~~~

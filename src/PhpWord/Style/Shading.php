@@ -17,6 +17,10 @@
 
 namespace PhpOffice\PhpWord\Style;
 
+use PhpOffice\PhpWord\Style\Colors\Color;
+use PhpOffice\PhpWord\Style\Colors\ColorInterface;
+use PhpOffice\PhpWord\Style\Colors\Hex;
+
 /**
  * Shading style
  *
@@ -50,14 +54,14 @@ class Shading extends AbstractStyle
     /**
      * Shading pattern color
      *
-     * @var string
+     * @var ColorInterface
      */
     private $color;
 
     /**
      * Shading background color
      *
-     * @var string
+     * @var ColorInterface
      */
     private $fill;
 
@@ -68,6 +72,8 @@ class Shading extends AbstractStyle
      */
     public function __construct($style = array())
     {
+        $this->setColor(new Hex(null));
+        $this->setFill(new Hex(null));
         $this->setStyleByArray($style);
     }
 
@@ -101,9 +107,9 @@ class Shading extends AbstractStyle
     /**
      * Get color
      *
-     * @return string
+     * @return ColorInterface
      */
-    public function getColor()
+    public function getColor(): ColorInterface
     {
         return $this->color;
     }
@@ -111,10 +117,10 @@ class Shading extends AbstractStyle
     /**
      * Set pattern
      *
-     * @param string $value
+     * @param ColorInterface $value
      * @return self
      */
-    public function setColor($value = null)
+    public function setColor(ColorInterface $value): self
     {
         $this->color = $value;
 
@@ -124,9 +130,9 @@ class Shading extends AbstractStyle
     /**
      * Get fill
      *
-     * @return string
+     * @return ColorInterface
      */
-    public function getFill()
+    public function getFill(): ColorInterface
     {
         return $this->fill;
     }
@@ -134,10 +140,10 @@ class Shading extends AbstractStyle
     /**
      * Set fill
      *
-     * @param string $value
+     * @param ColorInterface $value
      * @return self
      */
-    public function setFill($value = null)
+    public function setFill(ColorInterface $value): self
     {
         $this->fill = $value;
 

@@ -62,7 +62,7 @@ Example:
     $templateProcessor->setValue(array('City', 'Street'), array('Detroit', '12th Street'));
 
     $templateProcessor->setImageValue('CompanyLogo', 'path/to/company/logo.png');
-    $templateProcessor->setImageValue('UserLogo', array('path' => 'path/to/logo.png', 'width' => 100, 'height' => 100, 'ratio' => false));
+    $templateProcessor->setImageValue('UserLogo', array('path' => 'path/to/logo.png', 'width' => Absolute::from('twip', 100), 'height' => Absolute::from('twip', 100), 'ratio' => false));
 
 cloneBlock
 """"""""""
@@ -89,10 +89,10 @@ The result will be
 
     Customer: ${customer_name#1}
     Address: ${customer_address#1}
-    
+
     Customer: ${customer_name#2}
     Address: ${customer_address#2}
-    
+
     Customer: ${customer_name#3}
     Address: ${customer_address#3}
 
@@ -113,7 +113,7 @@ The result will then be
 
     Customer: Batman
     Address: Gotham City
-    
+
     Customer: Superman
     Address: Metropolis
 
@@ -234,13 +234,13 @@ See ``Sample_40_TemplateSetComplexValue.php`` for examples.
 
 .. code-block:: php
 
-    $table = new Table(array('borderSize' => 12, 'borderColor' => 'green', 'width' => 6000, 'unit' => TblWidth::TWIP));
+    $table = new Table(array('borderSize' => Absolute::from('twip', 12), 'borderColor' => new ForegroundColor('green'), 'width' => Absolute::from('twip', 6000)));
     $table->addRow();
-    $table->addCell(150)->addText('Cell A1');
-    $table->addCell(150)->addText('Cell A2');
-    $table->addCell(150)->addText('Cell A3');
+    $table->addCell(Absolute::from('twip', 150))->addText('Cell A1');
+    $table->addCell(Absolute::from('twip', 150))->addText('Cell A2');
+    $table->addCell(Absolute::from('twip', 150))->addText('Cell A3');
     $table->addRow();
-    $table->addCell(150)->addText('Cell B1');
-    $table->addCell(150)->addText('Cell B2');
-    $table->addCell(150)->addText('Cell B3');
+    $table->addCell(Absolute::from('twip', 150))->addText('Cell B1');
+    $table->addCell(Absolute::from('twip', 150))->addText('Cell B2');
+    $table->addCell(Absolute::from('twip', 150))->addText('Cell B3');
     $templateProcessor->setComplexBlock('table', $table);

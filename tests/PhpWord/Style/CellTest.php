@@ -18,6 +18,9 @@
 namespace PhpOffice\PhpWord\Style;
 
 use PhpOffice\PhpWord\SimpleType\VerticalJc;
+use PhpOffice\PhpWord\Style\Colors\ColorInterface;
+use PhpOffice\PhpWord\Style\Colors\Hex;
+use PhpOffice\PhpWord\Style\Lengths\Absolute;
 
 /**
  * Test class for PhpOffice\PhpWord\Style\Cell
@@ -37,27 +40,43 @@ class CellTest extends \PHPUnit\Framework\TestCase
         $attributes = array(
             'valign'            => VerticalJc::TOP,
             'textDirection'     => Cell::TEXT_DIR_BTLR,
-            'bgColor'           => 'FFFF00',
-            'borderTopSize'     => 120,
-            'borderTopColor'    => 'FFFF00',
-            'borderLeftSize'    => 120,
-            'borderLeftColor'   => 'FFFF00',
-            'borderRightSize'   => 120,
-            'borderRightColor'  => 'FFFF00',
-            'borderBottomSize'  => 120,
-            'borderBottomColor' => 'FFFF00',
+            'bgColor'           => new Hex('FFFF00'),
+            'borderTopSize'     => Absolute::from('eop', 120),
+            'borderTopColor'    => new Hex('FFFF00'),
+            'borderLeftSize'    => Absolute::from('eop', 120),
+            'borderLeftColor'   => new Hex('FFFF00'),
+            'borderRightSize'   => Absolute::from('eop', 120),
+            'borderRightColor'  => new Hex('FFFF00'),
+            'borderBottomSize'  => Absolute::from('eop', 120),
+            'borderBottomColor' => new Hex('FFFF00'),
             'gridSpan'          => 2,
             'vMerge'            => Cell::VMERGE_RESTART,
         );
         foreach ($attributes as $key => $value) {
+            $get = "get$key";
+            $result = $object->$get();
+            if ($result instanceof ColorInterface) {
+                $result = $result->toHex();
+            } elseif ($result instanceof Absolute) {
+                $result = $result->toInt('eop');
+            }
+
+            $this->assertNull($result);
+
             $set = "set{$key}";
-            $get = "get{$key}";
-
-            $this->assertNull($object->$get()); // Init with null value
-
             $object->$set($value);
 
-            $this->assertEquals($value, $object->$get());
+            $get = "get$key";
+            $result = $object->$get();
+            if ($result instanceof ColorInterface) {
+                $result = $result->toHex();
+                $value = $value->toHex();
+            } elseif ($result instanceof Absolute) {
+                $result = $result->toInt('eop');
+                $value = $value->toInt('eop');
+            }
+
+            $this->assertEquals($value, $result);
         }
     }
 
@@ -70,9 +89,11 @@ class CellTest extends \PHPUnit\Framework\TestCase
 
         $value = 'FF0000';
 
-        $object->setStyleValue('borderColor', $value);
+        $object->setStyleValue('borderColor', new Hex($value));
         $expected = array($value, $value, $value, $value);
-        $this->assertEquals($expected, $object->getBorderColor());
+        $this->assertEquals($expected, array_map(function ($value) {
+            return $value->toHex();
+        }, $object->getBorderColor()));
     }
 
     /**
@@ -84,7 +105,9 @@ class CellTest extends \PHPUnit\Framework\TestCase
 
         $value = 120;
         $expected = array($value, $value, $value, $value);
-        $object->setStyleValue('borderSize', $value);
-        $this->assertEquals($expected, $object->getBorderSize());
+        $object->setStyleValue('borderSize', Absolute::from('twip', $value));
+        $this->assertEquals($expected, array_map(function ($value) {
+            return $value->toInt('twip');
+        }, $object->getBorderSize()));
     }
 }

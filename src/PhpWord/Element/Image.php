@@ -21,8 +21,10 @@ use PhpOffice\PhpWord\Exception\CreateTemporaryFileException;
 use PhpOffice\PhpWord\Exception\InvalidImageException;
 use PhpOffice\PhpWord\Exception\UnsupportedImageTypeException;
 use PhpOffice\PhpWord\Settings;
+use PhpOffice\PhpWord\Shared\HtmlDpi as Dpi;
 use PhpOffice\PhpWord\Shared\ZipArchive;
 use PhpOffice\PhpWord\Style\Image as ImageStyle;
+use PhpOffice\PhpWord\Style\Lengths\Absolute;
 
 /**
  * Image element
@@ -419,6 +421,15 @@ class Image extends AbstractElement
         }
         list($actualWidth, $actualHeight, $imageType) = $imageData;
 
+        // Convert pixel dimensions to Absolute
+        // FIXME: This is likely not the best approach.
+        // It looks like DPI can vary in a word doc,
+        // but there's no obvious DPI information
+        // that I can find for these images right now.
+        $dpi = new Dpi();
+        $actualWidth = Absolute::fromPixels($dpi, $actualWidth);
+        $actualHeight = Absolute::fromPixels($dpi, $actualHeight);
+
         // Check image type support
         $supportedTypes = array(IMAGETYPE_JPEG, IMAGETYPE_GIF, IMAGETYPE_PNG);
         if ($this->sourceType != self::SOURCE_GD && $this->sourceType != self::SOURCE_STRING) {
@@ -557,22 +568,22 @@ class Image extends AbstractElement
     /**
      * Set proportional width/height if one dimension not available.
      *
-     * @param int $actualWidth
-     * @param int $actualHeight
+     * @param Absolute $actualWidth
+     * @param Absolute $actualHeight
      */
-    private function setProportionalSize($actualWidth, $actualHeight)
+    private function setProportionalSize(Absolute $actualWidth, Absolute $actualHeight)
     {
-        $styleWidth = $this->style->getWidth();
-        $styleHeight = $this->style->getHeight();
-        if (!($styleWidth && $styleHeight)) {
-            if ($styleWidth == null && $styleHeight == null) {
-                $this->style->setWidth($actualWidth);
-                $this->style->setHeight($actualHeight);
-            } elseif ($styleWidth) {
-                $this->style->setHeight($actualHeight * ($styleWidth / $actualWidth));
-            } else {
-                $this->style->setWidth($actualWidth * ($styleHeight / $actualHeight));
-            }
+        $styleWidth = $this->style->getWidth()->toInt('twip');
+        $styleHeight = $this->style->getHeight()->toInt('twip');
+        if ($styleWidth === null && $styleHeight === null) {
+            $this->style->setWidth($actualWidth);
+            $this->style->setHeight($actualHeight);
+        } elseif ($styleHeight === null) {
+            $newHeight = Absolute::from('twip', $actualHeight->toInt('twip') * ($styleWidth / $actualWidth->toInt('twip')));
+            $this->style->setHeight($newHeight);
+        } elseif ($styleWidth === null) {
+            $newWidth = Absolute::from('twip', $actualWidth->toInt('twip') * ($styleHeight / $actualHeight->toInt('twip')));
+            $this->style->setWidth($newWidth);
         }
     }
 

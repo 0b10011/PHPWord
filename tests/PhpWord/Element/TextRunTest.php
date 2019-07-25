@@ -19,6 +19,7 @@ namespace PhpOffice\PhpWord\Element;
 
 use PhpOffice\PhpWord\PhpWord;
 use PhpOffice\PhpWord\SimpleType\Jc;
+use PhpOffice\PhpWord\Style\Lengths\Absolute;
 use PhpOffice\PhpWord\Style\Paragraph;
 
 /**
@@ -178,7 +179,7 @@ class TextRunTest extends \PHPUnit\Framework\TestCase
         $oText = new TextRun('paragraphStyle');
         $this->assertEquals('paragraphStyle', $oText->getParagraphStyle());
 
-        $oText->setParagraphStyle(array('alignment' => Jc::CENTER, 'spaceAfter' => 100));
+        $oText->setParagraphStyle(array('alignment' => Jc::CENTER, 'spaceAfter' => Absolute::from('twip', 100)));
         $this->assertInstanceOf('PhpOffice\\PhpWord\\Style\\Paragraph', $oText->getParagraphStyle());
     }
 }

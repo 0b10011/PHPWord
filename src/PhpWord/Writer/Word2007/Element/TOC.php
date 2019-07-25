@@ -75,7 +75,7 @@ class TOC extends AbstractElement
         $fontStyle = $element->getStyleFont();
         $isObject = ($fontStyle instanceof Font) ? true : false;
         $rId = $title->getRelationId();
-        $indent = ($title->getDepth() - 1) * $tocStyle->getIndent();
+        $indent = ($title->getDepth() - 1) * $tocStyle->getIndent()->toInt('twip');
 
         $xmlWriter->startElement('w:p');
 

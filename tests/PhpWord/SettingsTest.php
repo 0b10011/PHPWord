@@ -17,6 +17,8 @@
 
 namespace PhpOffice\PhpWord;
 
+use PhpOffice\PhpWord\Style\Lengths\Absolute;
+
 /**
  * Test class for PhpOffice\PhpWord\Settings
  *
@@ -108,9 +110,9 @@ class SettingsTest extends \PHPUnit\Framework\TestCase
      */
     public function testSetGetDefaultFontSize()
     {
-        $this->assertEquals(Settings::DEFAULT_FONT_SIZE, Settings::getDefaultFontSize());
-        $this->assertTrue(Settings::setDefaultFontSize(12));
-        $this->assertFalse(Settings::setDefaultFontSize(null));
+        $this->assertEquals(Settings::DEFAULT_FONT_SIZE, Settings::getDefaultFontSize()->toInt('pt'));
+        $this->assertTrue(Settings::setDefaultFontSize(Absolute::from('pt', 12)));
+        $this->assertFalse(Settings::setDefaultFontSize(Absolute::from('pt', null)));
     }
 
     /**

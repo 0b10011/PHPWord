@@ -18,7 +18,6 @@
 namespace PhpOffice\PhpWord\Reader\Word2007;
 
 use PhpOffice\PhpWord\AbstractTestReader;
-use PhpOffice\PhpWord\SimpleType\TblWidth;
 use PhpOffice\PhpWord\SimpleType\VerticalJc;
 use PhpOffice\PhpWord\Style;
 use PhpOffice\PhpWord\Style\Table;
@@ -66,8 +65,7 @@ class StyleTest extends AbstractTestReader
         $this->assertInstanceOf('PhpOffice\PhpWord\Style\Table', $elements[0]->getStyle());
         /** @var \PhpOffice\PhpWord\Style\Table $tableStyle */
         $tableStyle = $elements[0]->getStyle();
-        $this->assertEquals(TblWidth::AUTO, $tableStyle->getUnit());
-        $this->assertEquals(10.5, $tableStyle->getCellSpacing());
+        $this->assertEquals(10.5, $tableStyle->getCellSpacing()->toFloat('twip'));
     }
 
     /**
@@ -126,7 +124,7 @@ class StyleTest extends AbstractTestReader
         $this->assertInstanceOf('PhpOffice\PhpWord\Style\Font', $textRun->getElement(0)->getFontStyle());
         /** @var \PhpOffice\PhpWord\Style\Font $fontStyle */
         $fontStyle = $textRun->getElement(0)->getFontStyle();
-        $this->assertEquals(15, $fontStyle->getPosition());
+        $this->assertEquals(15, $fontStyle->getPosition()->toInt('twip'));
     }
 
     public function testReadIndent()
@@ -144,8 +142,7 @@ class StyleTest extends AbstractTestReader
         $this->assertInstanceOf('PhpOffice\PhpWord\Style\Table', $elements[0]->getStyle());
         /** @var \PhpOffice\PhpWord\Style\Table $tableStyle */
         $tableStyle = $elements[0]->getStyle();
-        $this->assertSame(TblWidth::TWIP, $tableStyle->getIndent()->getType());
-        $this->assertSame(2160, $tableStyle->getIndent()->getValue());
+        $this->assertEquals(2160, $tableStyle->getIndent()->toInt('twip'));
     }
 
     public function testReadTableRTL()

@@ -17,8 +17,11 @@
 
 namespace PhpOffice\PhpWord\Style;
 
-use PhpOffice\PhpWord\SimpleType\TblWidth;
 use PhpOffice\PhpWord\SimpleType\VerticalJc;
+use PhpOffice\PhpWord\Style\Colors\ColorInterface;
+use PhpOffice\PhpWord\Style\Colors\Hex;
+use PhpOffice\PhpWord\Style\Lengths\Absolute;
+use PhpOffice\PhpWord\Style\Lengths\Length;
 
 /**
  * Table cell style
@@ -127,16 +130,9 @@ class Cell extends Border
     /**
      * Width
      *
-     * @var int
+     * @var Length
      */
     private $width;
-
-    /**
-     * Width unit
-     *
-     * @var string
-     */
-    private $unit = TblWidth::TWIP;
 
     /**
      * Get vertical align.
@@ -189,15 +185,15 @@ class Cell extends Border
     /**
      * Get background
      *
-     * @return string
+     * @return ColorInterface
      */
-    public function getBgColor()
+    public function getBgColor(): ColorInterface
     {
-        if ($this->shading !== null) {
-            return $this->shading->getFill();
+        if ($this->shading === null) {
+            $this->setBgColor(new Hex(null));
         }
 
-        return null;
+        return $this->shading->getFill();
     }
 
     /**
@@ -206,7 +202,7 @@ class Cell extends Border
      * @param string $value
      * @return self
      */
-    public function setBgColor($value = null)
+    public function setBgColor(ColorInterface $value): self
     {
         return $this->setShading(array('fill' => $value));
     }
@@ -274,7 +270,7 @@ class Cell extends Border
      * @param mixed $value
      * @return self
      */
-    public function setShading($value = null)
+    public function setShading($value = null): self
     {
         $this->setObjectVal($value, 'Shading', $this->shading);
 
@@ -284,44 +280,26 @@ class Cell extends Border
     /**
      * Get cell width
      *
-     * @return int
+     * @return Length
      */
-    public function getWidth()
+    public function getWidth(): Length
     {
+        if ($this->width === null) {
+            $this->setWidth(new Absolute(null));
+        }
+
         return $this->width;
     }
 
     /**
      * Set cell width
      *
-     * @param int $value
+     * @param Length $value
      * @return self
      */
-    public function setWidth($value)
+    public function setWidth(Length $value): self
     {
-        $this->setIntVal($value);
-
-        return $this;
-    }
-
-    /**
-     * Get width unit
-     *
-     * @return string
-     */
-    public function getUnit()
-    {
-        return $this->unit;
-    }
-
-    /**
-     * Set width unit
-     *
-     * @param string $value
-     */
-    public function setUnit($value)
-    {
-        $this->unit = $this->setEnumVal($value, array(TblWidth::AUTO, TblWidth::PERCENT, TblWidth::TWIP), TblWidth::TWIP);
+        $this->width = $value;
 
         return $this;
     }

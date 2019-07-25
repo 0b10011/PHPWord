@@ -37,7 +37,9 @@ class TextBox extends Frame
         }
 
         $xmlWriter = $this->getXmlWriter();
-        $margins = implode(', ', $style->getInnerMargin());
+        $margins = implode(', ', array_map(function ($value) {
+            return $value->toInt('twip');
+        }, $style->getInnerMargin()));
 
         $xmlWriter->writeAttribute('inset', $margins);
     }
@@ -54,8 +56,9 @@ class TextBox extends Frame
         $xmlWriter = $this->getXmlWriter();
 
         $xmlWriter->startElement('v:stroke');
-        $xmlWriter->writeAttributeIf($style->getBorderSize() !== null, 'weight', $style->getBorderSize() . 'pt');
-        $xmlWriter->writeAttributeIf($style->getBorderColor() !== null, 'color', $style->getBorderColor());
+        $borderSize = $style->getBorderSize()->toInt('pt');
+        $xmlWriter->writeAttributeIf($borderSize !== null, 'weight', $borderSize . 'pt');
+        $xmlWriter->writeAttributeIf($style->getBorderColor()->getColor() !== null, 'color', $style->getBorderColor()->getColor());
         $xmlWriter->endElement(); // v:stroke
     }
 }

@@ -19,6 +19,7 @@ namespace PhpOffice\PhpWord;
 
 use PhpOffice\PhpWord\Element\Section;
 use PhpOffice\PhpWord\Exception\Exception;
+use PhpOffice\PhpWord\Style\Lengths\Absolute;
 
 /**
  * PHPWord main class
@@ -158,7 +159,7 @@ class PhpWord
             /** @var \PhpOffice\PhpWord\Collection\AbstractCollection $collectionObject */
             $collectionObject = $this->collections[$key];
 
-            return $collectionObject->addItem(isset($args[0]) ? $args[0] : null);
+            return $collectionObject->addItem($args[0] ?? null);
         }
 
         // Run add style method
@@ -289,9 +290,9 @@ class PhpWord
     /**
      * Get default font size
      *
-     * @return int
+     * @return Absolute
      */
-    public function getDefaultFontSize()
+    public function getDefaultFontSize(): Absolute
     {
         return Settings::getDefaultFontSize();
     }
@@ -299,9 +300,9 @@ class PhpWord
     /**
      * Set default font size.
      *
-     * @param int $fontSize
+     * @param Absolute $fontSize
      */
-    public function setDefaultFontSize($fontSize)
+    public function setDefaultFontSize(Absolute $fontSize)
     {
         Settings::setDefaultFontSize($fontSize);
     }

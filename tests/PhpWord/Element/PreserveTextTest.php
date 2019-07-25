@@ -18,6 +18,8 @@
 namespace PhpOffice\PhpWord\Element;
 
 use PhpOffice\PhpWord\SimpleType\Jc;
+use PhpOffice\PhpWord\Style\Colors\Hex;
+use PhpOffice\PhpWord\Style\Lengths\Absolute;
 
 /**
  * Test class for PhpOffice\PhpWord\Element\PreserveText
@@ -55,7 +57,7 @@ class PreserveTextTest extends \PHPUnit\Framework\TestCase
      */
     public function testConstructWithArray()
     {
-        $oPreserveText = new PreserveText('text', array('size' => 16, 'color' => '1B2232'), array('alignment' => Jc::CENTER));
+        $oPreserveText = new PreserveText('text', array('size' => Absolute::from('pt', 16), 'color' => new Hex('1B2232')), array('alignment' => Jc::CENTER));
         $this->assertInstanceOf('PhpOffice\\PhpWord\\Style\\Font', $oPreserveText->getFontStyle());
         $this->assertInstanceOf('PhpOffice\\PhpWord\\Style\\Paragraph', $oPreserveText->getParagraphStyle());
     }

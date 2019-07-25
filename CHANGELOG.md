@@ -5,15 +5,21 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 v0.17.0 (?? ??? 2019)
 ----------------------
+This release marked the addition of return type declarations (PHP 7+).
+
 ### Added
 - Add RightToLeft table presentation. @troosan #1550
 - Set complex type in template @troosan #1565
 - Add support for page vertical alignment. @troosan #672 #1569
+- Length validation with `PhpOffice\PhpWord\Style\Lengths\{Absolute, Auto, Percent}` @0b10011 #1669
+- Color validation with `PhpOffice\PhpWord\Style\Colors\{ForegroundColor, Hex, Rgb, SystemColor}` @0b10011 #1669
+- BorderStyle validation with `PhpOffice\PhpWord\Style\BorderStyle` @0b10011 #1669
 
 ### Fixed
 - Fix HTML border-color parsing. @troosan #1551 #1570
 
 ### Miscellaneous
+-
 - Use embedded http server to test loading of remote images @troosan #
 
 v0.16.0 (30 dec 2018)

@@ -19,6 +19,7 @@ namespace PhpOffice\PhpWord\Reader\RTF;
 
 use PhpOffice\PhpWord\PhpWord;
 use PhpOffice\PhpWord\SimpleType\Jc;
+use PhpOffice\PhpWord\Style\Lengths\Absolute;
 
 /**
  * RTF document reader
@@ -366,6 +367,9 @@ class Document
     private function readStyle($directives)
     {
         list($style, $property, $value) = $directives;
+        if ($style === 'font' && $property === 'size') {
+            $value = Absolute::from('pt', $value);
+        }
         $this->flags['styles'][$style][$property] = $value;
     }
 

@@ -37,8 +37,8 @@ class Outline extends AbstractStyle
 
         $xmlWriter->startElement('v:stroke');
         $xmlWriter->writeAttribute('on', 't');
-        $xmlWriter->writeAttributeIf($style->getColor() !== null, 'color', $style->getColor());
-        $xmlWriter->writeAttributeIf($style->getWeight() !== null, 'weight', $style->getWeight() . $style->getUnit());
+        $xmlWriter->writeAttributeIf($style->getColor()->getColor() !== null, 'color', $style->getColor()->getColor());
+        $xmlWriter->writeAttributeIf($style->getWeight() !== null, 'weight', $style->getWeight());
         $xmlWriter->writeAttributeIf($style->getDash() !== null, 'dashstyle', $style->getDash());
         $xmlWriter->writeAttributeIf($style->getLine() !== null, 'linestyle', $style->getLine());
         $xmlWriter->writeAttributeIf($style->getEndCap() !== null, 'endcap', $style->getEndCap());

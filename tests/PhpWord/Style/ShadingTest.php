@@ -17,6 +17,9 @@
 
 namespace PhpOffice\PhpWord\Style;
 
+use PhpOffice\PhpWord\Style\Colors\ColorInterface;
+use PhpOffice\PhpWord\Style\Colors\Hex;
+
 /**
  * Test class for PhpOffice\PhpWord\Style\Shading
  *
@@ -32,19 +35,39 @@ class ShadingTest extends \PHPUnit\Framework\TestCase
         $object = new Shading();
         $properties = array(
             'pattern' => array('clear', 'solid'),
-            'color'   => array(null, 'FF0000'),
-            'fill'    => array(null, 'FF0000'),
+            'color'   => array(null, new Hex('FF0000')),
+            'fill'    => array(null, new Hex('FF0000')),
         );
         foreach ($properties as $property => $value) {
             list($default, $expected) = $value;
-            $get = "get{$property}";
-            $set = "set{$property}";
 
-            $this->assertEquals($default, $object->$get()); // Default value
+            $this->assertEquals($default, $this->get($object, $property)); // Default value
 
-            $object->$set($expected);
+            $this->set($object, $property, $expected);
 
-            $this->assertEquals($expected, $object->$get()); // New value
+            if ($expected instanceof ColorInterface) {
+                $expected = $expected->toHex();
+            }
+            $this->assertEquals($expected, $this->get($object, $property)); // New value
         }
+    }
+
+    private function get(Shading $object, string $property)
+    {
+        $get = "get{$property}";
+
+        $result = $object->$get();
+        if ($result instanceof ColorInterface) {
+            $result = $result->toHex();
+        }
+
+        return $result;
+    }
+
+    private function set(Shading $object, string $property, $expected)
+    {
+        $set = "set$property";
+
+        return $object->$set($expected);
     }
 }

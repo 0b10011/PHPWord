@@ -17,6 +17,8 @@
 
 namespace PhpOffice\PhpWord\Element;
 
+use PhpOffice\PhpWord\Style\Lengths\Absolute;
+
 /**
  * Test class for PhpOffice\PhpWord\Element\TextBox
  *
@@ -53,15 +55,13 @@ class TextBoxTest extends \PHPUnit\Framework\TestCase
     {
         $oTextBox = new TextBox(
             array(
-                'width'       => \PhpOffice\PhpWord\Shared\Converter::cmToPixel(4.5),
-                'height'      => \PhpOffice\PhpWord\Shared\Converter::cmToPixel(17.5),
+                'width'       => Absolute::from('cm', 4.5),
+                'height'      => Absolute::from('cm', 17.5),
                 'positioning' => 'absolute',
-                'marginLeft'  => \PhpOffice\PhpWord\Shared\Converter::cmToPixel(15.4),
-                'marginTop'   => \PhpOffice\PhpWord\Shared\Converter::cmToPixel(9.9),
-                'stroke'      => 0,
-                'innerMargin' => 0,
-                'borderSize'  => 1,
-                'borderColor' => '',
+                'marginLeft'  => Absolute::from('cm', 15.4),
+                'marginTop'   => Absolute::from('cm', 9.9),
+                'innerMargin' => Absolute::from('eop', 0),
+                'borderSize'  => Absolute::from('eop', 1),
             )
         );
 

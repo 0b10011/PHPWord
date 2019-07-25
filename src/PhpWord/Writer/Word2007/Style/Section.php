@@ -44,8 +44,8 @@ class Section extends AbstractStyle
         // Page size & orientation
         $xmlWriter->startElement('w:pgSz');
         $xmlWriter->writeAttribute('w:orient', $style->getOrientation());
-        $xmlWriter->writeAttribute('w:w', $style->getPageSizeW());
-        $xmlWriter->writeAttribute('w:h', $style->getPageSizeH());
+        $xmlWriter->writeAttribute('w:w', $style->getPageSizeW()->toInt('twip'));
+        $xmlWriter->writeAttribute('w:h', $style->getPageSizeH()->toInt('twip'));
         $xmlWriter->endElement(); // w:pgSz
 
         // Vertical alignment
@@ -65,7 +65,7 @@ class Section extends AbstractStyle
         $xmlWriter->startElement('w:pgMar');
         foreach ($margins as $attribute => $value) {
             list($method, $default) = $value;
-            $xmlWriter->writeAttribute($attribute, $this->convertTwip($style->$method(), $default));
+            $xmlWriter->writeAttribute($attribute, $style->$method()->toInt('twip') ?? $default);
         }
         $xmlWriter->endElement();
 
@@ -87,7 +87,7 @@ class Section extends AbstractStyle
         $colsSpace = $style->getColsSpace();
         $xmlWriter->startElement('w:cols');
         $xmlWriter->writeAttribute('w:num', $style->getColsNum());
-        $xmlWriter->writeAttribute('w:space', $this->convertTwip($colsSpace, SectionStyle::DEFAULT_COLUMN_SPACING));
+        $xmlWriter->writeAttribute('w:space', $colsSpace->toInt('twip') ?? SectionStyle::DEFAULT_COLUMN_SPACING);
         $xmlWriter->endElement();
 
         // Page numbering start

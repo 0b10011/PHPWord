@@ -402,6 +402,17 @@ class NumberingLevel extends AbstractStyle
      * @param int $value
      * @return self
      */
+    public function setTab(int $value)
+    {
+        return $this->setTabPos($value);
+    }
+
+    /**
+     * Set tab
+     *
+     * @param int $value
+     * @return self
+     */
     public function setTabPos($value)
     {
         $this->tabPos = $this->setIntVal($value, $this->tabPos);

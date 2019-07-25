@@ -19,6 +19,8 @@ namespace PhpOffice\PhpWord\Writer;
 
 use PhpOffice\PhpWord\PhpWord;
 use PhpOffice\PhpWord\SimpleType\Jc;
+use PhpOffice\PhpWord\Style\Colors\Hex;
+use PhpOffice\PhpWord\Style\Lengths\Absolute;
 
 /**
  * Test class for PhpOffice\PhpWord\Writer\RTF
@@ -61,7 +63,7 @@ class RTFTest extends \PHPUnit\Framework\TestCase
         $phpWord = new PhpWord();
         $phpWord->addFontStyle(
             'Font',
-            array('name' => 'Verdana', 'size' => 11, 'color' => 'FF0000', 'fgColor' => '00FF00')
+            array('name' => 'Verdana', 'size' => Absolute::from('pt', 11), 'color' => new Hex('FF0000'))
         );
         $phpWord->addParagraphStyle('Paragraph', array('alignment' => Jc::CENTER));
         $section = $phpWord->addSection();

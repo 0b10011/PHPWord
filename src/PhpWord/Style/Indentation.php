@@ -17,6 +17,8 @@
 
 namespace PhpOffice\PhpWord\Style;
 
+use PhpOffice\PhpWord\Style\Lengths\Absolute;
+
 /**
  * Paragraph indentation style
  *
@@ -26,30 +28,30 @@ namespace PhpOffice\PhpWord\Style;
 class Indentation extends AbstractStyle
 {
     /**
-     * Left indentation (twip)
+     * Left indentation
      *
-     * @var int|float
+     * @var Absolute
      */
     private $left = 0;
 
     /**
-     * Right indentation (twip)
+     * Right indentation
      *
-     * @var int|float
+     * @var Absolute
      */
     private $right = 0;
 
     /**
-     * Additional first line indentation (twip)
+     * Additional first line indentation
      *
-     * @var int|float
+     * @var Absolute
      */
     private $firstLine;
 
     /**
-     * Indentation removed from first line (twip)
+     * Indentation removed from first line
      *
-     * @var int|float
+     * @var Absolute
      */
     private $hanging;
 
@@ -60,15 +62,19 @@ class Indentation extends AbstractStyle
      */
     public function __construct($style = array())
     {
+        $this->setLeft(new Absolute(0));
+        $this->setRight(new Absolute(0));
+        $this->setFirstLine(new Absolute(null));
+        $this->setHanging(new Absolute(null));
         $this->setStyleByArray($style);
     }
 
     /**
      * Get left
      *
-     * @return int|float
+     * @return Absolute
      */
-    public function getLeft()
+    public function getLeft(): Absolute
     {
         return $this->left;
     }
@@ -76,12 +82,12 @@ class Indentation extends AbstractStyle
     /**
      * Set left
      *
-     * @param int|float $value
+     * @param Absolute $value
      * @return self
      */
-    public function setLeft($value = null)
+    public function setLeft(Absolute $value): self
     {
-        $this->left = $this->setNumericVal($value, $this->left);
+        $this->left = $value;
 
         return $this;
     }
@@ -89,9 +95,9 @@ class Indentation extends AbstractStyle
     /**
      * Get right
      *
-     * @return int|float
+     * @return Absolute
      */
-    public function getRight()
+    public function getRight(): Absolute
     {
         return $this->right;
     }
@@ -99,12 +105,12 @@ class Indentation extends AbstractStyle
     /**
      * Set right
      *
-     * @param int|float $value
+     * @param Absolute $value
      * @return self
      */
-    public function setRight($value = null)
+    public function setRight(Absolute $value): self
     {
-        $this->right = $this->setNumericVal($value, $this->right);
+        $this->right = $value;
 
         return $this;
     }
@@ -112,9 +118,9 @@ class Indentation extends AbstractStyle
     /**
      * Get first line
      *
-     * @return int|float
+     * @return Absolute
      */
-    public function getFirstLine()
+    public function getFirstLine(): Absolute
     {
         return $this->firstLine;
     }
@@ -125,9 +131,9 @@ class Indentation extends AbstractStyle
      * @param int|float $value
      * @return self
      */
-    public function setFirstLine($value = null)
+    public function setFirstLine(Absolute $value = null): self
     {
-        $this->firstLine = $this->setNumericVal($value, $this->firstLine);
+        $this->firstLine = $value;
 
         return $this;
     }
@@ -135,9 +141,9 @@ class Indentation extends AbstractStyle
     /**
      * Get hanging
      *
-     * @return int|float
+     * @return Absolute
      */
-    public function getHanging()
+    public function getHanging(): Absolute
     {
         return $this->hanging;
     }
@@ -145,12 +151,12 @@ class Indentation extends AbstractStyle
     /**
      * Set hanging
      *
-     * @param int|float $value
+     * @param Absolute $value
      * @return self
      */
-    public function setHanging($value = null)
+    public function setHanging(Absolute $value): self
     {
-        $this->hanging = $this->setNumericVal($value, $this->hanging);
+        $this->hanging = $value;
 
         return $this;
     }

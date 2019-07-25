@@ -18,6 +18,8 @@
 namespace PhpOffice\PhpWord\Element;
 
 use PhpOffice\PhpWord\Style\Cell as CellStyle;
+use PhpOffice\PhpWord\Style\Lengths\Absolute;
+use PhpOffice\PhpWord\Style\Lengths\Length;
 
 /**
  * Table cell element
@@ -32,9 +34,9 @@ class Cell extends AbstractContainer
     /**
      * Cell width
      *
-     * @var int
+     * @var Absolute
      */
-    private $width = null;
+    private $width;
 
     /**
      * Cell style
@@ -46,12 +48,13 @@ class Cell extends AbstractContainer
     /**
      * Create new instance
      *
-     * @param int $width
+     * @see http://officeopenxml.com/WPtableGrid.php
+     * @param Absolute $width The element returns Absolute for the width, rather than Length like the style does. See link for documentation.
      * @param array|\PhpOffice\PhpWord\Style\Cell $style
      */
-    public function __construct($width = null, $style = null)
+    public function __construct(Absolute $width = null, $style = null)
     {
-        $this->width = $width;
+        $this->width = $width ?? new Absolute(null);
         $this->style = $this->setNewStyle(new CellStyle(), $style, true);
     }
 
@@ -68,9 +71,9 @@ class Cell extends AbstractContainer
     /**
      * Get cell width
      *
-     * @return int
+     * @return Absolute
      */
-    public function getWidth()
+    public function getWidth(): Absolute
     {
         return $this->width;
     }

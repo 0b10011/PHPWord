@@ -36,6 +36,8 @@ class Table extends AbstractElement
 {
     /**
      * Write element.
+     *
+     * @see http://officeopenxml.com/WPtableProperties.php
      */
     public function write()
     {
@@ -71,6 +73,8 @@ class Table extends AbstractElement
     /**
      * Write column.
      *
+     * @see http://officeopenxml.com/WPtableGrid.php
+     *
      * @param \PhpOffice\Common\XMLWriter $xmlWriter
      * @param \PhpOffice\PhpWord\Element\Table $element
      */
@@ -81,10 +85,8 @@ class Table extends AbstractElement
         $xmlWriter->startElement('w:tblGrid');
         foreach ($cellWidths as $width) {
             $xmlWriter->startElement('w:gridCol');
-            if ($width !== null) {
-                $xmlWriter->writeAttribute('w:w', $width);
-                $xmlWriter->writeAttribute('w:type', 'dxa');
-            }
+            $xmlWriter->writeAttribute('w:w', $width->toInt('twip'));
+            $xmlWriter->writeAttribute('w:type', 'dxa');
             $xmlWriter->endElement();
         }
         $xmlWriter->endElement(); // w:tblGrid
@@ -92,6 +94,8 @@ class Table extends AbstractElement
 
     /**
      * Write row.
+     *
+     * @see http://officeopenxml.com/WPtableRowProperties.php
      *
      * @param \PhpOffice\Common\XMLWriter $xmlWriter
      * @param \PhpOffice\PhpWord\Element\Row $row
@@ -104,7 +108,7 @@ class Table extends AbstractElement
         $rowStyle = $row->getStyle();
         if ($rowStyle instanceof RowStyle) {
             $styleWriter = new RowStyleWriter($xmlWriter, $rowStyle);
-            $styleWriter->setHeight($row->getHeight());
+            $styleWriter->setHeight($row->getHeight()->toInt('twip'));
             $styleWriter->write();
         }
 
@@ -118,6 +122,8 @@ class Table extends AbstractElement
 
     /**
      * Write cell.
+     *
+     * @see http://officeopenxml.com/WPtableCellProperties-Width.php
      *
      * @param \PhpOffice\Common\XMLWriter $xmlWriter
      * @param \PhpOffice\PhpWord\Element\Cell $cell

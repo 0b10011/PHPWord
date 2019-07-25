@@ -18,7 +18,6 @@
 namespace PhpOffice\PhpWord\Writer\RTF\Element;
 
 use PhpOffice\PhpWord\Element\Image as ImageElement;
-use PhpOffice\PhpWord\Shared\Converter;
 
 /**
  * Image element RTF writer
@@ -45,8 +44,8 @@ class Image extends AbstractElement
         $content .= $this->writeOpening();
         $content .= '{\*\shppict {\pict';
         $content .= '\pngblip\picscalex100\picscaley100';
-        $content .= '\picwgoal' . round(Converter::pixelToTwip($style->getWidth()));
-        $content .= '\pichgoal' . round(Converter::pixelToTwip($style->getHeight()));
+        $content .= '\picwgoal' . $style->getWidth()->toInt('twip');
+        $content .= '\pichgoal' . $style->getHeight()->toInt('twip');
         $content .= PHP_EOL;
         $content .= $this->element->getImageStringData();
         $content .= '}}';

@@ -21,6 +21,7 @@ use PhpOffice\Common\Text;
 use PhpOffice\PhpWord\Exception\InvalidStyleException;
 use PhpOffice\PhpWord\SimpleType\Jc;
 use PhpOffice\PhpWord\SimpleType\TextAlignment;
+use PhpOffice\PhpWord\Style\Lengths\Absolute;
 
 /**
  * Paragraph style
@@ -52,7 +53,7 @@ use PhpOffice\PhpWord\SimpleType\TextAlignment;
 class Paragraph extends Border
 {
     /**
-     * @const int One line height equals 240 twip
+     * @const Absolute One line height equals 240 twip
      */
     const LINE_HEIGHT = 240;
 
@@ -61,7 +62,7 @@ class Paragraph extends Border
      *
      * @var array
      */
-    protected $aliases = array('line-height' => 'lineHeight', 'line-spacing' => 'spacing');
+    protected $aliases = array('line-height' => 'lineHeight', 'line-spacing' => 'space');
 
     /**
      * Parent style
@@ -99,7 +100,7 @@ class Paragraph extends Border
     /**
      * Text line height
      *
-     * @var int
+     * @var int|float
      */
     private $lineHeight;
 
@@ -197,9 +198,6 @@ class Paragraph extends Border
     public function setStyleValue($key, $value)
     {
         $key = Text::removeUnderscorePrefix($key);
-        if ('indent' == $key || 'hanging' == $key) {
-            $value = $value * 720;
-        }
 
         return parent::setStyleValue($key, $value);
     }
@@ -368,20 +366,20 @@ class Paragraph extends Border
     /**
      * Get indentation
      *
-     * @return int
+     * @return Absolute
      */
-    public function getIndent()
+    public function getIndent(): Absolute
     {
-        return $this->getChildStyleValue($this->indentation, 'left');
+        return $this->getChildStyleValue($this->indentation, 'left') ?? new Absolute(null);
     }
 
     /**
      * Set indentation
      *
-     * @param int $value
+     * @param Absolute $value
      * @return self
      */
-    public function setIndent($value = null)
+    public function setIndent(Absolute $value)
     {
         return $this->setIndentation(array('left' => $value));
     }
@@ -389,11 +387,11 @@ class Paragraph extends Border
     /**
      * Get hanging
      *
-     * @return int
+     * @return Absolute
      */
     public function getHanging()
     {
-        return $this->getChildStyleValue($this->indentation, 'hanging');
+        return $this->getChildStyleValue($this->indentation, 'hanging') ?? new Absolute(null);
     }
 
     /**
@@ -435,20 +433,20 @@ class Paragraph extends Border
     /**
      * Get space before paragraph
      *
-     * @return int
+     * @return Absolute
      */
-    public function getSpaceBefore()
+    public function getSpaceBefore(): Absolute
     {
-        return $this->getChildStyleValue($this->spacing, 'before');
+        return $this->getChildStyleValue($this->spacing, 'before') ?? new Absolute(null);
     }
 
     /**
      * Set space before paragraph
      *
-     * @param int $value
+     * @param Absolute $value
      * @return self
      */
-    public function setSpaceBefore($value = null)
+    public function setSpaceBefore(Absolute $value): self
     {
         return $this->setSpace(array('before' => $value));
     }
@@ -456,11 +454,11 @@ class Paragraph extends Border
     /**
      * Get space after paragraph
      *
-     * @return int
+     * @return Absolute
      */
-    public function getSpaceAfter()
+    public function getSpaceAfter(): Absolute
     {
-        return $this->getChildStyleValue($this->spacing, 'after');
+        return $this->getChildStyleValue($this->spacing, 'after') ?? new Absolute(null);
     }
 
     /**
@@ -490,7 +488,7 @@ class Paragraph extends Border
      * @param int|float $value
      * @return self
      */
-    public function setSpacing($value = null)
+    public function setSpacing($value = null): self
     {
         return $this->setSpace(array('line' => $value));
     }

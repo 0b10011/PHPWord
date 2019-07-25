@@ -71,10 +71,10 @@ class Paragraph extends AbstractStyle
         // Spacing
         $spacing = $style->getSpace();
         if (!is_null($spacing)) {
-            $before = $spacing->getBefore();
-            $after = $spacing->getAfter();
-            $css['margin-top'] = $this->getValueIf(!is_null($before), ($before / 20) . 'pt');
-            $css['margin-bottom'] = $this->getValueIf(!is_null($after), ($after / 20) . 'pt');
+            $before = $spacing->getBefore()->toInt('pt');
+            $after = $spacing->getAfter()->toInt('pt');
+            $css['margin-top'] = $this->getValueIf(!is_null($before), $before . 'pt');
+            $css['margin-bottom'] = $this->getValueIf(!is_null($after), $after . 'pt');
         } else {
             $css['margin-top'] = '0';
             $css['margin-bottom'] = '0';

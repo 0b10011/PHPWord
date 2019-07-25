@@ -17,6 +17,7 @@
 
 namespace PhpOffice\PhpWord\Writer\Word2007\Style;
 
+use PhpOffice\PhpWord\Style\Lengths\Absolute;
 use PhpOffice\PhpWord\Style\Paragraph as ParagraphStyle;
 use PhpOffice\PhpWord\TestHelperDOCX;
 
@@ -42,7 +43,7 @@ class ParagraphTest extends \PHPUnit\Framework\TestCase
     public function testParagraphNumbering()
     {
         $phpWord = new \PhpOffice\PhpWord\PhpWord();
-        $phpWord->addParagraphStyle('testStyle', array('indent' => '10'));
+        $phpWord->addParagraphStyle('testStyle', array('indent' => Absolute::from('twip', 10)));
         $section = $phpWord->addSection();
         $section->addText('test', null, array('numStyle' => 'testStyle', 'numLevel' => '1'));
         $doc = TestHelperDOCX::getDocument($phpWord, 'Word2007');

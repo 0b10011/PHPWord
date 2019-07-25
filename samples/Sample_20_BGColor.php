@@ -1,19 +1,23 @@
 <?php
+use PhpOffice\PhpWord\PhpWord;
+use PhpOffice\PhpWord\Style\Colors\ForegroundColor;
+use PhpOffice\PhpWord\Style\Colors\Hex;
+
 include_once 'Sample_Header.php';
 
 // New Word document
 echo date('H:i:s'), ' Create new PhpWord object', EOL;
-$phpWord = new \PhpOffice\PhpWord\PhpWord();
+$phpWord = new PhpWord();
 
 // New section
 $section = $phpWord->addSection();
 
 $section->addText(
     'This is some text highlighted using fgColor (limited to 15 colors)',
-    array('fgColor' => \PhpOffice\PhpWord\Style\Font::FGCOLOR_YELLOW)
+    array('fgColor' => new ForegroundColor('yellow'))
 );
-$section->addText('This one uses bgColor and is using hex value (0xfbbb10)', array('bgColor' => 'fbbb10'));
-$section->addText('Compatible with font colors', array('color' => '0000ff', 'bgColor' => 'fbbb10'));
+$section->addText('This one uses bgColor and is using hex value (0xfbbb10)', array('bgColor' => new Hex('fbbb10')));
+$section->addText('Compatible with font colors', array('color' => new Hex('0000ff'), 'bgColor' => new Hex('fbbb10')));
 
 // Save file
 echo write($phpWord, basename(__FILE__, '.php'), $writers);

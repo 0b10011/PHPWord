@@ -17,6 +17,8 @@
 
 namespace PhpOffice\PhpWord\Style;
 
+use PhpOffice\PhpWord\Style\Lengths\Absolute;
+
 /**
  * TOC style
  */
@@ -37,24 +39,26 @@ class TOC extends Tab
     /**
      * Indent
      *
-     * @var int|float (twip)
+     * @var Absolute
      */
-    private $indent = 200;
+    private $indent;
 
     /**
      * Create a new TOC Style
      */
     public function __construct()
     {
-        parent::__construct(self::TAB_STOP_RIGHT, 9062, self::TAB_LEADER_DOT);
+        parent::__construct(self::TAB_STOP_RIGHT, Absolute::from('twip', 9062), self::TAB_LEADER_DOT);
+
+        $this->indent = Absolute::from('twip', 200);
     }
 
     /**
      * Get Tab Position
      *
-     * @return int|float
+     * @return Absolute
      */
-    public function getTabPos()
+    public function getTabPos(): Absolute
     {
         return $this->getPosition();
     }
@@ -62,10 +66,10 @@ class TOC extends Tab
     /**
      * Set Tab Position
      *
-     * @param int|float $value
+     * @param Absolute $value
      * @return self
      */
-    public function setTabPos($value)
+    public function setTabPos(Absolute $value): self
     {
         return $this->setPosition($value);
     }
@@ -94,9 +98,9 @@ class TOC extends Tab
     /**
      * Get Indent
      *
-     * @return int|float
+     * @return Absolute
      */
-    public function getIndent()
+    public function getIndent(): Absolute
     {
         return $this->indent;
     }
@@ -104,12 +108,12 @@ class TOC extends Tab
     /**
      * Set Indent
      *
-     * @param int|float $value
+     * @param Absolute $value
      * @return self
      */
-    public function setIndent($value)
+    public function setIndent(Absolute $value): self
     {
-        $this->indent = $this->setNumericVal($value, $this->indent);
+        $this->indent = $value;
 
         return $this;
     }

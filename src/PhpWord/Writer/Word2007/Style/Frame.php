@@ -18,6 +18,7 @@
 namespace PhpOffice\PhpWord\Writer\Word2007\Style;
 
 use PhpOffice\Common\XMLWriter;
+use PhpOffice\PhpWord\Shared\HtmlDpi as Dpi;
 use PhpOffice\PhpWord\Style\Frame as FrameStyle;
 use PhpOffice\PhpWord\Writer\Word2007\Element\ParagraphAlignment;
 
@@ -54,7 +55,7 @@ class Frame extends AbstractStyle
             'wrapDistanceLeft'   => 'mso-wrap-distance-left',
             'wrapDistanceRight'  => 'mso-wrap-distance-right',
         );
-        $sizeStyles = $this->getStyles($style, $properties, $style->getUnit());
+        $sizeStyles = $this->getSizeStyles($style, $properties);
 
         $properties = array(
             'pos'       => 'position',
@@ -151,10 +152,9 @@ class Frame extends AbstractStyle
      *
      * @param \PhpOffice\PhpWord\Style\Frame $style
      * @param array $properties
-     * @param string $suffix
      * @return array
      */
-    private function getStyles(FrameStyle $style, $properties, $suffix = '')
+    private function getStyles(FrameStyle $style, $properties)
     {
         $styles = array();
 
@@ -162,7 +162,30 @@ class Frame extends AbstractStyle
             $method = "get{$key}";
             $value = $style->$method();
             if ($value !== null) {
-                $styles[$property] = $style->$method() . $suffix;
+                $styles[$property] = $style->$method();
+            }
+        }
+
+        return $styles;
+    }
+
+    /**
+     * Get style values in associative array
+     *
+     * @param \PhpOffice\PhpWord\Style\Frame $style
+     * @param array $properties
+     * @return array
+     */
+    private function getSizeStyles(FrameStyle $style, $properties)
+    {
+        $styles = array();
+
+        $dpi = new Dpi();
+        foreach ($properties as $key => $property) {
+            $method = "get{$key}";
+            $value = $style->$method()->toPixels($dpi);
+            if ($value !== null) {
+                $styles[$property] = $value . 'px';
             }
         }
 

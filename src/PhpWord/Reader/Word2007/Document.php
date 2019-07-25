@@ -107,33 +107,33 @@ class Document extends AbstractPart
         $styleDefs = array(
             'breakType'     => array(self::READ_VALUE, 'w:type'),
             'vAlign'        => array(self::READ_VALUE, 'w:vAlign'),
-            'pageSizeW'     => array(self::READ_VALUE, 'w:pgSz', 'w:w'),
-            'pageSizeH'     => array(self::READ_VALUE, 'w:pgSz', 'w:h'),
+            'pageSizeW'     => array(self::READ_TWIP, 'w:pgSz', 'w:w'),
+            'pageSizeH'     => array(self::READ_TWIP, 'w:pgSz', 'w:h'),
             'orientation'   => array(self::READ_VALUE, 'w:pgSz', 'w:orient'),
             'colsNum'       => array(self::READ_VALUE, 'w:cols', 'w:num'),
-            'colsSpace'     => array(self::READ_VALUE, 'w:cols', 'w:space'),
-            'marginTop'     => array(self::READ_VALUE, 'w:pgMar', 'w:top'),
-            'marginLeft'    => array(self::READ_VALUE, 'w:pgMar', 'w:left'),
-            'marginBottom'  => array(self::READ_VALUE, 'w:pgMar', 'w:bottom'),
-            'marginRight'   => array(self::READ_VALUE, 'w:pgMar', 'w:right'),
-            'headerHeight'  => array(self::READ_VALUE, 'w:pgMar', 'w:header'),
-            'footerHeight'  => array(self::READ_VALUE, 'w:pgMar', 'w:footer'),
-            'gutter'        => array(self::READ_VALUE, 'w:pgMar', 'w:gutter'),
+            'colsSpace'     => array(self::READ_TWIP, 'w:cols', 'w:space'),
+            'marginTop'     => array(self::READ_TWIP, 'w:pgMar', 'w:top'),
+            'marginLeft'    => array(self::READ_TWIP, 'w:pgMar', 'w:left'),
+            'marginBottom'  => array(self::READ_TWIP, 'w:pgMar', 'w:bottom'),
+            'marginRight'   => array(self::READ_TWIP, 'w:pgMar', 'w:right'),
+            'headerHeight'  => array(self::READ_TWIP, 'w:pgMar', 'w:header'),
+            'footerHeight'  => array(self::READ_TWIP, 'w:pgMar', 'w:footer'),
+            'gutter'        => array(self::READ_TWIP, 'w:pgMar', 'w:gutter'),
         );
         $styles = $this->readStyleDefs($xmlReader, $domNode, $styleDefs);
 
         // Header and footer
         // @todo Cleanup this part
-        $nodes = $xmlReader->getElements('*', $domNode);
-        foreach ($nodes as $node) {
-            if ($node->nodeName == 'w:headerReference' || $node->nodeName == 'w:footerReference') {
-                $id = $xmlReader->getAttribute('r:id', $node);
-                $styles['hf'][$id] = array(
-                    'method' => str_replace('w:', '', str_replace('Reference', '', $node->nodeName)),
-                    'type'   => $xmlReader->getAttribute('w:type', $node),
-                );
-            }
-        }
+        // $nodes = $xmlReader->getElements('*', $domNode);
+        // foreach ($nodes as $node) {
+        //     if ($node->nodeName == 'w:headerReference' || $node->nodeName == 'w:footerReference') {
+        //         $id = $xmlReader->getAttribute('r:id', $node);
+        //         $styles['hf'][$id] = array(
+        //             'method' => str_replace('w:', '', str_replace('Reference', '', $node->nodeName)),
+        //             'type'   => $xmlReader->getAttribute('w:type', $node),
+        //         );
+        //     }
+        // }
 
         return $styles;
     }

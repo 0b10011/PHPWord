@@ -18,6 +18,7 @@
 namespace PhpOffice\PhpWord\Style;
 
 use PhpOffice\PhpWord\SimpleType\LineSpacingRule;
+use PhpOffice\PhpWord\Style\Lengths\Absolute;
 
 /**
  * Spacing between lines and above/below paragraph style
@@ -28,21 +29,21 @@ use PhpOffice\PhpWord\SimpleType\LineSpacingRule;
 class Spacing extends AbstractStyle
 {
     /**
-     * Spacing above paragraph (twip)
+     * Spacing above paragraph
      *
-     * @var int|float
+     * @var Absolute
      */
     private $before;
 
     /**
-     * Spacing below paragraph (twip)
+     * Spacing below paragraph
      *
-     * @var int|float
+     * @var Absolute
      */
     private $after;
 
     /**
-     * Spacing between lines in paragraph (twip)
+     * Spacing between lines in paragraph
      *
      * @var int|float
      */
@@ -62,15 +63,17 @@ class Spacing extends AbstractStyle
      */
     public function __construct($style = array())
     {
+        $this->setBefore(new Absolute(null));
+        $this->setAfter(new Absolute(null));
         $this->setStyleByArray($style);
     }
 
     /**
      * Get before
      *
-     * @return int|float
+     * @return Absolute
      */
-    public function getBefore()
+    public function getBefore(): Absolute
     {
         return $this->before;
     }
@@ -78,12 +81,12 @@ class Spacing extends AbstractStyle
     /**
      * Set before
      *
-     * @param int|float $value
+     * @param Absolute $value
      * @return self
      */
-    public function setBefore($value = null)
+    public function setBefore(Absolute $value): self
     {
-        $this->before = $this->setNumericVal($value, $this->before);
+        $this->before = $value;
 
         return $this;
     }
@@ -91,9 +94,9 @@ class Spacing extends AbstractStyle
     /**
      * Get after
      *
-     * @return int|float
+     * @return Absolute
      */
-    public function getAfter()
+    public function getAfter(): Absolute
     {
         return $this->after;
     }
@@ -101,12 +104,12 @@ class Spacing extends AbstractStyle
     /**
      * Set after
      *
-     * @param int|float $value
+     * @param Absolute $value
      * @return self
      */
-    public function setAfter($value = null)
+    public function setAfter(Absolute $value): self
     {
-        $this->after = $this->setNumericVal($value, $this->after);
+        $this->after = $value;
 
         return $this;
     }
@@ -127,9 +130,9 @@ class Spacing extends AbstractStyle
      * @param int|float $value
      * @return self
      */
-    public function setLine($value = null)
+    public function setLine($value): self
     {
-        $this->line = $this->setNumericVal($value, $this->line);
+        $this->line = $value;
 
         return $this;
     }

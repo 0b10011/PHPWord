@@ -32,17 +32,17 @@ class FooterTest extends \PHPUnit\Framework\TestCase
      */
     public function testWriteFooter()
     {
-        $imageSrc = __DIR__ . '/../../../_files/images/PhpWord.png';
+        // $imageSrc = __DIR__ . '/../../../_files/images/PhpWord.png';
         $container = new \PhpOffice\PhpWord\Element\Footer(1);
-        $container->addText('');
-        $container->addPreserveText('');
-        $container->addTextBreak();
-        $container->addTextRun();
+        // $container->addText('');
+        // $container->addPreserveText('');
+        // $container->addTextBreak();
+        // $container->addTextRun();
         $container->addTable()->addRow()->addCell()->addText('');
-        $container->addImage($imageSrc);
-
+        // $container->addImage($imageSrc);
+        //
         $writer = new Word2007();
-        $writer->setUseDiskCaching(true);
+        // $writer->setUseDiskCaching(true);
         $object = new Footer();
         $object->setParentWriter($writer);
         $object->setElement($container);

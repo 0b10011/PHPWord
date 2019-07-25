@@ -21,8 +21,16 @@ use PhpOffice\PhpWord\Element\AbstractContainer;
 use PhpOffice\PhpWord\Element\Row;
 use PhpOffice\PhpWord\Element\Table;
 use PhpOffice\PhpWord\Settings;
+use PhpOffice\PhpWord\Shared\HtmlDpi as Dpi;
 use PhpOffice\PhpWord\SimpleType\Jc;
+use PhpOffice\PhpWord\SimpleType\LineSpacingRule;
 use PhpOffice\PhpWord\SimpleType\NumberFormat;
+use PhpOffice\PhpWord\Style\BorderStyle;
+use PhpOffice\PhpWord\Style\Colors\Color;
+use PhpOffice\PhpWord\Style\Image;
+use PhpOffice\PhpWord\Style\Lengths\Absolute;
+use PhpOffice\PhpWord\Style\Lengths\Length;
+use PhpOffice\PhpWord\Style\Lengths\Percent;
 use PhpOffice\PhpWord\Style\Paragraph;
 
 /**
@@ -228,6 +236,24 @@ class Html
     protected static function parseParagraph($node, $element, &$styles)
     {
         $styles['paragraph'] = self::recursiveParseStylesInHierarchy($node, $styles['paragraph']);
+
+        $fontAttributes = array(
+            'letter-spacing',
+            'hidden',
+            'underline',
+            'strikethrough',
+            'color',
+            'bgColor',
+            'bold',
+            'italic',
+        );
+        foreach ($fontAttributes as $fontAttribute) {
+            if (isset($styles['paragraph'][$fontAttribute])) {
+                $styles['font'][$fontAttribute] = $styles['paragraph'][$fontAttribute];
+                unset($styles['paragraph'][$fontAttribute]);
+            }
+        }
+
         $newElement = $element->addTextRun($styles['paragraph']);
 
         return $newElement;
@@ -263,9 +289,10 @@ class Html
     {
         $styles['font'] = self::recursiveParseStylesInHierarchy($node, $styles['font']);
 
-        //alignment applies on paragraph, not on font. Let's copy it there
+        //alignment applies on paragraph, not on font. Let's move it there
         if (isset($styles['font']['alignment']) && is_array($styles['paragraph'])) {
             $styles['paragraph']['alignment'] = $styles['font']['alignment'];
+            unset($styles['font']['alignment']);
         }
 
         if (is_callable(array($element, 'addText'))) {
@@ -500,119 +527,127 @@ class Html
         $properties = explode(';', trim($attribute->value, " \t\n\r\0\x0B;"));
 
         foreach ($properties as $property) {
-            list($cKey, $cValue) = array_pad(explode(':', $property, 2), 2, null);
-            $cValue = trim($cValue);
-            switch (trim($cKey)) {
-                case 'text-decoration':
-                    switch ($cValue) {
-                        case 'underline':
-                            $styles['underline'] = 'single';
-                            break;
-                        case 'line-through':
-                            $styles['strikethrough'] = true;
-                            break;
-                    }
-                    break;
-                case 'text-align':
-                    $styles['alignment'] = self::mapAlign($cValue);
-                    break;
-                case 'display':
-                    $styles['hidden'] = $cValue === 'none' || $cValue === 'hidden';
-                    break;
-                case 'direction':
-                    $styles['rtl'] = $cValue === 'rtl';
-                    break;
-                case 'font-size':
-                    $styles['size'] = Converter::cssToPoint($cValue);
-                    break;
-                case 'font-family':
-                    $cValue = array_map('trim', explode(',', $cValue));
-                    $styles['name'] = ucwords($cValue[0]);
-                    break;
-                case 'color':
-                    $styles['color'] = trim($cValue, '#');
-                    break;
-                case 'background-color':
-                    $styles['bgColor'] = trim($cValue, '#');
-                    break;
-                case 'line-height':
-                    $matches = array();
-                    if (preg_match('/([0-9]+\.?[0-9]*[a-z]+)/', $cValue, $matches)) {
-                        //matches number with a unit, e.g. 12px, 15pt, 20mm, ...
-                        $spacingLineRule = \PhpOffice\PhpWord\SimpleType\LineSpacingRule::EXACT;
-                        $spacing = Converter::cssToTwip($matches[1]);
-                    } elseif (preg_match('/([0-9]+)%/', $cValue, $matches)) {
-                        //matches percentages
-                        $spacingLineRule = \PhpOffice\PhpWord\SimpleType\LineSpacingRule::AUTO;
-                        //we are subtracting 1 line height because the Spacing writer is adding one line
-                        $spacing = ((((int) $matches[1]) / 100) * Paragraph::LINE_HEIGHT) - Paragraph::LINE_HEIGHT;
-                    } else {
-                        //any other, wich is a multiplier. E.g. 1.2
-                        $spacingLineRule = \PhpOffice\PhpWord\SimpleType\LineSpacingRule::AUTO;
-                        //we are subtracting 1 line height because the Spacing writer is adding one line
-                        $spacing = ($cValue * Paragraph::LINE_HEIGHT) - Paragraph::LINE_HEIGHT;
-                    }
-                    $styles['spacingLineRule'] = $spacingLineRule;
-                    $styles['line-spacing'] = $spacing;
-                    break;
-                case 'letter-spacing':
-                    $styles['letter-spacing'] = Converter::cssToTwip($cValue);
-                    break;
-                case 'text-indent':
-                    $styles['indentation']['firstLine'] = Converter::cssToTwip($cValue);
-                    break;
-                case 'font-weight':
-                    $tValue = false;
-                    if (preg_match('#bold#', $cValue)) {
-                        $tValue = true; // also match bolder
-                    }
-                    $styles['bold'] = $tValue;
-                    break;
-                case 'font-style':
-                    $tValue = false;
-                    if (preg_match('#(?:italic|oblique)#', $cValue)) {
-                        $tValue = true;
-                    }
-                    $styles['italic'] = $tValue;
-                    break;
-                case 'margin-top':
-                    $styles['spaceBefore'] = Converter::cssToPoint($cValue);
-                    break;
-                case 'margin-bottom':
-                    $styles['spaceAfter'] = Converter::cssToPoint($cValue);
-                    break;
-                case 'border-color':
-                    self::mapBorderColor($styles, $cValue);
-                    break;
-                case 'border-width':
-                    $styles['borderSize'] = Converter::cssToPoint($cValue);
-                    break;
-                case 'border-style':
-                    $styles['borderStyle'] = self::mapBorderStyle($cValue);
-                    break;
-                case 'width':
-                    if (preg_match('/([0-9]+[a-z]+)/', $cValue, $matches)) {
-                        $styles['width'] = Converter::cssToTwip($matches[1]);
-                        $styles['unit'] = \PhpOffice\PhpWord\SimpleType\TblWidth::TWIP;
-                    } elseif (preg_match('/([0-9]+)%/', $cValue, $matches)) {
-                        $styles['width'] = $matches[1] * 50;
-                        $styles['unit'] = \PhpOffice\PhpWord\SimpleType\TblWidth::PERCENT;
-                    } elseif (preg_match('/([0-9]+)/', $cValue, $matches)) {
-                        $styles['width'] = $matches[1];
-                        $styles['unit'] = \PhpOffice\PhpWord\SimpleType\TblWidth::AUTO;
-                    }
-                    break;
-                case 'border':
-                    if (preg_match('/([0-9]+[^0-9]*)\s+(\#[a-fA-F0-9]+)\s+([a-z]+)/', $cValue, $matches)) {
-                        $styles['borderSize'] = Converter::cssToPoint($matches[1]);
-                        $styles['borderColor'] = trim($matches[2], '#');
-                        $styles['borderStyle'] = self::mapBorderStyle($matches[3]);
-                    }
-                    break;
-            }
+            list($property, $value) = array_pad(explode(':', $property, 2), 2, '');
+            self::mapStyleDeclaration(trim($property), trim($value), $styles);
         }
 
         return $styles;
+    }
+
+    private static function mapStyleDeclaration(string $property, string $value, array &$styles)
+    {
+        switch ($property) {
+            case 'text-decoration':
+                switch ($value) {
+                    case 'underline':
+                        $styles['underline'] = 'single';
+                        break;
+                    case 'line-through':
+                        $styles['strikethrough'] = true;
+                        break;
+                }
+                break;
+            case 'text-align':
+                $styles['alignment'] = self::mapAlign($value);
+                break;
+            case 'display':
+                // If `display: none` or `visibility: hidden` is set,
+                // element should be hidden
+                $styles['hidden'] = $value === 'none' || ($styles['hidden'] ?? false);
+                break;
+            case 'direction':
+                $styles['rtl'] = $value === 'rtl';
+                break;
+            case 'font-size':
+                $styles['size'] = self::cssToAbsolute($value);
+                break;
+            case 'font-family':
+                $value = array_map('trim', explode(',', $value));
+                $styles['name'] = ucwords($value[0]);
+                break;
+            case 'color':
+                $styles['color'] = Color::translate(trim($value, '#'));
+                break;
+            case 'background-color':
+                $styles['bgColor'] = Color::translate(trim($value, '#'));
+                break;
+            case 'line-height':
+                $matches = array();
+                if (preg_match('/([0-9]+\.?[0-9]*[a-z]+)/', $value, $matches)) {
+                    //matches number with a unit, e.g. 12px, 15pt, 20mm, ...
+                    $spacingLineRule = LineSpacingRule::EXACT;
+                    $spacing = self::cssToAbsolute($matches[1])->toFloat('twip');
+                } elseif (preg_match('/([0-9]+)%/', $value, $matches)) {
+                    //matches percentages
+                    $spacingLineRule = LineSpacingRule::AUTO;
+                    //we are subtracting 1 line height because the Spacing writer is adding one line
+                    $spacing = ((((int) $matches[1]) / 100) * Paragraph::LINE_HEIGHT) - Paragraph::LINE_HEIGHT;
+                } else {
+                    //any other, wich is a multiplier. E.g. 1.2
+                    $spacingLineRule = LineSpacingRule::AUTO;
+                    //we are subtracting 1 line height because the Spacing writer is adding one line
+                    $spacing = ($value * Paragraph::LINE_HEIGHT) - Paragraph::LINE_HEIGHT;
+                }
+                $styles['spacingLineRule'] = $spacingLineRule;
+                $styles['line-spacing'] = array('line' => $spacing);
+                break;
+            case 'letter-spacing':
+                $styles['letter-spacing'] = self::cssToAbsolute($value);
+                break;
+            case 'text-indent':
+                $styles['indentation']['firstLine'] = self::cssToAbsolute($value);
+                break;
+            case 'font-weight':
+                $tValue = false;
+                if (preg_match('#bold#', $value)) {
+                    $tValue = true; // also match bolder
+                }
+                $styles['bold'] = $tValue;
+                break;
+            case 'font-style':
+                $tValue = false;
+                if (preg_match('#(?:italic|oblique)#', $value)) {
+                    $tValue = true;
+                }
+                $styles['italic'] = $tValue;
+                break;
+            case 'margin-top':
+                $styles['spaceBefore'] = self::cssToAbsolute($value);
+                break;
+            case 'margin-bottom':
+                $styles['spaceAfter'] = self::cssToAbsolute($value);
+                break;
+            case 'border-color':
+                self::mapBorderColor($styles, $value);
+                break;
+            case 'border-width':
+                $styles['borderSize'] = self::cssToAbsolute($value);
+                break;
+            case 'border-style':
+                $styles['borderStyle'] = self::mapBorderStyle($value);
+                break;
+            case 'width':
+                if (preg_match('/([0-9]+[a-z]+)/', $value, $matches)) {
+                    $styles['width'] = self::cssToAbsolute($matches[1]);
+                } elseif (preg_match('/([0-9]+)%/', $value, $matches)) {
+                    $styles['width'] = Percent::fromMixed($matches[1]);
+                } elseif (preg_match('/([0-9]+)/', $value, $matches)) {
+                    $styles['width'] = Absolute::fromMixed('twip', $matches[1]);
+                }
+                break;
+            case 'border':
+                if (preg_match('/([0-9]+[^0-9]*)\s+(\#[a-fA-F0-9]+)\s+([a-z]+)/', $value, $matches)) {
+                    $styles['borderSize'] = self::cssToAbsolute($matches[1]);
+                    $styles['borderColor'] = Color::translate(trim($matches[2], '#'));
+                    $styles['borderStyle'] = self::mapBorderStyle($matches[3]);
+                }
+                break;
+            case 'visibility':
+                // If `display: none` or `visibility: hidden` is set,
+                // element should be hidden
+                $styles['hidden'] = $value === 'hidden' || ($styles['hidden'] ?? false);
+                break;
+        }
     }
 
     /**
@@ -633,14 +668,10 @@ class Html
                     $src = $attribute->value;
                     break;
                 case 'width':
-                    $width = $attribute->value;
-                    $style['width'] = $width;
-                    $style['unit'] = \PhpOffice\PhpWord\Style\Image::UNIT_PX;
+                    $style['width'] = Absolute::fromPixels(new Dpi(), $attribute->value);
                     break;
                 case 'height':
-                    $height = $attribute->value;
-                    $style['height'] = $height;
-                    $style['unit'] = \PhpOffice\PhpWord\Style\Image::UNIT_PX;
+                    $style['height'] = Absolute::fromPixels(new Dpi(), $attribute->value);
                     break;
                 case 'style':
                     $styleattr = explode(';', $attribute->value);
@@ -650,17 +681,17 @@ class Html
                             switch ($k) {
                                 case 'float':
                                     if (trim($v) == 'right') {
-                                        $style['hPos'] = \PhpOffice\PhpWord\Style\Image::POS_RIGHT;
-                                        $style['hPosRelTo'] = \PhpOffice\PhpWord\Style\Image::POS_RELTO_PAGE;
-                                        $style['pos'] = \PhpOffice\PhpWord\Style\Image::POS_RELATIVE;
-                                        $style['wrap'] = \PhpOffice\PhpWord\Style\Image::WRAP_TIGHT;
+                                        $style['hPos'] = Image::POS_RIGHT;
+                                        $style['hPosRelTo'] = Image::POS_RELTO_PAGE;
+                                        $style['pos'] = Image::POS_RELATIVE;
+                                        $style['wrap'] = Image::WRAP_TIGHT;
                                         $style['overlap'] = true;
                                     }
                                     if (trim($v) == 'left') {
-                                        $style['hPos'] = \PhpOffice\PhpWord\Style\Image::POS_LEFT;
-                                        $style['hPosRelTo'] = \PhpOffice\PhpWord\Style\Image::POS_RELTO_PAGE;
-                                        $style['pos'] = \PhpOffice\PhpWord\Style\Image::POS_RELATIVE;
-                                        $style['wrap'] = \PhpOffice\PhpWord\Style\Image::WRAP_TIGHT;
+                                        $style['hPos'] = Image::POS_LEFT;
+                                        $style['hPosRelTo'] = Image::POS_RELTO_PAGE;
+                                        $style['pos'] = Image::POS_RELATIVE;
+                                        $style['wrap'] = Image::WRAP_TIGHT;
                                         $style['overlap'] = true;
                                     }
                                     break;
@@ -724,18 +755,18 @@ class Html
      * Transforms a CSS border style into a word border style
      *
      * @param string $cssBorderStyle
-     * @return null|string
+     * @return BorderStyle
      */
-    protected static function mapBorderStyle($cssBorderStyle)
+    protected static function mapBorderStyle(string $cssBorderStyle): BorderStyle
     {
         switch ($cssBorderStyle) {
             case 'none':
             case 'dashed':
             case 'dotted':
             case 'double':
-                return $cssBorderStyle;
+                return new BorderStyle($cssBorderStyle);
             default:
-                return 'single';
+                return new BorderStyle('single');
         }
     }
 
@@ -743,12 +774,12 @@ class Html
     {
         $numColors = substr_count($cssBorderColor, '#');
         if ($numColors === 1) {
-            $styles['borderColor'] = trim($cssBorderColor, '#');
+            $styles['borderColor'] = Color::translate(trim($cssBorderColor, '#'));
         } elseif ($numColors > 1) {
             $colors = explode(' ', $cssBorderColor);
             $borders = array('borderTopColor', 'borderRightColor', 'borderBottomColor', 'borderLeftColor');
             for ($i = 0; $i < min(4, $numColors, count($colors)); $i++) {
-                $styles[$borders[$i]] = trim($colors[$i], '#');
+                $styles[$borders[$i]] = Color::translate(trim($colors[$i], '#'));
             }
         }
     }
@@ -807,5 +838,61 @@ class Html
         }
 
         return $element->addLink($target, $node->textContent, $styles['font'], $styles['paragraph']);
+    }
+
+    /**
+     * Transforms a size in CSS format (eg. 10px, 10cm, ...) to Length
+     *
+     * @param string $value
+     * @return Length
+     */
+    public static function cssToLength(string $value): Length
+    {
+        if ($value == '0') {
+            return new Absolute(0);
+        }
+
+        $matches = array();
+        if (preg_match('/^[+-]?([0-9]+\.?[0-9]*)?(px|em|ex|%|in|cm|mm|pt|pc)$/i', $value, $matches)) {
+            $size = $matches[1];
+            $unit = $matches[2];
+
+            switch ($unit) {
+                case 'pt':
+                    return Absolute::from('pt', $size);
+                case 'px':
+                    return Absolute::fromPixels(new Dpi(), $size);
+                case 'cm':
+                    return Absolute::from('cm', $size);
+                case 'mm':
+                    return Absolute::from('mm', $size);
+                case 'in':
+                    return Absolute::from('in', $size);
+                case 'pc':
+                    return Absolute::from('pc', $size);
+                case '%':
+                    return new Percent($size);
+                case 'em':
+                    return new Percent(100);
+            }
+        }
+
+        return new Absolute(null);
+    }
+
+    /**
+     * Transforms a size in CSS format (eg. 10px, 10cm, ...) to Absolute
+     *
+     * @param string $value
+     * @return Absolute
+     */
+    public static function cssToAbsolute(string $value): Length
+    {
+        $size = self::cssToLength($value);
+        if ($size instanceof Absolute) {
+            return $size;
+        }
+
+        return new Absolute(null);
     }
 }

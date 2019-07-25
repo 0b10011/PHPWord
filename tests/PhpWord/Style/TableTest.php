@@ -17,9 +17,12 @@
 
 namespace PhpOffice\PhpWord\Style;
 
-use PhpOffice\PhpWord\ComplexType\TblWidth as TblWidthComplexType;
 use PhpOffice\PhpWord\SimpleType\JcTable;
-use PhpOffice\PhpWord\SimpleType\TblWidth;
+use PhpOffice\PhpWord\Style\Colors\ColorInterface;
+use PhpOffice\PhpWord\Style\Colors\Hex;
+use PhpOffice\PhpWord\Style\Lengths\Absolute;
+use PhpOffice\PhpWord\Style\Lengths\Auto;
+use PhpOffice\PhpWord\Style\Lengths\Percent;
 
 /**
  * Test class for PhpOffice\PhpWord\Style\Table
@@ -37,15 +40,15 @@ class TableTest extends \PHPUnit\Framework\TestCase
      */
     public function testConstruct()
     {
-        $styleTable = array('bgColor' => 'FF0000');
-        $styleFirstRow = array('borderBottomSize' => 3);
+        $styleTable = array('bgColor' => new Hex('FF0000'));
+        $styleFirstRow = array('borderBottomSize' => Absolute::from('eop', 3));
 
         $object = new Table($styleTable, $styleFirstRow);
-        $this->assertEquals('FF0000', $object->getBgColor());
+        $this->assertEquals('FF0000', $object->getBgColor()->toHex());
 
         $firstRow = $object->getFirstRow();
         $this->assertInstanceOf('PhpOffice\\PhpWord\\Style\\Table', $firstRow);
-        $this->assertEquals(3, $firstRow->getBorderBottomSize());
+        $this->assertEquals(3, $firstRow->getBorderBottomSize()->toInt('eop'));
     }
 
     /**
@@ -55,10 +58,9 @@ class TableTest extends \PHPUnit\Framework\TestCase
     {
         $object = new Table();
 
-        $this->assertNull($object->getBgColor());
+        $this->assertNull($object->getBgColor()->toHex());
         $this->assertEquals(Table::LAYOUT_AUTO, $object->getLayout());
-        $this->assertEquals(TblWidth::AUTO, $object->getUnit());
-        $this->assertNull($object->getIndent());
+        $this->assertInstanceOf(Auto::class, $object->getIndent());
     }
 
     /**
@@ -69,33 +71,43 @@ class TableTest extends \PHPUnit\Framework\TestCase
         $object = new Table();
 
         $attributes = array(
-            'bgColor'            => 'FF0000',
-            'borderTopSize'      => 4,
-            'borderTopColor'     => 'FF0000',
-            'borderLeftSize'     => 4,
-            'borderLeftColor'    => 'FF0000',
-            'borderRightSize'    => 4,
-            'borderRightColor'   => 'FF0000',
-            'borderBottomSize'   => 4,
-            'borderBottomColor'  => 'FF0000',
-            'borderInsideHSize'  => 4,
-            'borderInsideHColor' => 'FF0000',
-            'borderInsideVSize'  => 4,
-            'borderInsideVColor' => 'FF0000',
-            'cellMarginTop'      => 240,
-            'cellMarginLeft'     => 240,
-            'cellMarginRight'    => 240,
-            'cellMarginBottom'   => 240,
+            'bgColor'            => new Hex('FF0000'),
+            'borderTopSize'      => Absolute::from('eop', 4),
+            'borderTopColor'     => new Hex('FF0000'),
+            'borderLeftSize'     => Absolute::from('eop', 4),
+            'borderLeftColor'    => new Hex('FF0000'),
+            'borderRightSize'    => Absolute::from('eop', 4),
+            'borderRightColor'   => new Hex('FF0000'),
+            'borderBottomSize'   => Absolute::from('eop', 4),
+            'borderBottomColor'  => new Hex('FF0000'),
+            'borderInsideHSize'  => Absolute::from('eop', 4),
+            'borderInsideHColor' => new Hex('FF0000'),
+            'borderInsideVSize'  => Absolute::from('eop', 4),
+            'borderInsideVColor' => new Hex('FF0000'),
+            'cellMarginTop'      => Absolute::from('eop', 240),
+            'cellMarginLeft'     => Absolute::from('eop', 240),
+            'cellMarginRight'    => Absolute::from('eop', 240),
+            'cellMarginBottom'   => Absolute::from('eop', 240),
             'alignment'          => JcTable::CENTER,
-            'width'              => 100,
-            'unit'               => 'pct',
+            'width'              => new Percent(100),
             'layout'             => Table::LAYOUT_FIXED,
         );
         foreach ($attributes as $key => $value) {
             $set = "set{$key}";
             $get = "get{$key}";
             $object->$set($value);
-            $this->assertEquals($value, $object->$get());
+            $result = $object->$get();
+            if ($result instanceof Absolute) {
+                $result = $result->toInt('eop');
+                $value = $value->toInt('eop');
+            } elseif ($result instanceof Percent) {
+                $result = $result->toInt();
+                $value = $value->toInt();
+            } elseif ($result instanceof ColorInterface) {
+                $result = $result->toHex();
+                $value = $value->toHex();
+            }
+            $this->assertEquals($value, $result);
         }
     }
 
@@ -111,14 +123,16 @@ class TableTest extends \PHPUnit\Framework\TestCase
         $parts = array('Top', 'Left', 'Right', 'Bottom', 'InsideH', 'InsideV');
 
         $value = 'FF0000';
-        $object->setBorderColor($value);
+        $object->setBorderColor(new Hex($value));
         $values = array();
         foreach ($parts as $part) {
             $get = "getBorder{$part}Color";
             $values[] = $value;
-            $this->assertEquals($value, $object->$get());
+            $this->assertEquals($value, $object->$get()->toHex());
         }
-        $this->assertEquals($values, $object->getBorderColor());
+        $this->assertEquals($values, array_map(function ($value) {
+            return $value->toHex();
+        }, $object->getBorderColor()));
     }
 
     /**
@@ -126,7 +140,6 @@ class TableTest extends \PHPUnit\Framework\TestCase
      *
      * Set border size and test if each part has the same size
      * While looping, push values array to be asserted with getBorderSize
-     * Value is in eights of a point, i.e. 4 / 8 = .5pt
      */
     public function testBorderSize()
     {
@@ -134,14 +147,16 @@ class TableTest extends \PHPUnit\Framework\TestCase
         $parts = array('Top', 'Left', 'Right', 'Bottom', 'InsideH', 'InsideV');
 
         $value = 4;
-        $object->setBorderSize($value);
+        $object->setBorderSize(Absolute::from('eop', $value));
         $values = array();
         foreach ($parts as $part) {
             $get = "getBorder{$part}Size";
             $values[] = $value;
-            $this->assertEquals($value, $object->$get());
+            $this->assertEquals($value, $object->$get()->toInt('eop'));
         }
-        $this->assertEquals($values, $object->getBorderSize());
+        foreach ($object->getBorderSize() as $key => $size) {
+            $this->assertEquals($values[$key], $size->toInt('eop'));
+        }
     }
 
     /**
@@ -157,14 +172,16 @@ class TableTest extends \PHPUnit\Framework\TestCase
         $parts = array('Top', 'Left', 'Right', 'Bottom');
 
         $value = 240;
-        $object->setCellMargin($value);
+        $object->setCellMargin(Absolute::from('twip', $value));
         $values = array();
         foreach ($parts as $part) {
             $get = "getCellMargin{$part}";
             $values[] = $value;
-            $this->assertEquals($value, $object->$get());
+            $this->assertEquals($value, $object->$get()->toInt('twip'));
         }
-        $this->assertEquals($values, $object->getCellMargin());
+        $this->assertEquals($values, array_map(function ($value) {
+            return $value->toInt('twip');
+        }, $object->getCellMargin()));
         $this->assertTrue($object->hasMargin());
     }
 
@@ -174,15 +191,21 @@ class TableTest extends \PHPUnit\Framework\TestCase
     public function testSetStyleValue()
     {
         $object = new Table();
-        $object->setStyleValue('borderSize', 120);
-        $object->setStyleValue('cellMargin', 240);
-        $object->setStyleValue('borderColor', '999999');
+        $object->setStyleValue('borderSize', Absolute::from('twip', 120));
+        $object->setStyleValue('cellMargin', Absolute::from('twip', 240));
+        $object->setStyleValue('borderColor', new Hex('999999'));
 
-        $this->assertEquals(array(120, 120, 120, 120, 120, 120), $object->getBorderSize());
-        $this->assertEquals(array(240, 240, 240, 240), $object->getCellMargin());
+        $this->assertEquals(array(120, 120, 120, 120, 120, 120), array_map(function ($value) {
+            return $value->toInt('twip');
+        }, $object->getBorderSize()));
+        $this->assertEquals(array(240, 240, 240, 240), array_map(function ($value) {
+            return $value->toInt('twip');
+        }, $object->getCellMargin()));
         $this->assertEquals(
             array('999999', '999999', '999999', '999999', '999999', '999999'),
-            $object->getBorderColor()
+            array_map(function ($value) {
+                return $value->toHex();
+            }, $object->getBorderColor())
         );
     }
 
@@ -192,10 +215,10 @@ class TableTest extends \PHPUnit\Framework\TestCase
     public function testTableCellSpacing()
     {
         $object = new Table();
-        $this->assertNull($object->getCellSpacing());
+        $this->assertNull($object->getCellSpacing()->toInt('twip'));
 
-        $object = new Table(array('cellSpacing' => 20));
-        $this->assertEquals(20, $object->getCellSpacing());
+        $object = new Table(array('cellSpacing' => Absolute::from('twip', 20)));
+        $this->assertEquals(20, $object->getCellSpacing()->toInt('twip'));
     }
 
     /**
@@ -213,7 +236,7 @@ class TableTest extends \PHPUnit\Framework\TestCase
 
     public function testIndent()
     {
-        $indent = new TblWidthComplexType(100, TblWidth::TWIP);
+        $indent = Absolute::from('twip', 100);
 
         $table = new Table(array('indent' => $indent));
 

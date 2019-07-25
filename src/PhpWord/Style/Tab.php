@@ -17,6 +17,8 @@
 
 namespace PhpOffice\PhpWord\Style;
 
+use PhpOffice\PhpWord\Style\Lengths\Absolute;
+
 /**
  * Tab style
  */
@@ -62,11 +64,11 @@ class Tab extends AbstractStyle
     private $leader = self::TAB_LEADER_NONE;
 
     /**
-     * Tab stop position (twip)
+     * Tab stop position
      *
-     * @var int|float
+     * @var Absolute
      */
-    private $position = 0;
+    private $position;
 
     /**
      * Create a new instance of Tab. Both $type and $leader
@@ -74,10 +76,10 @@ class Tab extends AbstractStyle
      * they will be changed to default values.
      *
      * @param string $type Defaults to 'clear' if value is not possible
-     * @param int $position Must be numeric; otherwise defaults to 0
+     * @param Absolute $position Defaults to 0
      * @param string $leader Defaults to null if value is not possible
      */
-    public function __construct($type = null, $position = 0, $leader = null)
+    public function __construct($type = null, Absolute $position = null, $leader = null)
     {
         $stopTypes = array(
             self::TAB_STOP_CLEAR, self::TAB_STOP_LEFT, self::TAB_STOP_CENTER,
@@ -89,7 +91,7 @@ class Tab extends AbstractStyle
         );
 
         $this->type = $this->setEnumVal($type, $stopTypes, $this->type);
-        $this->position = $this->setNumericVal($position, $this->position);
+        $this->position = $position ?? Absolute::from('twip', 0);
         $this->leader = $this->setEnumVal($leader, $leaderTypes, $this->leader);
     }
 
@@ -151,9 +153,9 @@ class Tab extends AbstractStyle
     /**
      * Get position
      *
-     * @return int|float
+     * @return Absolute
      */
-    public function getPosition()
+    public function getPosition(): Absolute
     {
         return $this->position;
     }
@@ -161,12 +163,12 @@ class Tab extends AbstractStyle
     /**
      * Set position
      *
-     * @param int|float $value
+     * @param Absolute $value
      * @return self
      */
-    public function setPosition($value)
+    public function setPosition(Absolute $value): self
     {
-        $this->position = $this->setNumericVal($value, $this->position);
+        $this->position = $value;
 
         return $this;
     }

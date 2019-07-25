@@ -17,6 +17,7 @@
 
 namespace PhpOffice\PhpWord\Element;
 
+use PhpOffice\PhpWord\Style\Colors\Hex;
 use PhpOffice\PhpWord\Style\Font;
 
 /**
@@ -49,8 +50,8 @@ class LinkTest extends \PHPUnit\Framework\TestCase
         $oLink = new Link(
             'https://github.com/PHPOffice/PHPWord',
             'PHPWord on GitHub',
-            array('color'      => '0000FF', 'underline' => Font::UNDERLINE_SINGLE),
-            array('marginLeft' => 600, 'marginRight' => 600, 'marginTop' => 600, 'marginBottom' => 600)
+            array('color'      => new Hex('0000FF'), 'underline' => Font::UNDERLINE_SINGLE),
+            array('alignment'  => 'center')
         );
 
         $this->assertInstanceOf('PhpOffice\\PhpWord\\Element\\Link', $oLink);

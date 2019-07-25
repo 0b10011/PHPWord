@@ -18,6 +18,12 @@
 namespace PhpOffice\PhpWord\Writer\Word2007\Style;
 
 use PhpOffice\Common\XMLWriter;
+use PhpOffice\PhpWord\Exception\Exception;
+use PhpOffice\PhpWord\Style\BorderStyle;
+use PhpOffice\PhpWord\Style\Colors\ColorInterface;
+use PhpOffice\PhpWord\Style\Colors\Hex;
+use PhpOffice\PhpWord\Style\Colors\SystemColor;
+use PhpOffice\PhpWord\Style\Lengths\Absolute;
 
 /**
  * Margin border style writer
@@ -29,21 +35,21 @@ class MarginBorder extends AbstractStyle
     /**
      * Sizes
      *
-     * @var int[]
+     * @var Absolute[]
      */
     private $sizes = array();
 
     /**
      * Colors
      *
-     * @var string[]
+     * @var ColorInterface[]
      */
     private $colors = array();
 
     /**
      * Border styles
      *
-     * @var string[]
+     * @var BorderStyle[]
      */
     private $styles = array();
 
@@ -65,11 +71,12 @@ class MarginBorder extends AbstractStyle
 
         foreach ($this->sizes as $i => $size) {
             if ($size !== null) {
-                $color = null;
                 if (isset($this->colors[$i])) {
                     $color = $this->colors[$i];
+                } else {
+                    $color = new Hex(null);
                 }
-                $style = isset($this->styles[$i]) ? $this->styles[$i] : 'single';
+                $style = isset($this->styles[$i]) ? $this->styles[$i] : new BorderStyle('single');
                 $this->writeSide($xmlWriter, $sides[$i], $this->sizes[$i], $color, $style);
             }
         }
@@ -80,21 +87,26 @@ class MarginBorder extends AbstractStyle
      *
      * @param \PhpOffice\Common\XMLWriter $xmlWriter
      * @param string $side
-     * @param int $width
+     * @param Absolute $width
      * @param string $color
      * @param string $borderStyle
      */
-    private function writeSide(XMLWriter $xmlWriter, $side, $width, $color = null, $borderStyle = 'solid')
+    private function writeSide(XMLWriter $xmlWriter, $side, Absolute $width, ColorInterface $color, BorderStyle $borderStyle)
     {
         $xmlWriter->startElement('w:' . $side);
         if (!empty($this->colors)) {
+            if ($color instanceof SystemColor) {
+                $color = $color->getColor();
+            } else {
+                $color = $color->toHex();
+            }
             if ($color === null && !empty($this->attributes)) {
                 if (isset($this->attributes['defaultColor'])) {
                     $color = $this->attributes['defaultColor'];
                 }
             }
-            $xmlWriter->writeAttribute('w:val', $borderStyle);
-            $xmlWriter->writeAttribute('w:sz', $width);
+            $xmlWriter->writeAttribute('w:val', $borderStyle->getStyle());
+            $xmlWriter->writeAttribute('w:sz', $width->toInt('eop'));
             $xmlWriter->writeAttributeIf($color != null, 'w:color', $color);
             if (!empty($this->attributes)) {
                 if (isset($this->attributes['space'])) {
@@ -102,7 +114,7 @@ class MarginBorder extends AbstractStyle
                 }
             }
         } else {
-            $xmlWriter->writeAttribute('w:w', $width);
+            $xmlWriter->writeAttribute('w:w', $width->toInt('twip'));
             $xmlWriter->writeAttribute('w:type', 'dxa');
         }
         $xmlWriter->endElement();
@@ -111,27 +123,40 @@ class MarginBorder extends AbstractStyle
     /**
      * Set sizes.
      *
-     * @param int[] $value
+     * @param Absolute[] $value
+     * @param mixed $values
      */
-    public function setSizes($value)
+    public function setSizes($values)
     {
-        $this->sizes = $value;
+        foreach ($values as $value) {
+            if (!($value instanceof Absolute)) {
+                throw new Exception('An array of `Absolute` must be provided. `' . gettype($value) . '` provided');
+            }
+        }
+        $this->sizes = $values;
     }
 
     /**
      * Set colors.
      *
-     * @param string[] $value
+     * @param ColorInterface[] $value
      */
-    public function setColors($value)
+    public function setColors(array $values): self
     {
-        $this->colors = $value;
+        foreach ($values as $value) {
+            if (!($value instanceof ColorInterface)) {
+                throw new Exception('An array of `ColorInterface` must be provided. `' . gettype($value) . '` provided');
+            }
+        }
+        $this->colors = $values;
+
+        return $this;
     }
 
     /**
      * Set border styles.
      *
-     * @param string[] $value
+     * @param BorderStyle[] $value
      */
     public function setStyles($value)
     {

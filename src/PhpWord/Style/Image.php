@@ -17,6 +17,8 @@
 
 namespace PhpOffice\PhpWord\Style;
 
+use PhpOffice\PhpWord\Style\Lengths\Absolute;
+
 /**
  * Image and memory image style
  */
@@ -61,7 +63,6 @@ class Image extends Frame
     public function __construct()
     {
         parent::__construct();
-        $this->setUnit(self::UNIT_PT);
 
         // Backward compatibility setting
         // @todo Remove on 1.0.0
@@ -75,9 +76,9 @@ class Image extends Frame
     /**
      * Get margin top
      *
-     * @return int|float
+     * @return Absolute
      */
-    public function getMarginTop()
+    public function getMarginTop(): Absolute
     {
         return $this->getTop();
     }
@@ -85,11 +86,10 @@ class Image extends Frame
     /**
      * Set margin top
      *
-     * @ignoreScrutinizerPatch
-     * @param int|float $value
+     * @param Absolute $value
      * @return self
      */
-    public function setMarginTop($value = 0)
+    public function setMarginTop(Absolute $value): self
     {
         $this->setTop($value);
 
@@ -99,9 +99,9 @@ class Image extends Frame
     /**
      * Get margin left
      *
-     * @return int|float
+     * @return Absolute
      */
-    public function getMarginLeft()
+    public function getMarginLeft(): Absolute
     {
         return $this->getLeft();
     }
@@ -109,11 +109,10 @@ class Image extends Frame
     /**
      * Set margin left
      *
-     * @ignoreScrutinizerPatch
-     * @param int|float $value
+     * @param Absolute $value
      * @return self
      */
-    public function setMarginLeft($value = 0)
+    public function setMarginLeft(Absolute $value): self
     {
         $this->setLeft($value);
 

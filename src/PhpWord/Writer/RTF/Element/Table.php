@@ -20,6 +20,7 @@ namespace PhpOffice\PhpWord\Writer\RTF\Element;
 use PhpOffice\PhpWord\Element\Cell as CellElement;
 use PhpOffice\PhpWord\Element\Row as RowElement;
 use PhpOffice\PhpWord\Element\Table as TableElement;
+use PhpOffice\PhpWord\Style\Lengths\Absolute;
 
 /**
  * Table element RTF writer
@@ -76,10 +77,17 @@ class Table extends AbstractElement
         $rightMargin = 0;
         foreach ($row->getCells() as $cell) {
             $width = $cell->getWidth();
-            $vMerge = $this->getVMerge($cell->getStyle()->getVMerge());
+            if ($width instanceof Absolute) {
+                /** @scrutinizer ignore-call */
+                $width = $width->toInt('twip');
+            } else {
+                $width = null;
+            }
             if ($width === null) {
                 $width = 720; // Arbitrary default width
             }
+
+            $vMerge = $this->getVMerge($cell->getStyle()->getVMerge());
             $rightMargin += $width;
             $content .= "{$vMerge}\cellx{$rightMargin} ";
         }

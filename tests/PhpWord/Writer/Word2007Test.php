@@ -20,6 +20,7 @@ namespace PhpOffice\PhpWord\Writer;
 use PhpOffice\PhpWord\AbstractWebServerEmbeddedTest;
 use PhpOffice\PhpWord\PhpWord;
 use PhpOffice\PhpWord\SimpleType\Jc;
+use PhpOffice\PhpWord\Style\Lengths\Absolute;
 use PhpOffice\PhpWord\TestHelperDOCX;
 
 /**
@@ -78,7 +79,7 @@ class Word2007Test extends AbstractWebServerEmbeddedTest
         $localImage = __DIR__ . '/../_files/images/earth.jpg';
         $remoteImage = self::getRemoteGifImageUrl();
         $phpWord = new PhpWord();
-        $phpWord->addFontStyle('Font', array('size' => 11));
+        $phpWord->addFontStyle('Font', array('size' => Absolute::from('pt', 11)));
         $phpWord->addParagraphStyle('Paragraph', array('alignment' => Jc::CENTER));
         $section = $phpWord->addSection();
         $section->addText('Test 1', 'Font', 'Paragraph');

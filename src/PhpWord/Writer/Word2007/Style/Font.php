@@ -98,13 +98,13 @@ class Font extends AbstractStyle
         }
 
         // Color
-        $color = $style->getColor();
+        $color = $style->getColor()->getColor();
         $xmlWriter->writeElementIf($color !== null, 'w:color', 'w:val', $color);
 
         // Size
-        $size = $style->getSize();
-        $xmlWriter->writeElementIf($size !== null, 'w:sz', 'w:val', $size * 2);
-        $xmlWriter->writeElementIf($size !== null, 'w:szCs', 'w:val', $size * 2);
+        $size = $style->getSize()->toInt('hpt');
+        $xmlWriter->writeElementIf($size !== null, 'w:sz', 'w:val', $size);
+        $xmlWriter->writeElementIf($size !== null, 'w:szCs', 'w:val', $size);
 
         // Bold, italic
         $xmlWriter->writeElementIf($style->isBold() !== null, 'w:b', 'w:val', $this->writeOnOf($style->isBold()));
@@ -127,7 +127,8 @@ class Font extends AbstractStyle
         $xmlWriter->writeElementIf($style->getUnderline() != 'none', 'w:u', 'w:val', $style->getUnderline());
 
         // Foreground-Color
-        $xmlWriter->writeElementIf($style->getFgColor() !== null, 'w:highlight', 'w:val', $style->getFgColor());
+        $fgColor = $style->getFgColor()->getColor();
+        $xmlWriter->writeElementIf($fgColor !== null, 'w:highlight', 'w:val', $fgColor);
 
         // Superscript/subscript
         $xmlWriter->writeElementIf($style->isSuperScript(), 'w:vertAlign', 'w:val', 'superscript');
@@ -135,14 +136,15 @@ class Font extends AbstractStyle
 
         // Spacing
         $xmlWriter->writeElementIf($style->getScale() !== null, 'w:w', 'w:val', $style->getScale());
-        $xmlWriter->writeElementIf($style->getSpacing() !== null, 'w:spacing', 'w:val', $style->getSpacing());
+        $spacing = $style->getSpacing()->toInt('twip');
+        $xmlWriter->writeElementIf($spacing !== null, 'w:spacing', 'w:val', $spacing);
         $xmlWriter->writeElementIf($style->getKerning() !== null, 'w:kern', 'w:val', $style->getKerning() * 2);
 
         // noProof
         $xmlWriter->writeElementIf($style->isNoProof() !== null, 'w:noProof', $this->writeOnOf($style->isNoProof()));
 
         // Background-Color
-        $shading = $style->getShading();
+        $shading = $style->getShading()->getColor()->getColor();
         if (!is_null($shading)) {
             $styleWriter = new Shading($xmlWriter, $shading);
             $styleWriter->write();
@@ -155,7 +157,7 @@ class Font extends AbstractStyle
         }
 
         // Position
-        $xmlWriter->writeElementIf($style->getPosition() !== null, 'w:position', 'w:val', $style->getPosition());
+        $xmlWriter->writeElementIf($style->getPosition()->toInt('hpt') !== null, 'w:position', 'w:val', $style->getPosition()->toInt('hpt'));
 
         $xmlWriter->endElement();
     }

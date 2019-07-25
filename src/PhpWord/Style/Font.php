@@ -17,6 +17,12 @@
 
 namespace PhpOffice\PhpWord\Style;
 
+use PhpOffice\PhpWord\Style\Colors\Color;
+use PhpOffice\PhpWord\Style\Colors\ColorInterface;
+use PhpOffice\PhpWord\Style\Colors\ForegroundColor;
+use PhpOffice\PhpWord\Style\Colors\Hex;
+use PhpOffice\PhpWord\Style\Lengths\Absolute;
+
 /**
  * Font style
  */
@@ -55,27 +61,6 @@ class Font extends AbstractStyle
     const UNDERLINE_WORDS = 'words';
 
     /**
-     * Foreground colors
-     *
-     * @const string
-     */
-    const FGCOLOR_YELLOW = 'yellow';
-    const FGCOLOR_LIGHTGREEN = 'green';
-    const FGCOLOR_CYAN = 'cyan';
-    const FGCOLOR_MAGENTA = 'magenta';
-    const FGCOLOR_BLUE = 'blue';
-    const FGCOLOR_RED = 'red';
-    const FGCOLOR_DARKBLUE = 'darkBlue';
-    const FGCOLOR_DARKCYAN = 'darkCyan';
-    const FGCOLOR_DARKGREEN = 'darkGreen';
-    const FGCOLOR_DARKMAGENTA = 'darkMagenta';
-    const FGCOLOR_DARKRED = 'darkRed';
-    const FGCOLOR_DARKYELLOW = 'darkYellow';
-    const FGCOLOR_DARKGRAY = 'darkGray';
-    const FGCOLOR_LIGHTGRAY = 'lightGray';
-    const FGCOLOR_BLACK = 'black';
-
-    /**
      * Aliases
      *
      * @var array
@@ -106,14 +91,14 @@ class Font extends AbstractStyle
     /**
      * Font size
      *
-     * @var int|float
+     * @var Absolute
      */
     private $size;
 
     /**
      * Font color
      *
-     * @var string
+     * @var ColorInterface
      */
     private $color;
 
@@ -185,7 +170,7 @@ class Font extends AbstractStyle
     /**
      * Foreground/highlight
      *
-     * @var string
+     * @var ForegroundColor
      */
     private $fgColor;
 
@@ -201,7 +186,7 @@ class Font extends AbstractStyle
     /**
      * Character spacing adjustment: twip
      *
-     * @var int|float
+     * @var Absolute
      * @since 0.12.0
      * @see  http://www.schemacentral.com/sc/ooxml/e-w_spacing-2.html
      */
@@ -263,7 +248,7 @@ class Font extends AbstractStyle
     /**
      * Vertically Raised or Lowered Text
      *
-     * @var int Signed Half-Point Measurement
+     * @var Absolute
      * @see http://www.datypic.com/sc/ooxml/e-w_position-1.html
      */
     private $position;
@@ -276,6 +261,12 @@ class Font extends AbstractStyle
      */
     public function __construct($type = 'text', $paragraph = null)
     {
+        $this
+            ->setSize(new Absolute(null))
+            ->setColor(new Hex(null))
+            ->setFgColor(new ForegroundColor(null))
+            ->setBgColor(new Hex(null))
+            ->setSpacing(new Absolute(null));
         $this->type = $type;
         $this->setParagraph($paragraph);
     }
@@ -383,9 +374,9 @@ class Font extends AbstractStyle
     /**
      * Get font size
      *
-     * @return int|float
+     * @return Absolute
      */
-    public function getSize()
+    public function getSize(): Absolute
     {
         return $this->size;
     }
@@ -393,12 +384,12 @@ class Font extends AbstractStyle
     /**
      * Set font size
      *
-     * @param int|float $value
+     * @param Absolute $value
      * @return self
      */
-    public function setSize($value = null)
+    public function setSize(Absolute $value): self
     {
-        $this->size = $this->setNumericVal($value, $this->size);
+        $this->size = $value;
 
         return $this;
     }
@@ -406,9 +397,9 @@ class Font extends AbstractStyle
     /**
      * Get font color
      *
-     * @return string
+     * @return ColorInterface
      */
-    public function getColor()
+    public function getColor(): ColorInterface
     {
         return $this->color;
     }
@@ -416,10 +407,10 @@ class Font extends AbstractStyle
     /**
      * Set font color
      *
-     * @param string $value
+     * @param ColorInterface $value
      * @return self
      */
-    public function setColor($value = null)
+    public function setColor(ColorInterface $value): self
     {
         $this->color = $value;
 
@@ -624,9 +615,9 @@ class Font extends AbstractStyle
     /**
      * Get foreground/highlight color
      *
-     * @return string
+     * @return ColorInterface
      */
-    public function getFgColor()
+    public function getFgColor(): ForegroundColor
     {
         return $this->fgColor;
     }
@@ -634,10 +625,10 @@ class Font extends AbstractStyle
     /**
      * Set foreground/highlight color
      *
-     * @param string $value
+     * @param ForegroundColor $value
      * @return self
      */
-    public function setFgColor($value = null)
+    public function setFgColor(ForegroundColor $value)
     {
         $this->fgColor = $value;
 
@@ -657,12 +648,14 @@ class Font extends AbstractStyle
     /**
      * Set background
      *
-     * @param string $value
-     * @return \PhpOffice\PhpWord\Style\Table
+     * @param ColorInterface $value
+     * @return self
      */
-    public function setBgColor($value = null)
+    public function setBgColor(ColorInterface $value = null): self
     {
         $this->setShading(array('fill' => $value));
+
+        return $this;
     }
 
     /**
@@ -691,9 +684,9 @@ class Font extends AbstractStyle
     /**
      * Get font spacing
      *
-     * @return int|float
+     * @return Absolute
      */
-    public function getSpacing()
+    public function getSpacing(): Absolute
     {
         return $this->spacing;
     }
@@ -701,12 +694,12 @@ class Font extends AbstractStyle
     /**
      * Set font spacing
      *
-     * @param int|float $value
+     * @param Absolute $value
      * @return self
      */
-    public function setSpacing($value = null)
+    public function setSpacing(Absolute $value): self
     {
-        $this->spacing = $this->setNumericVal($value, null);
+        $this->spacing = $value;
 
         return $this;
     }
@@ -973,22 +966,26 @@ class Font extends AbstractStyle
     /**
      * Get position
      *
-     * @return int
+     * @return Absolute
      */
-    public function getPosition()
+    public function getPosition(): Absolute
     {
+        if ($this->position === null) {
+            $this->position = new Absolute(null);
+        }
+
         return $this->position;
     }
 
     /**
      * Set position
      *
-     * @param int $value
+     * @param Absolute $value
      * @return self
      */
-    public function setPosition($value = null)
+    public function setPosition(Absolute $value): self
     {
-        $this->position = $this->setIntVal($value, null);
+        $this->position = $value;
 
         return $this;
     }

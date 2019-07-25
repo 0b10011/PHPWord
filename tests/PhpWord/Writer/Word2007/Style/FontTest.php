@@ -17,6 +17,7 @@
 
 namespace PhpOffice\PhpWord\Writer\Word2007\Style;
 
+use PhpOffice\PhpWord\Style\Lengths\Absolute;
 use PhpOffice\PhpWord\TestHelperDOCX;
 
 /**
@@ -73,7 +74,7 @@ class FontTest extends \PHPUnit\Framework\TestCase
     {
         $phpWord = new \PhpOffice\PhpWord\PhpWord();
         $section = $phpWord->addSection();
-        $section->addText('This text is lowered', array('position' => -20));
+        $section->addText('This text is lowered', array('position' => Absolute::from('hpt', -20)));
         $doc = TestHelperDOCX::getDocument($phpWord, 'Word2007');
 
         $path = '/w:document/w:body/w:p/w:r/w:rPr/w:position';

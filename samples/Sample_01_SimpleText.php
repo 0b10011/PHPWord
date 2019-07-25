@@ -1,5 +1,6 @@
 <?php
 use PhpOffice\PhpWord\Style\Font;
+use PhpOffice\PhpWord\Style\Lengths\Absolute;
 
 include_once 'Sample_Header.php';
 
@@ -12,12 +13,12 @@ $phpWord = new \PhpOffice\PhpWord\PhpWord();
 $phpWord->getSettings()->setThemeFontLang($languageEnGb);
 
 $fontStyleName = 'rStyle';
-$phpWord->addFontStyle($fontStyleName, array('bold' => true, 'italic' => true, 'size' => 16, 'allCaps' => true, 'doubleStrikethrough' => true));
+$phpWord->addFontStyle($fontStyleName, array('bold' => true, 'italic' => true, 'size' => Absolute::from('pt', 16), 'allCaps' => true, 'doubleStrikethrough' => true));
 
 $paragraphStyleName = 'pStyle';
-$phpWord->addParagraphStyle($paragraphStyleName, array('alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER, 'spaceAfter' => 100));
+$phpWord->addParagraphStyle($paragraphStyleName, array('alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER, 'spaceAfter' => Absolute::from('pt', 100)));
 
-$phpWord->addTitleStyle(1, array('bold' => true), array('spaceAfter' => 240));
+$phpWord->addTitleStyle(1, array('bold' => true), array('spaceAfter' => Absolute::from('pt', 240)));
 
 // New portrait section
 $section = $phpWord->addSection();
@@ -42,12 +43,12 @@ $section->addTextBreak();
 
 // Inline font style
 $fontStyle['name'] = 'Times New Roman';
-$fontStyle['size'] = 20;
+$fontStyle['size'] = Absolute::from('pt', 20);
 
 $textrun = $section->addTextRun();
 $textrun->addText('I am inline styled ', $fontStyle);
 $textrun->addText('with ');
-$textrun->addText('color', array('color' => '996699'));
+$textrun->addText('color', array('color' => new Hex('996699')));
 $textrun->addText(', ');
 $textrun->addText('bold', array('bold' => true));
 $textrun->addText(', ');
@@ -69,11 +70,11 @@ $textrun->addText('allCaps', array('allCaps' => true));
 $textrun->addText(', ');
 $textrun->addText('fgColor', array('fgColor' => 'yellow'));
 $textrun->addText(', ');
-$textrun->addText('scale', array('scale' => 200));
+$textrun->addText('scale', array('scale' => Absolute::from('twip', 200)));
 $textrun->addText(', ');
-$textrun->addText('spacing', array('spacing' => 120));
+$textrun->addText('spacing', array('spacing' => Absolute::from('twip', 120)));
 $textrun->addText(', ');
-$textrun->addText('kerning', array('kerning' => 10));
+$textrun->addText('kerning', array('kerning' => Absolute::from('twip', 10)));
 $textrun->addText('. ');
 
 // Link
@@ -81,7 +82,7 @@ $section->addLink('https://github.com/PHPOffice/PHPWord', 'PHPWord on GitHub');
 $section->addTextBreak();
 
 // Image
-$section->addImage('resources/_earth.jpg', array('width'=>18, 'height'=>18));
+$section->addImage('resources/_earth.jpg', array('width'=>Absolute::from('pt', 18), 'height'=>Absolute::from('pt', 18)));
 
 // Save file
 echo write($phpWord, basename(__FILE__, '.php'), $writers);

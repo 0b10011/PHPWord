@@ -18,6 +18,7 @@
 namespace PhpOffice\PhpWord;
 
 use PhpOffice\PhpWord\Metadata\DocInfo;
+use PhpOffice\PhpWord\Style\Lengths\Absolute;
 
 /**
  * Test class for PhpOffice\PhpWord\PhpWord
@@ -34,7 +35,7 @@ class PhpWordTest extends \PHPUnit\Framework\TestCase
         $phpWord = new PhpWord();
         $this->assertEquals(new DocInfo(), $phpWord->getDocInfo());
         $this->assertEquals(Settings::DEFAULT_FONT_NAME, $phpWord->getDefaultFontName());
-        $this->assertEquals(Settings::DEFAULT_FONT_SIZE, $phpWord->getDefaultFontSize());
+        $this->assertEquals(Settings::DEFAULT_FONT_SIZE, $phpWord->getDefaultFontSize()->toInt('pt'));
     }
 
     /**
@@ -66,9 +67,9 @@ class PhpWordTest extends \PHPUnit\Framework\TestCase
     {
         $phpWord = new PhpWord();
         $fontSize = 16;
-        $this->assertEquals(Settings::DEFAULT_FONT_SIZE, $phpWord->getDefaultFontSize());
-        $phpWord->setDefaultFontSize($fontSize);
-        $this->assertEquals($fontSize, $phpWord->getDefaultFontSize());
+        $this->assertEquals(Settings::DEFAULT_FONT_SIZE, $phpWord->getDefaultFontSize()->toInt('pt'));
+        $phpWord->setDefaultFontSize(Absolute::from('pt', $fontSize));
+        $this->assertEquals($fontSize, $phpWord->getDefaultFontSize()->toInt('pt'));
     }
 
     /**

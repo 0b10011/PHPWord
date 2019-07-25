@@ -42,7 +42,7 @@ class Tab extends AbstractStyle
         if (isset($tabs[$style->getType()])) {
             $content .= $tabs[$style->getType()];
         }
-        $content .= '\tx' . round($style->getPosition());
+        $content .= '\tx' . round($style->getPosition()->toInt('twip'));
 
         return $content;
     }

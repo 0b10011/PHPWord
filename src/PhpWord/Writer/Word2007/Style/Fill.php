@@ -36,6 +36,6 @@ class Fill extends AbstractStyle
         $xmlWriter = $this->getXmlWriter();
 
         $xmlWriter->writeAttribute('on', 't');
-        $xmlWriter->writeAttributeIf($style->getColor() !== null, 'fillcolor', $style->getColor());
+        $xmlWriter->writeAttributeIf($style->getColor()->getColor() !== null, 'fillcolor', $style->getColor()->getColor());
     }
 }

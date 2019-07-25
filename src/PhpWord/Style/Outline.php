@@ -62,13 +62,6 @@ class Outline extends AbstractStyle
     const ARROW_OPEN = 'open';
 
     /**
-     * Unit; No set method for now
-     *
-     * @var string
-     */
-    private $unit = 'pt';
-
-    /**
      * Outline weight
      *
      * @var int|float
@@ -126,16 +119,6 @@ class Outline extends AbstractStyle
     public function __construct($style = array())
     {
         $this->setStyleByArray($style);
-    }
-
-    /**
-     * Get unit
-     *
-     * @return string
-     */
-    public function getUnit()
-    {
-        return $this->unit;
     }
 
     /**
