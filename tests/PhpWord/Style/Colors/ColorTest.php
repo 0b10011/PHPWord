@@ -35,7 +35,7 @@ class ColorTest extends \PHPUnit\Framework\TestCase
             array(null, AbstractColor::class, null),
             array(new Hex('fff'), Hex::class, 'FFFFFF'),
             array(new Rgb(0, 102, 255), Rgb::class, '0066FF'),
-            array(new SystemColor('window'), SystemColor::class, 'window'),
+            array(new SystemColor('window', new Hex('fff')), SystemColor::class, 'window'),
             array(new HighlightColor('green'), HighlightColor::class, 'green'),
         );
         // Conduct test

@@ -67,7 +67,7 @@ class SystemColorTest extends \PHPUnit\Framework\TestCase
         // Conduct test
         foreach ($values as $value) {
             $message = $value . ' should be a valid color';
-            $result = new SystemColor($value);
+            $result = new SystemColor($value, new Hex('000'));
             $this->assertEquals($value, $result->getName(), $message);
             $this->assertEquals($value, $result->toHexOrName(), $message);
         }

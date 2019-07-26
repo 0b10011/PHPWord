@@ -44,20 +44,27 @@ final class SystemColor extends AbstractColor implements NamedColorInterface
         'menuBar'                 => true,
     );
 
-    private $color;
+    private $name;
+    private $lastColor;
 
-    public function __construct(string $color)
+    public function __construct(string $name, StaticColorInterface $lastColor)
     {
-        if (!static::isValid($color)) {
-            throw new Exception(sprintf("Provided system color must be a valid system color. '%s' provided. Allowed: %s", $color, implode(', ', array_keys(self::$allowedColors))));
+        if (!static::isValid($name)) {
+            throw new Exception(sprintf("Provided system color must be a valid system color. '%s' provided. Allowed: %s", $name, implode(', ', array_keys(self::$allowedColors))));
         }
 
-        $this->color = $color;
+        $this->name = $name;
+        $this->lastColor = clone $lastColor;
     }
 
     public function getName(): string
     {
-        return $this->color;
+        return $this->name;
+    }
+
+    public function getLastColor(): StaticColorInterface
+    {
+        return clone $this->lastColor;
     }
 
     public static function isValid(string $color): bool
