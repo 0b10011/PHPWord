@@ -22,6 +22,9 @@ use PhpOffice\PhpWord\SimpleType\VerticalJc;
 use PhpOffice\PhpWord\Style\Colors\AbstractColor;
 use PhpOffice\PhpWord\Style\Colors\Hex;
 use PhpOffice\PhpWord\Style\Lengths\Absolute;
+use PhpOffice\PhpWord\Style\Lengths\Auto;
+use PhpOffice\PhpWord\Style\Lengths\Length;
+use PhpOffice\PhpWord\Style\Lengths\Percent;
 
 /**
  * Test class for PhpOffice\PhpWord\Style\Cell
@@ -110,5 +113,41 @@ class CellTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, array_map(function ($value) {
             return $value->toInt('twip');
         }, $object->getBorderSize()));
+    }
+
+    /**
+     * Test width
+     */
+    public function testWidth()
+    {
+        $cell = new Cell();
+
+        // Undefined
+        $width = $cell->getWidth();
+        $this->assertInstanceOf(Length::class, $width);
+        $this->assertNull($width->toInt('twip'));
+
+        // Null
+        $cell->setWidth(new Absolute(null));
+        $width = $cell->getWidth();
+        $this->assertInstanceOf(Absolute::class, $width);
+        $this->assertNull($width->toInt('twip'));
+
+        // Absolute
+        $cell->setWidth(Absolute::from('twip', 204));
+        $width = $cell->getWidth();
+        $this->assertInstanceOf(Length::class, $width);
+        $this->assertEquals(204, $width->toInt('twip'));
+
+        // Percent
+        $cell->setWidth(new Percent(50));
+        $width = $cell->getWidth();
+        $this->assertInstanceOf(Percent::class, $width);
+        $this->assertEquals(50, $width->toInt());
+
+        // Auto
+        $cell->setWidth(new Auto());
+        $width = $cell->getWidth();
+        $this->assertInstanceOf(Auto::class, $width);
     }
 }
