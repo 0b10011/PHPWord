@@ -19,7 +19,6 @@ declare(strict_types=1);
 namespace PhpOffice\PhpWord\Writer\Word2007\Style;
 
 use PhpOffice\Common\XMLWriter;
-use PhpOffice\PhpWord\Settings;
 
 /**
  * Style writer
@@ -76,31 +75,6 @@ abstract class AbstractStyle
     protected function getStyle()
     {
         return $this->style;
-    }
-
-    /**
-     * Convert twip value
-     *
-     * @param int|float $value
-     * @param int $default (int|float)
-     * @return int|float
-     */
-    protected function convertTwip($value, $default = 0)
-    {
-        $factors = array(
-            Settings::UNIT_CM    => 567,
-            Settings::UNIT_MM    => 56.7,
-            Settings::UNIT_INCH  => 1440,
-            Settings::UNIT_POINT => 20,
-            Settings::UNIT_PICA  => 240,
-        );
-        $unit = Settings::getMeasurementUnit();
-        $factor = 1;
-        if (in_array($unit, $factors) && $value != $default) {
-            $factor = $factors[$unit];
-        }
-
-        return $value * $factor;
     }
 
     /**
