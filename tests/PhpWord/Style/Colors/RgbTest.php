@@ -110,7 +110,7 @@ class RgbTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @expectedException \TypeError
-     * @expectedExceptionMessage Argument 3 passed to PhpOffice\PhpWord\Style\Colors\Rgb::__construct() must be of the type integer, none given
+     * @expectedExceptionMessageRegEx (Argument 3 passed to PhpOffice\\PhpWord\\Style\\Colors\\Rgb::\_\_construct\(\) must be of the type integer, none given|Too few arguments to function PhpOffice\\PhpWord\\Style\\Colors\\Rgb::\_\_construct\(\), 2 passed)
      */
     public function testTooFewArgs()
     {

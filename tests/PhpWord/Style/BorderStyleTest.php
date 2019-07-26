@@ -82,7 +82,7 @@ class BorderStyleTest extends \PHPUnit\Framework\TestCase
     /**
      * Test setting style with wrong type
      * @expectedException \TypeError
-     * @expectedExceptionMessage Argument 1 passed to PhpOffice\PhpWord\Style\BorderStyle::__construct() must be of the type string, integer given
+     * @expectedExceptionMessage Argument 1 passed to PhpOffice\PhpWord\Style\BorderStyle::__construct() must be of the type string
      */
     public function testSetGetWrongType()
     {
