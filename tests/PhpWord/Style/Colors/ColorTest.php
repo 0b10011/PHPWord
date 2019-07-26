@@ -50,7 +50,7 @@ class ColorTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @expectedException \Exception
-     * @expectedExceptionMessage All colors must implement NamedAbstractColor or StaticAbstractColor. 'class@anonymous
+     * @expectedExceptionMessage All colors must implement NamedColorInterface or StaticColorInterface. 'class@anonymous
      */
     public function testBadClass()
     {

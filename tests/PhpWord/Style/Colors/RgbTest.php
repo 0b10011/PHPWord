@@ -19,7 +19,7 @@ declare(strict_types=1);
 namespace PhpOffice\PhpWord\Style\Colors;
 
 /**
- * @coversDefaultClass \PhpOffice\PhpWord\Style\Colors\SystemColor
+ * @coversDefaultClass \PhpOffice\PhpWord\Style\Colors\Rgb
  */
 class RgbTest extends \PHPUnit\Framework\TestCase
 {

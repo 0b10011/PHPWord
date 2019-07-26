@@ -15,6 +15,6 @@ abstract class AbstractColor
         if ($this instanceof StaticColorInterface) {
             return $this->toHex($includeHash);
         }
-        throw new Exception(sprintf('All colors must implement NamedAbstractColor or StaticAbstractColor. \'%s\' does not implement either.', get_class($this)));
+        throw new Exception(sprintf('All colors must implement NamedColorInterface or StaticColorInterface. \'%s\' does not implement either.', get_class($this)));
     }
 }
