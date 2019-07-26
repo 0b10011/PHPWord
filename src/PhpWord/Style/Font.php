@@ -20,8 +20,8 @@ namespace PhpOffice\PhpWord\Style;
 
 use PhpOffice\PhpWord\Style\Colors\AbstractColor;
 use PhpOffice\PhpWord\Style\Colors\Color;
-use PhpOffice\PhpWord\Style\Colors\ForegroundColor;
 use PhpOffice\PhpWord\Style\Colors\Hex;
+use PhpOffice\PhpWord\Style\Colors\HighlightColor;
 use PhpOffice\PhpWord\Style\Lengths\Absolute;
 
 /**
@@ -171,7 +171,7 @@ class Font extends AbstractStyle
     /**
      * Foreground/highlight
      *
-     * @var ForegroundColor
+     * @var HighlightColor
      */
     private $fgColor;
 
@@ -265,7 +265,7 @@ class Font extends AbstractStyle
         $this
             ->setSize(new Absolute(null))
             ->setColor(new Hex(null))
-            ->setFgColor(new ForegroundColor(null))
+            ->setFgColor(new HighlightColor(null))
             ->setBgColor(new Hex(null))
             ->setSpacing(new Absolute(null));
         $this->type = $type;
@@ -605,10 +605,8 @@ class Font extends AbstractStyle
 
     /**
      * Get foreground/highlight color
-     *
-     * @return AbstractColor
      */
-    public function getFgColor(): ForegroundColor
+    public function getFgColor(): HighlightColor
     {
         return $this->fgColor;
     }
@@ -618,7 +616,7 @@ class Font extends AbstractStyle
      *
      * @return self
      */
-    public function setFgColor(ForegroundColor $value)
+    public function setFgColor(HighlightColor $value)
     {
         $this->fgColor = $value;
 

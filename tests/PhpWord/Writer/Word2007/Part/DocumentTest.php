@@ -515,7 +515,7 @@ class DocumentTest extends \PHPUnit\Framework\TestCase
         $styles['strikethrough'] = true;
         $styles['superScript'] = true;
         $styles['color'] = new Colors\Hex('FF0000');
-        $styles['fgColor'] = new Colors\ForegroundColor('yellow');
+        $styles['fgColor'] = new Colors\HighlightColor('yellow');
         $styles['bgColor'] = new Colors\Hex('FFFF00');
         $styles['hint'] = 'eastAsia';
         $styles['smallCaps'] = true;

@@ -21,8 +21,8 @@ namespace PhpOffice\PhpWord\Style;
 use PhpOffice\PhpWord\PhpWord;
 use PhpOffice\PhpWord\SimpleType\Jc;
 use PhpOffice\PhpWord\Style\Colors\AbstractColor;
-use PhpOffice\PhpWord\Style\Colors\ForegroundColor;
 use PhpOffice\PhpWord\Style\Colors\Hex;
+use PhpOffice\PhpWord\Style\Colors\HighlightColor;
 use PhpOffice\PhpWord\Style\Lengths\Absolute;
 use PhpOffice\PhpWord\TestHelperDOCX;
 
@@ -75,7 +75,7 @@ class FontTest extends \PHPUnit\Framework\TestCase
             'smallCaps'           => false,
             'allCaps'             => false,
             'rtl'                 => false,
-            'fgColor'             => new ForegroundColor(null),
+            'fgColor'             => new HighlightColor(null),
             'bgColor'             => new Hex(null),
             'scale'               => null,
             'spacing'             => new Absolute(null),
@@ -121,7 +121,7 @@ class FontTest extends \PHPUnit\Framework\TestCase
             'doubleStrikethrough' => false,
             'smallCaps'           => true,
             'allCaps'             => false,
-            'fgColor'             => new ForegroundColor('yellow'),
+            'fgColor'             => new HighlightColor('yellow'),
             'bgColor'             => new Hex('FFFF00'),
             'lineHeight'          => 2,
             'scale'               => 150,

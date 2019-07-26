@@ -43,7 +43,7 @@ class Font extends AbstractStyle
         $font = $style->getName();
         $size = $style->getSize()->toInt('pt');
         $color = $style->getColor()->toHex(true);
-        $fgColor = $style->getFgColor()->toHexOrName();
+        $fgColor = $style->getFgColor()->toName();
         $underline = $style->getUnderline() != FontStyle::UNDERLINE_NONE;
         $lineThrough = $style->isStrikethrough() || $style->isDoubleStrikethrough();
 

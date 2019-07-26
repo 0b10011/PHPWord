@@ -20,7 +20,7 @@ namespace PhpOffice\PhpWord\Style;
 
 use PhpOffice\PhpWord\Exception\Exception;
 use PhpOffice\PhpWord\SimpleType\Jc;
-use PhpOffice\PhpWord\Style\Colors\ForegroundColor;
+use PhpOffice\PhpWord\Style\Colors\HighlightColor;
 use PhpOffice\PhpWord\Style\Lengths\Absolute;
 use Throwable;
 
@@ -56,7 +56,7 @@ class TextBoxTest extends \PHPUnit\Framework\TestCase
             'innerMarginBottom' => Absolute::from('twip', 5),
             'innerMarginLeft'   => Absolute::from('twip', 5),
             'borderSize'        => Absolute::from('twip', 2),
-            'borderColor'       => new ForegroundColor('red'),
+            'borderColor'       => new HighlightColor('red'),
         );
         foreach ($properties as $key => $value) {
             $set = "set{$key}";
@@ -99,7 +99,7 @@ class TextBoxTest extends \PHPUnit\Framework\TestCase
             'innerMarginBottom' => Absolute::from('twip', 5),
             'innerMarginLeft'   => Absolute::from('twip', 5),
             'borderSize'        => Absolute::from('twip', 2),
-            'borderColor'       => new ForegroundColor('red'),
+            'borderColor'       => new HighlightColor('red'),
         );
         foreach ($properties as $key => $value) {
             $get = "get{$key}";
@@ -319,7 +319,7 @@ class TextBoxTest extends \PHPUnit\Framework\TestCase
      */
     public function testSetGetBorderColor()
     {
-        $expected = new ForegroundColor('red');
+        $expected = new HighlightColor('red');
         $object = new TextBox();
         $object->setBorderColor($expected);
         $this->assertEquals($expected, $object->getBorderColor());

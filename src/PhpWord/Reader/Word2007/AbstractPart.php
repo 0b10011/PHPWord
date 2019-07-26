@@ -28,7 +28,7 @@ use PhpOffice\PhpWord\Element\TrackChange;
 use PhpOffice\PhpWord\PhpWord;
 use PhpOffice\PhpWord\Style\BorderStyle;
 use PhpOffice\PhpWord\Style\Colors\Color;
-use PhpOffice\PhpWord\Style\Colors\ForegroundColor;
+use PhpOffice\PhpWord\Style\Colors\HighlightColor;
 use PhpOffice\PhpWord\Style\Lengths\Absolute;
 use PhpOffice\PhpWord\Style\Lengths\Auto;
 use PhpOffice\PhpWord\Style\Lengths\Length;
@@ -50,7 +50,7 @@ abstract class AbstractPart
      */
     const READ_VALUE = 'attributeValue';            // Read attribute value
     const READ_COLOR = 'color';            // Read attribute value
-    const READ_FOREGROUND = 'foregroundColor';            // Read attribute value
+    const READ_HIGHLIGHT = 'highlightColor';            // Read attribute value
     const READ_EQUAL = 'attributeEquals';           // Read `true` when attribute value equals specified value
     const READ_TRUE = 'attributeTrue';              // Read `true` when element exists
     const READ_FALSE = 'attributeFalse';            // Read `false` when element exists
@@ -473,7 +473,7 @@ abstract class AbstractPart
             'allCaps'             => array(self::READ_TRUE,  'w:caps'),
             'superScript'         => array(self::READ_EQUAL, 'w:vertAlign', 'w:val', 'superscript'),
             'subScript'           => array(self::READ_EQUAL, 'w:vertAlign', 'w:val', 'subscript'),
-            'fgColor'             => array(self::READ_FOREGROUND, 'w:highlight'),
+            'fgColor'             => array(self::READ_HIGHLIGHT, 'w:highlight'),
             'rtl'                 => array(self::READ_TRUE,  'w:rtl'),
             'lang'                => array(self::READ_VALUE, 'w:lang'),
             'position'            => array(self::READ_TWIP, 'w:position'),
@@ -710,8 +710,8 @@ abstract class AbstractPart
             $style = $attributeValue == $expected;
         } elseif (self::READ_COLOR == $method) {
             $style = Color::fromMixed($attributeValue);
-        } elseif (self::READ_FOREGROUND == $method) {
-            $style = new ForegroundColor($attributeValue);
+        } elseif (self::READ_HIGHLIGHT == $method) {
+            $style = new HighlightColor($attributeValue);
         }
 
         return $style;

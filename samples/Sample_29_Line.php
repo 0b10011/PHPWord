@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 use PhpOffice\PhpWord\PhpWord;
-use PhpOffice\PhpWord\Style\Colors\ForegroundColor;
+use PhpOffice\PhpWord\Style\Colors\HighlightColor;
 use PhpOffice\PhpWord\Style\Lengths\Absolute;
 
 include_once 'Sample_Header.php';
@@ -45,7 +45,7 @@ $section->addLine(
         'marginLeft'       => Absolute::from('cm', 10),
         'marginTop'        => Absolute::from('cm', 8),
         'wrappingStyle'    => \PhpOffice\PhpWord\Style\Image::WRAPPING_STYLE_SQUARE,
-        'color'            => new ForegroundColor('red'),
+        'color'            => new HighlightColor('red'),
     )
 );
 

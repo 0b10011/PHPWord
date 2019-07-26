@@ -27,8 +27,8 @@ class ColorTest extends \PHPUnit\Framework\TestCase
     {
         // Prepare test values [ original, expected ]
         $values = array(
-            array('yellow', ForegroundColor::class, 'yellow'),
-            array('ActiveBorderColor', SystemColor::class, 'ActiveBorderColor'),
+            array('yellow', HighlightColor::class, 'yellow'),
+            array('window', SystemColor::class, 'window'),
             array('a0b', Hex::class, 'AA00BB'),
             array('aB01cD', Hex::class, 'AB01CD'),
             array('', AbstractColor::class, null),
@@ -36,8 +36,8 @@ class ColorTest extends \PHPUnit\Framework\TestCase
             array(null, AbstractColor::class, null),
             array(new Hex('fff'), Hex::class, 'FFFFFF'),
             array(new Rgb(0, 102, 255), Rgb::class, '0066FF'),
-            array(new SystemColor('ActiveBorderColor'), SystemColor::class, 'ActiveBorderColor'),
-            array(new ForegroundColor('green'), ForegroundColor::class, 'green'),
+            array(new SystemColor('window'), SystemColor::class, 'window'),
+            array(new HighlightColor('green'), HighlightColor::class, 'green'),
         );
         // Conduct test
         foreach ($values as $value) {

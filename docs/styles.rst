@@ -47,7 +47,7 @@ Available Font style options:
 - ``bold``. Bold, *true* or *false*.
 - ``color``. Font color (``\PhpOffice\PhpWord\Style\Colors\AbstractColor``).
 - ``doubleStrikethrough``. Double strikethrough, *true* or *false*.
-- ``fgColor``. Font highlight color (``\PhpOffice\PhpWord\Style\Colors\ForegroundColor``).
+- ``fgColor``. Font highlight color (``\PhpOffice\PhpWord\Style\Colors\HighlightColor``).
 - ``hint``. Font content type, *default*, *eastAsia*, or *cs*.
 - ``italic``. Italic, *true* or *false*.
 - ``name``. Font name, e.g. *Arial*.

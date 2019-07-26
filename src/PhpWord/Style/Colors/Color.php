@@ -23,8 +23,8 @@ final class Color
                 return new Hex($value);
             } elseif (SystemColor::isValid($value)) {
                 return new SystemColor($value);
-            } elseif (ForegroundColor::isValid($value)) {
-                return new ForegroundColor($value);
+            } elseif (HighlightColor::isValid($value)) {
+                return new HighlightColor($value);
             }
         }
 

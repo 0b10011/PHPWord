@@ -234,7 +234,7 @@ See ``Sample_40_TemplateSetComplexValue.php`` for examples.
 
 .. code-block:: php
 
-    $table = new Table(array('borderSize' => Absolute::from('twip', 12), 'borderColor' => new ForegroundColor('green'), 'width' => Absolute::from('twip', 6000)));
+    $table = new Table(array('borderSize' => Absolute::from('twip', 12), 'borderColor' => new HighlightColor('green'), 'width' => Absolute::from('twip', 6000)));
     $table->addRow();
     $table->addCell(Absolute::from('twip', 150))->addText('Cell A1');
     $table->addCell(Absolute::from('twip', 150))->addText('Cell A2');

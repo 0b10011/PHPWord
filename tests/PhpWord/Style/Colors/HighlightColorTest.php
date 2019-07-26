@@ -19,13 +19,13 @@ declare(strict_types=1);
 namespace PhpOffice\PhpWord\Style\Colors;
 
 /**
- * @coversDefaultClass \PhpOffice\PhpWord\Style\Colors\ForegroundColor
+ * @coversDefaultClass \PhpOffice\PhpWord\Style\Colors\HighlightColor
  */
-class ForegroundColorTest extends \PHPUnit\Framework\TestCase
+class HighlightColorTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @expectedException \Exception
-     * @expectedExceptionMessage Provided color must be a valid foreground color. 'fakeColor' provided. Allowed:
+     * @expectedExceptionMessage Provided color must be a valid highlight color. 'fakeColor' provided. Allowed:
      */
     public function testConversions()
     {
@@ -57,7 +57,7 @@ class ForegroundColorTest extends \PHPUnit\Framework\TestCase
         // Conduct test
         foreach ($values as $value) {
             $message = $value[0] . ' should be a valid foreground color';
-            $result = new ForegroundColor($value[0]);
+            $result = new HighlightColor($value[0]);
             $this->assertEquals($value[1], $result->toHex(), $message);
             $this->assertEquals($value[1] === null ? null : '#' . $value[1], $result->toHex(true), $message);
             $this->assertEquals($value[0], $result->toHexOrName(), $message);

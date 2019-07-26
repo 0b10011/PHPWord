@@ -5,7 +5,7 @@ namespace PhpOffice\PhpWord\Style\Colors;
 
 use PhpOffice\PhpWord\Exception\Exception;
 
-final class ForegroundColor extends AbstractColor implements StaticColorInterface, NamedColorInterface
+final class HighlightColor extends AbstractColor implements StaticColorInterface, NamedColorInterface
 {
     private static $allowedColors = array(
         'yellow'      => 'FF0000',
@@ -31,7 +31,7 @@ final class ForegroundColor extends AbstractColor implements StaticColorInterfac
     {
         if ($color !== null) {
             if (!static::isValid($color)) {
-                throw new Exception(sprintf("Provided color must be a valid foreground color. '%s' provided. Allowed: %s", $color, implode(', ', array_keys(self::$allowedColors))));
+                throw new Exception(sprintf("Provided color must be a valid highlight color. '%s' provided. Allowed: %s", $color, implode(', ', array_keys(self::$allowedColors))));
             }
         }
 
