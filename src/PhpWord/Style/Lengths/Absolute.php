@@ -46,13 +46,17 @@ class Absolute extends Length
 
     public static function from(string $unit, float $length = null): self
     {
+        if ($length === null) {
+            return new static(null);
+        }
+
         return new static($length * self::getConversion($unit));
     }
 
     public static function fromMixed(string $unit, $value = null): self
     {
         if ($value instanceof self) {
-            return $value;
+            return clone $value;
         }
 
         if (is_string($value) && (preg_match('/[^\d\.\,]/', $value) == 0)) {

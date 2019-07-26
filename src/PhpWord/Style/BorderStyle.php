@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace PhpOffice\PhpWord\Style;
 
-use PhpOffice\PhpWord\Exception;
+use PhpOffice\PhpWord\Exception\Exception;
 
 class BorderStyle
 {
@@ -46,7 +46,7 @@ class BorderStyle
     public function __construct(string $style = null)
     {
         if ($style !== null && !static::isValid($style)) {
-            throw new Exception(sprintf("Provided border style must be valid. '%s' provided. Allowed: %s`", $style, implode(', ', self::$allowedStyles)));
+            throw new Exception(sprintf("Provided border style must be valid. '%s' provided. Allowed: '%s'", $style, implode('\', \'', array_keys(self::$allowedStyles))));
         }
 
         $this->style = $style;

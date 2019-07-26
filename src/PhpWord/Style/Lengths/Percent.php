@@ -27,19 +27,19 @@ class Percent extends Length
     public static function fromMixed($value = null): self
     {
         if ($value instanceof self) {
-            return $value;
+            return clone $value;
         }
 
         // The 2006 version of the OOXML standard specified that the value was to be a decimal. When type="pct", the value was interpretted as fifths of a percent, so 4975=99.5%, and no % symbol was included in the attribute. In the 2011 version the value can be either a decimal or a percent, so a % symbol should be included when type="pct".
         // @see http://officeopenxml.com/WPtableCellProperties-Width.php
-        $divideBy500 = true;
+        $divideBy50 = true;
 
         if (!is_string($value)) {
             $float = $value;
         } elseif (preg_match('/^([0-9]+\\.?|[0-9]*\\.[0-9]+)%$/', $value)) {
-            $divideBy500 = false;
-            $float = (float) substr($value, -1);
-        } elseif (preg_match('/[^\d\.\,]/', $value)) {
+            $divideBy50 = false;
+            $float = (float) substr($value, 0, -1);
+        } elseif (!preg_match('/[^\d\.\,]/', $value)) {
             $float = (float) $value;
         } else {
             $float = $value;
@@ -56,6 +56,6 @@ class Percent extends Length
             return new self(null);
         }
 
-        return new self($divideBy500 ? $float / 500 : $float);
+        return new self($divideBy50 ? $float / 50 : $float);
     }
 }
