@@ -224,12 +224,6 @@ class Table extends AbstractStyle
 
     private function writeIndent(XMLWriter $xmlWriter, TableStyle $style)
     {
-        $indent = $style->getIndent();
-
-        if ($indent === null) {
-            return;
-        }
-
-        $this->writeTblWidth($xmlWriter, 'w:tblInd', $indent);
+        $this->writeTblWidth($xmlWriter, 'w:tblInd', $style->getIndent());
     }
 }
