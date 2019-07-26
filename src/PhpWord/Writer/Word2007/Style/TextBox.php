@@ -59,7 +59,7 @@ class TextBox extends Frame
         $xmlWriter->startElement('v:stroke');
         $borderSize = $style->getBorderSize()->toInt('pt');
         $xmlWriter->writeAttributeIf($borderSize !== null, 'weight', $borderSize . 'pt');
-        $xmlWriter->writeAttributeIf($style->getBorderColor()->getHexOrName() !== null, 'color', $style->getBorderColor()->getHexOrName());
+        $xmlWriter->writeAttributeIf($style->getBorderColor()->toHexOrName() !== null, 'color', $style->getBorderColor()->toHexOrName());
         $xmlWriter->endElement(); // v:stroke
     }
 }

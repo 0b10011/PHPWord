@@ -217,7 +217,7 @@ class Header extends AbstractPart
     {
         $colors = $style->getBorderColor();
         foreach ($colors as $color) {
-            if ($color->getHexOrName() !== null) {
+            if ($color->toHexOrName() !== null) {
                 $this->registerTableItem($this->colorTable, $color);
             }
         }

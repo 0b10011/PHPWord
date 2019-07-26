@@ -19,18 +19,15 @@ declare(strict_types=1);
 namespace PhpOffice\PhpWord\Style\Colors;
 
 /**
- * Test class for PhpOffice\PhpWord\Shared\Converter
- *
- * @coversDefaultClass \PhpOffice\PhpWord\Shared\Converter
+ * @coversDefaultClass \PhpOffice\PhpWord\Style\Colors\Hex
  */
 class HexTest extends \PHPUnit\Framework\TestCase
 {
     /**
-     * Test htmlToRGB()
      * @expectedException \Exception
      * @expectedExceptionMessage Hex value must match `([0-9a-f]{3}){1,2}`. `0F9D` provided
      */
-    public function testHexToRgb()
+    public function testHexConversions()
     {
         // Prepare test values [ original, expected ]
         $values = array(
@@ -59,6 +56,8 @@ class HexTest extends \PHPUnit\Framework\TestCase
             $result = new Hex($value[0]);
             $this->assertEquals($value[1], $result->toHex(), $message);
             $this->assertEquals($value[1] === null ? null : '#' . $value[1], $result->toHex(true), $message);
+            $this->assertEquals($value[1], $result->toHexOrName(), $message);
+            $this->assertEquals($value[1] === null ? null : '#' . $value[1], $result->toHexOrName(true), $message);
             $this->assertEquals($value[2], $result->toRgb(), $message);
         }
     }

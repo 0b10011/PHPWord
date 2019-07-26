@@ -88,8 +88,8 @@ class FontTest extends \PHPUnit\Framework\TestCase
             $result = $object->$get();
             $new = $default;
             if ($result instanceof AbstractColor) {
-                $default = $default->getHexOrName();
-                $result = $result->getHexOrName();
+                $default = $default->toHexOrName();
+                $result = $result->toHexOrName();
             } elseif ($result instanceof Absolute) {
                 $default = $default->toInt('pt');
                 $result = $result->toInt('pt');
@@ -137,8 +137,8 @@ class FontTest extends \PHPUnit\Framework\TestCase
             $get = is_bool($value) ? "is{$key}" : "get{$key}";
             $result = $object->$get();
             if ($result instanceof AbstractColor) {
-                $result = $result->getHexOrName();
-                $value = $value->getHexOrName();
+                $result = $result->toHexOrName();
+                $value = $value->toHexOrName();
             } elseif ($result instanceof Absolute) {
                 $result = $result->toInt('hpt');
                 $value = $value->toInt('hpt');

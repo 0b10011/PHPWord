@@ -99,7 +99,7 @@ class Font extends AbstractStyle
         }
 
         // Color
-        $color = $style->getColor()->getHexOrName();
+        $color = $style->getColor()->toHexOrName();
         $xmlWriter->writeElementIf($color !== null, 'w:color', 'w:val', $color);
 
         // Size
@@ -128,7 +128,7 @@ class Font extends AbstractStyle
         $xmlWriter->writeElementIf($style->getUnderline() != 'none', 'w:u', 'w:val', $style->getUnderline());
 
         // Foreground-Color
-        $fgColor = $style->getFgColor()->getHexOrName();
+        $fgColor = $style->getFgColor()->toHexOrName();
         $xmlWriter->writeElementIf($fgColor !== null, 'w:highlight', 'w:val', $fgColor);
 
         // Superscript/subscript
@@ -145,7 +145,7 @@ class Font extends AbstractStyle
         $xmlWriter->writeElementIf($style->isNoProof() !== null, 'w:noProof', $this->writeOnOf($style->isNoProof()));
 
         // Background-Color
-        $shading = $style->getShading()->getColor()->getHexOrName();
+        $shading = $style->getShading()->getColor()->toHexOrName();
         if (!is_null($shading)) {
             $styleWriter = new Shading($xmlWriter, $shading);
             $styleWriter->write();

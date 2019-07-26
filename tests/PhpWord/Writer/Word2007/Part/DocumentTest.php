@@ -532,8 +532,8 @@ class DocumentTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($styles['underline'], $doc->getElementAttribute("{$parent}/w:u", 'w:val'));
         $this->assertTrue($doc->elementExists("{$parent}/w:strike"));
         $this->assertEquals('superscript', $doc->getElementAttribute("{$parent}/w:vertAlign", 'w:val'));
-        $this->assertEquals($styles['color']->getHexOrName(), $doc->getElementAttribute("{$parent}/w:color", 'w:val'));
-        $this->assertEquals($styles['fgColor']->getHexOrName(), $doc->getElementAttribute("{$parent}/w:highlight", 'w:val'));
+        $this->assertEquals($styles['color']->toHexOrName(), $doc->getElementAttribute("{$parent}/w:color", 'w:val'));
+        $this->assertEquals($styles['fgColor']->toHexOrName(), $doc->getElementAttribute("{$parent}/w:highlight", 'w:val'));
         $this->assertTrue($doc->elementExists("{$parent}/w:smallCaps"));
     }
 

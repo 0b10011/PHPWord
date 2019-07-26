@@ -7,13 +7,14 @@ use PhpOffice\PhpWord\Exception\Exception;
 
 abstract class AbstractColor
 {
-    final public function getHexOrName(bool $includeHash = false)
+    final public function toHexOrName(bool $includeHash = false)
     {
         if ($this instanceof NamedColorInterface) {
             return $this->getName();
-        } elseif ($this instanceof StaticColorInterface) {
+        }
+        if ($this instanceof StaticColorInterface) {
             return $this->toHex($includeHash);
         }
-        throw new Exception('All colors must implement NamedAbstractColor or StaticAbstractColor.');
+        throw new Exception(sprintf('All colors must implement NamedAbstractColor or StaticAbstractColor. \'%s\' does not implement either.', get_class($this)));
     }
 }

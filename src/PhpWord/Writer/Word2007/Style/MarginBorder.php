@@ -93,7 +93,7 @@ class MarginBorder extends AbstractStyle
     {
         $xmlWriter->startElement('w:' . $side);
         if (!empty($this->colors)) {
-            $color = $color->getHexOrName();
+            $color = $color->toHexOrName();
             if ($color === null && !empty($this->attributes)) {
                 if (isset($this->attributes['defaultColor'])) {
                     $color = $this->attributes['defaultColor'];

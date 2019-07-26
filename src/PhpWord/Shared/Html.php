@@ -563,10 +563,10 @@ class Html
                 $styles['name'] = ucwords($value[0]);
                 break;
             case 'color':
-                $styles['color'] = Color::translate(trim($value, '#'));
+                $styles['color'] = Color::fromMixed(trim($value, '#'));
                 break;
             case 'background-color':
-                $styles['bgColor'] = Color::translate(trim($value, '#'));
+                $styles['bgColor'] = Color::fromMixed(trim($value, '#'));
                 break;
             case 'line-height':
                 $matches = array();
@@ -635,7 +635,7 @@ class Html
             case 'border':
                 if (preg_match('/([0-9]+[^0-9]*)\s+(\#[a-fA-F0-9]+)\s+([a-z]+)/', $value, $matches)) {
                     $styles['borderSize'] = self::cssToAbsolute($matches[1]);
-                    $styles['borderColor'] = Color::translate(trim($matches[2], '#'));
+                    $styles['borderColor'] = Color::fromMixed(trim($matches[2], '#'));
                     $styles['borderStyle'] = self::mapBorderStyle($matches[3]);
                 }
                 break;
@@ -768,12 +768,12 @@ class Html
     {
         $numColors = substr_count($cssBorderColor, '#');
         if ($numColors === 1) {
-            $styles['borderColor'] = Color::translate(trim($cssBorderColor, '#'));
+            $styles['borderColor'] = Color::fromMixed(trim($cssBorderColor, '#'));
         } elseif ($numColors > 1) {
             $colors = explode(' ', $cssBorderColor);
             $borders = array('borderTopColor', 'borderRightColor', 'borderBottomColor', 'borderLeftColor');
             for ($i = 0; $i < min(4, $numColors, count($colors)); $i++) {
-                $styles[$borders[$i]] = Color::translate(trim($colors[$i], '#'));
+                $styles[$borders[$i]] = Color::fromMixed(trim($colors[$i], '#'));
             }
         }
     }

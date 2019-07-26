@@ -709,7 +709,7 @@ abstract class AbstractPart
         } elseif (self::READ_EQUAL == $method) {
             $style = $attributeValue == $expected;
         } elseif (self::READ_COLOR == $method) {
-            $style = Color::translate($attributeValue);
+            $style = Color::fromMixed($attributeValue);
         } elseif (self::READ_FOREGROUND == $method) {
             $style = new ForegroundColor($attributeValue);
         }

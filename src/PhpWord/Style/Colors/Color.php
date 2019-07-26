@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace PhpOffice\PhpWord\Style\Colors;
 
+use PhpOffice\PhpWord\Exception\Exception;
+
 final class Color
 {
     final public function __construct()
@@ -10,7 +12,7 @@ final class Color
         throw new Exception('Color cannot be instantiated');
     }
 
-    public static function translate($value = null): AbstractColor
+    public static function fromMixed($value = null): AbstractColor
     {
         if ($value instanceof AbstractColor) {
             return $value;

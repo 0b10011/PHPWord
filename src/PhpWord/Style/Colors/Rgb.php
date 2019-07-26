@@ -3,11 +3,13 @@ declare(strict_types=1);
 
 namespace PhpOffice\PhpWord\Style\Colors;
 
-use PhpOffice\PhpWord\Exception;
+use PhpOffice\PhpWord\Exception\Exception;
 
 class Rgb extends AbstractColor implements StaticColorInterface
 {
-    private $rgb;
+    private $red;
+    private $green;
+    private $blue;
 
     public function __construct(int $red, int $green, int $blue)
     {
@@ -15,16 +17,18 @@ class Rgb extends AbstractColor implements StaticColorInterface
             throw new Exception(sprintf('Provided values must be 0–255. Provided `Rgb(%s, %s, %s)`', $red, $green, $blue));
         }
 
-        $this->rgb = array($red, $green, $blue);
+        $this->red = $red;
+        $this->green = $green;
+        $this->blue = $blue;
     }
 
     public function toRgb(): array
     {
-        return $this->rgb;
+        return array($this->red, $this->green, $this->blue);
     }
 
     public function toHex(bool $includeHash = false): string
     {
-        return sprintf('%s%02X%02X%02X', ($includeHash ? '#' : ''), $red, $green, $blue);
+        return sprintf('%s%02X%02X%02X', ($includeHash ? '#' : ''), $this->red, $this->green, $this->blue);
     }
 }

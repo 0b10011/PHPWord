@@ -30,10 +30,8 @@ final class ForegroundColor extends AbstractColor implements StaticColorInterfac
     public function __construct(string $color = null)
     {
         if ($color !== null) {
-            $color = strtolower($color);
-
             if (!static::isValid($color)) {
-                throw new Exception(sprintf("Provided color must be a valid foreground color. '%s' provided. Allowed: %s`", $color, implode(', ', self::$allowedColors)));
+                throw new Exception(sprintf("Provided color must be a valid foreground color. '%s' provided. Allowed: %s", $color, implode(', ', array_keys(self::$allowedColors))));
             }
         }
 
@@ -71,20 +69,5 @@ final class ForegroundColor extends AbstractColor implements StaticColorInterfac
     public static function isValid(string $color): bool
     {
         return array_key_exists($color, self::$allowedColors);
-    }
-
-    public static function translate($value = null): self
-    {
-        if ($value instanceof self) {
-            return $value;
-        } elseif ($value === null || $value === '' || $value === 'auto') {
-            return new self(null);
-        } elseif (is_string($value) && self::isValid($value)) {
-            return new self($value);
-        }
-
-        trigger_error(sprintf('Foreground color `%s` is not a valid color', $value), E_USER_WARNING);
-
-        return new self(null);
     }
 }

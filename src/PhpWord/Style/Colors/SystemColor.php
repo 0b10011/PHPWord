@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace PhpOffice\PhpWord\Style\Colors;
 
-use PhpOffice\PhpWord\Exception;
+use PhpOffice\PhpWord\Exception\Exception;
 
 final class SystemColor extends AbstractColor implements NamedColorInterface
 {
@@ -143,13 +143,13 @@ final class SystemColor extends AbstractColor implements NamedColorInterface
     public function __construct(string $color)
     {
         if (!static::isValid($color)) {
-            throw new Exception(sprintf("Provided system color must be a valid system color. '%s' provided. Allowed: %s`", $color, implode(', ', self::$allowedColors)));
+            throw new Exception(sprintf("Provided system color must be a valid system color. '%s' provided. Allowed: %s", $color, implode(', ', array_keys(self::$allowedColors))));
         }
 
         $this->color = $color;
     }
 
-    public function getColor(): string
+    public function getName(): string
     {
         return $this->color;
     }
