@@ -12,7 +12,7 @@ This release marked the addition of return type declarations (PHP 7+).
 - Set complex type in template @troosan #1565
 - Add support for page vertical alignment. @troosan #672 #1569
 - Length validation with `PhpOffice\PhpWord\Style\Lengths\{Absolute, Auto, Percent}` @0b10011 #1669
-- Color validation with `PhpOffice\PhpWord\Style\Colors\{HighlightColor, Hex, Rgb, SystemColor}` @0b10011 #1669
+- Color validation with `PhpOffice\PhpWord\Style\Colors\{HighlightColor, Hex, Rgb, SystemColor, ThemeColor}` @0b10011 #1669
 - BorderStyle validation with `PhpOffice\PhpWord\Style\BorderStyle` @0b10011 #1669
 
 ### Fixed

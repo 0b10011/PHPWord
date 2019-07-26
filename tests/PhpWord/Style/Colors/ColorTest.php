@@ -27,8 +27,7 @@ class ColorTest extends \PHPUnit\Framework\TestCase
     {
         // Prepare test values [ original, expected ]
         $values = array(
-            array('yellow', HighlightColor::class, 'yellow'),
-            array('window', SystemColor::class, 'window'),
+            array('lt1', ThemeColor::class, 'lt1'),
             array('a0b', Hex::class, 'AA00BB'),
             array('aB01cD', Hex::class, 'AB01CD'),
             array('', AbstractColor::class, null),

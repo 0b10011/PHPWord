@@ -21,10 +21,8 @@ final class Color
         } elseif (is_string($value)) {
             if (Hex::isValid($value)) {
                 return new Hex($value);
-            } elseif (SystemColor::isValid($value)) {
-                return new SystemColor($value);
-            } elseif (HighlightColor::isValid($value)) {
-                return new HighlightColor($value);
+            } elseif (ThemeColor::isValid($value)) {
+                return new ThemeColor($value);
             }
         }
 
