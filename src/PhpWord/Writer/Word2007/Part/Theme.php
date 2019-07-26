@@ -18,6 +18,9 @@ declare(strict_types=1);
 
 namespace PhpOffice\PhpWord\Writer\Word2007\Part;
 
+use PhpOffice\PhpWord\Style\Colors\Hex;
+use PhpOffice\PhpWord\Style\Colors\SystemColor;
+
 /**
  * Word2007 theme writer: word/theme/theme1.xml
  *
@@ -56,45 +59,36 @@ class Theme extends AbstractPart
      */
     private function writeColorScheme()
     {
-        $str = '';
+        $name = 'Office';
+        $colors = array(
+            'dk1'      => new SystemColor('windowText', new Hex('000')),
+            'lt1'      => new SystemColor('window', new Hex('fff')),
+            'dk2'      => new Hex('1F497D'),
+            'lt2'      => new Hex('EEECE1'),
+            'accent1'  => new Hex('4F81BD'),
+            'accent2'  => new Hex('C0504D'),
+            'accent3'  => new Hex('9BBB59'),
+            'accent4'  => new Hex('8064A2'),
+            'accent5'  => new Hex('4BACC6'),
+            'accent6'  => new Hex('F79646'),
+            'hlink'    => new Hex('0000FF'),
+            'folHlink' => new Hex('800080'),
+        );
 
-        $str .= '<a:clrScheme name="Office">';
-        $str .= '<a:dk1>';
-        $str .= '<a:sysClr val="windowText" lastClr="000000" />';
-        $str .= '</a:dk1>';
-        $str .= '<a:lt1>';
-        $str .= '<a:sysClr val="window" lastClr="FFFFFF" />';
-        $str .= '</a:lt1>';
-        $str .= '<a:dk2>';
-        $str .= '<a:srgbClr val="1F497D" />';
-        $str .= '</a:dk2>';
-        $str .= '<a:lt2>';
-        $str .= '<a:srgbClr val="EEECE1" />';
-        $str .= '</a:lt2>';
-        $str .= '<a:accent1>';
-        $str .= '<a:srgbClr val="4F81BD" />';
-        $str .= '</a:accent1>';
-        $str .= '<a:accent2>';
-        $str .= '<a:srgbClr val="C0504D" />';
-        $str .= '</a:accent2>';
-        $str .= '<a:accent3>';
-        $str .= '<a:srgbClr val="9BBB59" />';
-        $str .= '</a:accent3>';
-        $str .= '<a:accent4>';
-        $str .= '<a:srgbClr val="8064A2" />';
-        $str .= '</a:accent4>';
-        $str .= '<a:accent5>';
-        $str .= '<a:srgbClr val="4BACC6" />';
-        $str .= '</a:accent5>';
-        $str .= '<a:accent6>';
-        $str .= '<a:srgbClr val="F79646" />';
-        $str .= '</a:accent6>';
-        $str .= '<a:hlink>';
-        $str .= '<a:srgbClr val="0000FF" />';
-        $str .= '</a:hlink>';
-        $str .= '<a:folHlink>';
-        $str .= '<a:srgbClr val="800080" />';
-        $str .= '</a:folHlink>';
+        $str = '<a:clrScheme name="' . htmlentities($name, ENT_XML1) . '">';
+
+        foreach ($colors as $tag => $color) {
+            $str .= '<a:' . htmlentities($tag, ENT_XML1) . '>';
+
+            if ($color instanceof SystemColor) {
+                $str .= '<a:sysClr val="' . htmlentities($color->getName(), ENT_XML1) . '" lastClr="' . htmlentities($color->getLastColor()->toHex() ?? 'auto', ENT_XML1) . '" />';
+            } else {
+                $str .= '<a:srgbClr val="' . htmlentities($color->toHex() ?? 'auto', ENT_XML1) . '" />';
+            }
+
+            $str .= '</a:dk1>';
+        }
+
         $str .= '</a:clrScheme>';
 
         return $str;
