@@ -5,7 +5,7 @@ namespace PhpOffice\PhpWord\Style\Colors;
 
 use PhpOffice\PhpWord\Exception;
 
-final class SystemColor implements ColorInterface
+final class SystemColor extends AbstractColor implements NamedColorInterface
 {
     /**
      * Taken from https://docs.microsoft.com/en-us/dotnet/api/system.windows.systemcolors?view=netframework-4.8
@@ -152,16 +152,6 @@ final class SystemColor implements ColorInterface
     public function getColor(): string
     {
         return $this->color;
-    }
-
-    public function toRgb(): array
-    {
-        throw new Exception('Cannot convert system color to RGB');
-    }
-
-    public function toHex(bool $includeHash = false): string
-    {
-        throw new Exception('Cannot convert system color to hex');
     }
 
     public static function isValid(string $color): bool

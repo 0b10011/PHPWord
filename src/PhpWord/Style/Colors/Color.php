@@ -3,11 +3,16 @@ declare(strict_types=1);
 
 namespace PhpOffice\PhpWord\Style\Colors;
 
-class Color
+final class Color
 {
-    public static function translate($value = null): ColorInterface
+    final public function __construct()
     {
-        if ($value instanceof ColorInterface) {
+        throw new Exception('Color cannot be instantiated');
+    }
+
+    public static function translate($value = null): AbstractColor
+    {
+        if ($value instanceof AbstractColor) {
             return $value;
         } elseif ($value === null || $value === '' || $value === 'auto') {
             return new Hex(null);

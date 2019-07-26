@@ -19,7 +19,7 @@ declare(strict_types=1);
 namespace PhpOffice\PhpWord\Style;
 
 use PhpOffice\PhpWord\SimpleType\JcTable;
-use PhpOffice\PhpWord\Style\Colors\ColorInterface;
+use PhpOffice\PhpWord\Style\Colors\AbstractColor;
 use PhpOffice\PhpWord\Style\Colors\Hex;
 use PhpOffice\PhpWord\Style\Lengths\Absolute;
 use PhpOffice\PhpWord\Style\Lengths\Auto;
@@ -104,7 +104,7 @@ class TableTest extends \PHPUnit\Framework\TestCase
             } elseif ($result instanceof Percent) {
                 $result = $result->toInt();
                 $value = $value->toInt();
-            } elseif ($result instanceof ColorInterface) {
+            } elseif ($result instanceof AbstractColor) {
                 $result = $result->toHex();
                 $value = $value->toHex();
             }

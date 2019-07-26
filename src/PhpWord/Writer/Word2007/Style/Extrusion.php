@@ -39,7 +39,7 @@ class Extrusion extends AbstractStyle
         $xmlWriter->startElement('o:extrusion');
         $xmlWriter->writeAttribute('on', 't');
         $xmlWriter->writeAttributeIf($style->getType() !== null, 'type', $style->getType());
-        $xmlWriter->writeAttributeIf($style->getColor()->getColor() !== null, 'color', $style->getColor()->getColor());
+        $xmlWriter->writeAttributeIf($style->getColor()->getHexOrName() !== null, 'color', $style->getColor()->getHexOrName());
         $xmlWriter->endElement();
     }
 }

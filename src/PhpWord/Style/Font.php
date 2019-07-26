@@ -18,8 +18,8 @@ declare(strict_types=1);
 
 namespace PhpOffice\PhpWord\Style;
 
+use PhpOffice\PhpWord\Style\Colors\AbstractColor;
 use PhpOffice\PhpWord\Style\Colors\Color;
-use PhpOffice\PhpWord\Style\Colors\ColorInterface;
 use PhpOffice\PhpWord\Style\Colors\ForegroundColor;
 use PhpOffice\PhpWord\Style\Colors\Hex;
 use PhpOffice\PhpWord\Style\Lengths\Absolute;
@@ -99,7 +99,7 @@ class Font extends AbstractStyle
     /**
      * Font color
      *
-     * @var ColorInterface
+     * @var AbstractColor
      */
     private $color;
 
@@ -393,7 +393,7 @@ class Font extends AbstractStyle
     /**
      * Get font color
      */
-    public function getColor(): ColorInterface
+    public function getColor(): AbstractColor
     {
         return $this->color;
     }
@@ -401,7 +401,7 @@ class Font extends AbstractStyle
     /**
      * Set font color
      */
-    public function setColor(ColorInterface $value): self
+    public function setColor(AbstractColor $value): self
     {
         $this->color = $value;
 
@@ -606,7 +606,7 @@ class Font extends AbstractStyle
     /**
      * Get foreground/highlight color
      *
-     * @return ColorInterface
+     * @return AbstractColor
      */
     public function getFgColor(): ForegroundColor
     {
@@ -638,9 +638,9 @@ class Font extends AbstractStyle
     /**
      * Set background
      *
-     * @param ColorInterface $value
+     * @param AbstractColor $value
      */
-    public function setBgColor(ColorInterface $value = null): self
+    public function setBgColor(AbstractColor $value = null): self
     {
         $this->setShading(array('fill' => $value));
 

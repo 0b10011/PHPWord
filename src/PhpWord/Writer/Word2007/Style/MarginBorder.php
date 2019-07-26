@@ -21,9 +21,8 @@ namespace PhpOffice\PhpWord\Writer\Word2007\Style;
 use PhpOffice\Common\XMLWriter;
 use PhpOffice\PhpWord\Exception\Exception;
 use PhpOffice\PhpWord\Style\BorderStyle;
-use PhpOffice\PhpWord\Style\Colors\ColorInterface;
+use PhpOffice\PhpWord\Style\Colors\AbstractColor;
 use PhpOffice\PhpWord\Style\Colors\Hex;
-use PhpOffice\PhpWord\Style\Colors\SystemColor;
 use PhpOffice\PhpWord\Style\Lengths\Absolute;
 
 /**
@@ -43,7 +42,7 @@ class MarginBorder extends AbstractStyle
     /**
      * Colors
      *
-     * @var ColorInterface[]
+     * @var AbstractColor[]
      */
     private $colors = array();
 
@@ -90,15 +89,11 @@ class MarginBorder extends AbstractStyle
      * @param string $color
      * @param string $borderStyle
      */
-    private function writeSide(XMLWriter $xmlWriter, $side, Absolute $width, ColorInterface $color, BorderStyle $borderStyle)
+    private function writeSide(XMLWriter $xmlWriter, $side, Absolute $width, AbstractColor $color, BorderStyle $borderStyle)
     {
         $xmlWriter->startElement('w:' . $side);
         if (!empty($this->colors)) {
-            if ($color instanceof SystemColor) {
-                $color = $color->getColor();
-            } else {
-                $color = $color->toHex();
-            }
+            $color = $color->getHexOrName();
             if ($color === null && !empty($this->attributes)) {
                 if (isset($this->attributes['defaultColor'])) {
                     $color = $this->attributes['defaultColor'];
@@ -138,8 +133,8 @@ class MarginBorder extends AbstractStyle
     public function setColors(array $values): self
     {
         foreach ($values as $value) {
-            if (!($value instanceof ColorInterface)) {
-                throw new Exception('An array of `ColorInterface` must be provided. `' . gettype($value) . '` provided');
+            if (!($value instanceof AbstractColor)) {
+                throw new Exception('An array of `AbstractColor` must be provided. `' . gettype($value) . '` provided');
             }
         }
         $this->colors = $values;

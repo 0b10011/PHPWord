@@ -20,7 +20,7 @@ namespace PhpOffice\PhpWord\Style;
 
 use PhpOffice\PhpWord\PhpWord;
 use PhpOffice\PhpWord\SimpleType\Jc;
-use PhpOffice\PhpWord\Style\Colors\ColorInterface;
+use PhpOffice\PhpWord\Style\Colors\AbstractColor;
 use PhpOffice\PhpWord\Style\Colors\ForegroundColor;
 use PhpOffice\PhpWord\Style\Colors\Hex;
 use PhpOffice\PhpWord\Style\Lengths\Absolute;
@@ -87,9 +87,9 @@ class FontTest extends \PHPUnit\Framework\TestCase
             $get = is_bool($default) ? "is{$key}" : "get{$key}";
             $result = $object->$get();
             $new = $default;
-            if ($result instanceof ColorInterface) {
-                $default = $default->getColor();
-                $result = $result->getColor();
+            if ($result instanceof AbstractColor) {
+                $default = $default->getHexOrName();
+                $result = $result->getHexOrName();
             } elseif ($result instanceof Absolute) {
                 $default = $default->toInt('pt');
                 $result = $result->toInt('pt');
@@ -136,12 +136,9 @@ class FontTest extends \PHPUnit\Framework\TestCase
         foreach ($attributes as $key => $value) {
             $get = is_bool($value) ? "is{$key}" : "get{$key}";
             $result = $object->$get();
-            if ($result instanceof ForegroundColor) {
-                $result = $result->getColor();
-                $value = $value->getColor();
-            } elseif ($result instanceof ColorInterface) {
-                $result = $result->toHex();
-                $value = $value->toHex();
+            if ($result instanceof AbstractColor) {
+                $result = $result->getHexOrName();
+                $value = $value->getHexOrName();
             } elseif ($result instanceof Absolute) {
                 $result = $result->toInt('hpt');
                 $value = $value->toInt('hpt');

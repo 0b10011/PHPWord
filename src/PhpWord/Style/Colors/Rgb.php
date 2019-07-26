@@ -5,9 +5,9 @@ namespace PhpOffice\PhpWord\Style\Colors;
 
 use PhpOffice\PhpWord\Exception;
 
-class Rgb implements ColorInterface
+class Rgb extends AbstractColor implements StaticColorInterface
 {
-    private $hex;
+    private $rgb;
 
     public function __construct(int $red, int $green, int $blue)
     {
@@ -15,27 +15,16 @@ class Rgb implements ColorInterface
             throw new Exception(sprintf('Provided values must be 0–255. Provided `Rgb(%s, %s, %s)`', $red, $green, $blue));
         }
 
-        // FIXME http://officeopenxml.com/WPtableCellProperties-Borders.php specifies no #; not sure if this applies everywhere for color
-        $this->hex = sprintf('%02X%02X%02X', $red, $green, $blue);
-    }
-
-    public function getColor(): string
-    {
-        return $this->hex;
+        $this->rgb = array($red, $green, $blue);
     }
 
     public function toRgb(): array
     {
-        $rgb = array();
-        foreach (str_split($this->hex, 2) as $c) {
-            $rgb[] = hexdec($c);
-        }
-
-        return $rgb;
+        return $this->rgb;
     }
 
     public function toHex(bool $includeHash = false): string
     {
-        return ($includeHash ? '#' : '') . $this->hex;
+        return sprintf('%s%02X%02X%02X', ($includeHash ? '#' : ''), $red, $green, $blue);
     }
 }

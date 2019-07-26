@@ -19,7 +19,7 @@ declare(strict_types=1);
 namespace PhpOffice\PhpWord\Style;
 
 use PhpOffice\PhpWord\SimpleType\VerticalJc;
-use PhpOffice\PhpWord\Style\Colors\ColorInterface;
+use PhpOffice\PhpWord\Style\Colors\AbstractColor;
 use PhpOffice\PhpWord\Style\Colors\Hex;
 use PhpOffice\PhpWord\Style\Lengths\Absolute;
 
@@ -56,7 +56,7 @@ class CellTest extends \PHPUnit\Framework\TestCase
         foreach ($attributes as $key => $value) {
             $get = "get$key";
             $result = $object->$get();
-            if ($result instanceof ColorInterface) {
+            if ($result instanceof AbstractColor) {
                 $result = $result->toHex();
             } elseif ($result instanceof Absolute) {
                 $result = $result->toInt('eop');
@@ -69,7 +69,7 @@ class CellTest extends \PHPUnit\Framework\TestCase
 
             $get = "get$key";
             $result = $object->$get();
-            if ($result instanceof ColorInterface) {
+            if ($result instanceof AbstractColor) {
                 $result = $result->toHex();
                 $value = $value->toHex();
             } elseif ($result instanceof Absolute) {

@@ -21,8 +21,8 @@ namespace PhpOffice\PhpWord\Style;
 use PhpOffice\PhpWord\Exception\Exception;
 use PhpOffice\PhpWord\SimpleType\Jc;
 use PhpOffice\PhpWord\SimpleType\JcTable;
+use PhpOffice\PhpWord\Style\Colors\AbstractColor;
 use PhpOffice\PhpWord\Style\Colors\Color;
-use PhpOffice\PhpWord\Style\Colors\ColorInterface;
 use PhpOffice\PhpWord\Style\Colors\Hex;
 use PhpOffice\PhpWord\Style\Lengths\Absolute;
 use PhpOffice\PhpWord\Style\Lengths\Auto;
@@ -96,7 +96,7 @@ class Table extends Border
     /**
      * Border color inside horizontal
      *
-     * @var ColorInterface
+     * @var AbstractColor
      */
     private $borderInsideHColor;
 
@@ -117,7 +117,7 @@ class Table extends Border
     /**
      * Border color inside vertical
      *
-     * @var ColorInterface
+     * @var AbstractColor
      */
     private $borderInsideVColor;
 
@@ -241,7 +241,7 @@ class Table extends Border
     /**
      * Get background
      */
-    public function getBgColor(): ColorInterface
+    public function getBgColor(): AbstractColor
     {
         if ($this->shading === null) {
             $this->setBgColor(new Hex(null));
@@ -255,7 +255,7 @@ class Table extends Border
      *
      * @return self
      */
-    public function setBgColor(ColorInterface $value)
+    public function setBgColor(AbstractColor $value)
     {
         $this->setShading(array('fill' => $value));
 
@@ -300,7 +300,7 @@ class Table extends Border
     /**
      * Get TLRBHV Border Color
      *
-     * @return ColorInterface[]
+     * @return AbstractColor[]
      */
     public function getBorderColor(): array
     {
@@ -319,7 +319,7 @@ class Table extends Border
      *
      * @return self
      */
-    public function setBorderColor(ColorInterface $value)
+    public function setBorderColor(AbstractColor $value)
     {
         $this->setBorderTopColor($value);
         $this->setBorderLeftColor($value);
@@ -389,7 +389,7 @@ class Table extends Border
     /**
      * Get border color inside horizontal
      */
-    public function getBorderInsideHColor(): ColorInterface
+    public function getBorderInsideHColor(): AbstractColor
     {
         return $this->borderInsideHColor;
     }
@@ -397,7 +397,7 @@ class Table extends Border
     /**
      * Set border color inside horizontal
      */
-    public function setBorderInsideHColor(ColorInterface $value): self
+    public function setBorderInsideHColor(AbstractColor $value): self
     {
         if (!$this->isFirstRow) {
             $this->borderInsideHColor = $value;
@@ -449,7 +449,7 @@ class Table extends Border
     /**
      * Get border color inside vertical
      */
-    public function getBorderInsideVColor(): ColorInterface
+    public function getBorderInsideVColor(): AbstractColor
     {
         return $this->borderInsideVColor;
     }
@@ -457,7 +457,7 @@ class Table extends Border
     /**
      * Set border color inside vertical
      */
-    public function setBorderInsideVColor(ColorInterface $value): self
+    public function setBorderInsideVColor(AbstractColor $value): self
     {
         if (!$this->isFirstRow) {
             $this->borderInsideVColor = $value;

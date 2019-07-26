@@ -5,7 +5,7 @@ namespace PhpOffice\PhpWord\Style\Colors;
 
 use PhpOffice\PhpWord\Exception\Exception;
 
-final class ForegroundColor implements ColorInterface
+final class ForegroundColor extends AbstractColor implements StaticColorInterface, NamedColorInterface
 {
     private static $allowedColors = array(
         'yellow'      => 'FF0000',
@@ -40,7 +40,7 @@ final class ForegroundColor implements ColorInterface
         $this->color = $color;
     }
 
-    public function getColor()
+    public function getName()
     {
         return $this->color;
     }

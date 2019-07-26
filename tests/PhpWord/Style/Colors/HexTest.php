@@ -35,23 +35,23 @@ class HexTest extends \PHPUnit\Framework\TestCase
         // Prepare test values [ original, expected ]
         $values = array(
             // 6 characters
-            array('FC94BD', 'FC94BD', array(252, 148, 189), "6 character uppercase hex values should be accepted"),
-            array('Ef03Cb', 'EF03CB', array(239, 3, 203), "6 character lowercase hex values should be accepted"),
-            array('72AeCd', '72AECD', array(114, 174, 205), "6 character mixed case hex values should be accepted"),
+            array('FC94BD', 'FC94BD', array(252, 148, 189), '6 character uppercase hex values should be accepted'),
+            array('Ef03Cb', 'EF03CB', array(239, 3, 203), '6 character lowercase hex values should be accepted'),
+            array('72AeCd', '72AECD', array(114, 174, 205), '6 character mixed case hex values should be accepted'),
 
             // 3 characters
-            array('d8e', 'DD88EE', array(221, 136, 238), "3 character uppercase hex values should be accepted and expanded to 6"),
-            array('af5', 'AAFF55', array(170, 255, 85), "3 character lowercase hex values should be accepted and expanded to 6"),
-            array('b3c', 'BB33CC', array(187, 51, 204), "3 character mixed case hex values should be accepted and expanded to 6"),
+            array('d8e', 'DD88EE', array(221, 136, 238), '3 character uppercase hex values should be accepted and expanded to 6'),
+            array('af5', 'AAFF55', array(170, 255, 85), '3 character lowercase hex values should be accepted and expanded to 6'),
+            array('b3c', 'BB33CC', array(187, 51, 204), '3 character mixed case hex values should be accepted and expanded to 6'),
 
-            array('000', '000000', array(0, 0, 0), "Black should be valid"),
-            array('fff', 'FFFFFF', array(255, 255, 255), "White should be valid"),
+            array('000', '000000', array(0, 0, 0), 'Black should be valid'),
+            array('fff', 'FFFFFF', array(255, 255, 255), 'White should be valid'),
 
             // Null
-            array(null, null, null, "NULL values should be accepted and converted to NULL"),
+            array(null, null, null, 'NULL values should be accepted and converted to NULL'),
 
             // Invalid
-            array('0F9D', null, null, "4 character hex values should fail"),
+            array('0F9D', null, null, '4 character hex values should fail'),
         );
         // Conduct test
         foreach ($values as $value) {

@@ -5,7 +5,7 @@ namespace PhpOffice\PhpWord\Style\Colors;
 
 use PhpOffice\PhpWord\Exception\Exception;
 
-class Hex implements ColorInterface
+class Hex extends AbstractColor implements StaticColorInterface
 {
     private $hex;
 
@@ -32,11 +32,6 @@ class Hex implements ColorInterface
         } else {
             $this->hex = strtoupper($hex);
         }
-    }
-
-    public function getColor()
-    {
-        return $this->hex;
     }
 
     public function toRgb()

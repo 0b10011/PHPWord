@@ -114,7 +114,7 @@ class Border extends AbstractStyle
     /**
      * Set colors.
      *
-     * @param ColorInterface[] $value
+     * @param AbstractColor[] $value
      */
     public function setColors($value)
     {

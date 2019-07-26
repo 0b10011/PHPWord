@@ -18,7 +18,7 @@ declare(strict_types=1);
 
 namespace PhpOffice\PhpWord\Style;
 
-use PhpOffice\PhpWord\Style\Colors\ColorInterface;
+use PhpOffice\PhpWord\Style\Colors\AbstractColor;
 use PhpOffice\PhpWord\Style\Colors\Hex;
 use PhpOffice\PhpWord\Style\Lengths\Absolute;
 
@@ -67,7 +67,7 @@ class TextBox extends Image
     /**
      * border color
      *
-     * @var ColorInterface
+     * @var AbstractColor
      */
     private $borderColor;
 
@@ -230,7 +230,7 @@ class TextBox extends Image
     /**
      * Set border color.
      */
-    public function setBorderColor(ColorInterface $value)
+    public function setBorderColor(AbstractColor $value)
     {
         $this->borderColor = $value;
     }
@@ -238,7 +238,7 @@ class TextBox extends Image
     /**
      * Get border color
      */
-    public function getBorderColor(): ColorInterface
+    public function getBorderColor(): AbstractColor
     {
         if ($this->borderColor === null) {
             $this->borderColor = new Hex(null);

@@ -18,8 +18,8 @@ declare(strict_types=1);
 
 namespace PhpOffice\PhpWord\Style;
 
+use PhpOffice\PhpWord\Style\Colors\AbstractColor;
 use PhpOffice\PhpWord\Style\Colors\Color;
-use PhpOffice\PhpWord\Style\Colors\ColorInterface;
 use PhpOffice\PhpWord\Style\Colors\Hex;
 use PhpOffice\PhpWord\Style\Lengths\Absolute;
 
@@ -38,7 +38,7 @@ class Border extends AbstractStyle
     /**
      * Border Top Color
      *
-     * @var ColorInterface
+     * @var AbstractColor
      */
     protected $borderTopColor;
 
@@ -59,7 +59,7 @@ class Border extends AbstractStyle
     /**
      * Border Left Color
      *
-     * @var ColorInterface
+     * @var AbstractColor
      */
     protected $borderLeftColor;
 
@@ -80,7 +80,7 @@ class Border extends AbstractStyle
     /**
      * Border Right Color
      *
-     * @var ColorInterface
+     * @var AbstractColor
      */
     protected $borderRightColor;
 
@@ -101,7 +101,7 @@ class Border extends AbstractStyle
     /**
      * Border Bottom Color
      *
-     * @var ColorInterface
+     * @var AbstractColor
      */
     protected $borderBottomColor;
 
@@ -152,7 +152,7 @@ class Border extends AbstractStyle
     /**
      * Get border color
      *
-     * @return ColorInterface[]
+     * @return AbstractColor[]
      */
     public function getBorderColor(): array
     {
@@ -169,7 +169,7 @@ class Border extends AbstractStyle
      *
      * @return self
      */
-    public function setBorderColor(ColorInterface $value)
+    public function setBorderColor(AbstractColor $value)
     {
         $this->setBorderTopColor($value);
         $this->setBorderLeftColor($value);
@@ -230,7 +230,7 @@ class Border extends AbstractStyle
     /**
      * Get border top color
      */
-    public function getBorderTopColor(): ColorInterface
+    public function getBorderTopColor(): AbstractColor
     {
         return $this->borderTopColor;
     }
@@ -240,7 +240,7 @@ class Border extends AbstractStyle
      *
      * @return self
      */
-    public function setBorderTopColor(ColorInterface $value)
+    public function setBorderTopColor(AbstractColor $value)
     {
         $this->borderTopColor = $value;
 
@@ -288,7 +288,7 @@ class Border extends AbstractStyle
     /**
      * Get border left color
      */
-    public function getBorderLeftColor(): ColorInterface
+    public function getBorderLeftColor(): AbstractColor
     {
         return $this->borderLeftColor;
     }
@@ -298,7 +298,7 @@ class Border extends AbstractStyle
      *
      * @return self
      */
-    public function setBorderLeftColor(ColorInterface $value)
+    public function setBorderLeftColor(AbstractColor $value)
     {
         $this->borderLeftColor = $value;
 
@@ -346,7 +346,7 @@ class Border extends AbstractStyle
     /**
      * Get border right color
      */
-    public function getBorderRightColor(): ColorInterface
+    public function getBorderRightColor(): AbstractColor
     {
         return $this->borderRightColor;
     }
@@ -356,7 +356,7 @@ class Border extends AbstractStyle
      *
      * @return self
      */
-    public function setBorderRightColor(ColorInterface $value)
+    public function setBorderRightColor(AbstractColor $value)
     {
         $this->borderRightColor = $value;
 
@@ -404,7 +404,7 @@ class Border extends AbstractStyle
     /**
      * Get border bottom color
      */
-    public function getBorderBottomColor(): ColorInterface
+    public function getBorderBottomColor(): AbstractColor
     {
         return $this->borderBottomColor;
     }
@@ -414,7 +414,7 @@ class Border extends AbstractStyle
      *
      * @return self
      */
-    public function setBorderBottomColor(ColorInterface $value)
+    public function setBorderBottomColor(AbstractColor $value)
     {
         $this->borderBottomColor = $value;
 

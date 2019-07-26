@@ -38,8 +38,8 @@ class Shading extends AbstractStyle
 
         $xmlWriter->startElement('w:shd');
         $xmlWriter->writeAttributeIf(!is_null($style->getPattern()), 'w:val', $style->getPattern());
-        $xmlWriter->writeAttributeIf(!is_null($style->getColor()), 'w:color', $style->getColor()->toHex());
-        $xmlWriter->writeAttributeIf(!is_null($style->getFill()), 'w:fill', $style->getFill()->getColor());
+        $xmlWriter->writeAttributeIf(!is_null($style->getColor()->getHexOrName()), 'w:color', $style->getColor()->getHexOrName());
+        $xmlWriter->writeAttributeIf(!is_null($style->getFill()), 'w:fill', $style->getFill()->getHexOrName());
         $xmlWriter->endElement();
     }
 }

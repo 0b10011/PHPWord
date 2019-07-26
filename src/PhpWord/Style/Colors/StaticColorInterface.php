@@ -3,13 +3,8 @@ declare(strict_types=1);
 
 namespace PhpOffice\PhpWord\Style\Colors;
 
-interface ColorInterface
+interface StaticColorInterface
 {
-    /**
-     * @return ?string
-     */
-    public function getColor();
-
     public function toRgb();
 
     public function toHex(bool $includeHash = false);
