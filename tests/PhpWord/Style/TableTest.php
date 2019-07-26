@@ -160,6 +160,24 @@ class TableTest extends \PHPUnit\Framework\TestCase
         }
     }
 
+    public function testBorderStyle()
+    {
+        $object = new Table();
+        $parts = array('Top', 'Left', 'Right', 'Bottom', 'InsideH', 'InsideV');
+
+        $value = new BorderStyle('single');
+        $object->setBorderStyle($value);
+        $values = array();
+        foreach ($parts as $part) {
+            $get = "getBorder{$part}Style";
+            $values[] = $value->getStyle();
+            $this->assertEquals($value->getStyle(), $object->$get()->getStyle());
+        }
+        foreach ($object->getBorderStyle() as $key => $size) {
+            $this->assertEquals($values[$key], $size->getStyle());
+        }
+    }
+
     /**
      * Test cell margin
      *
