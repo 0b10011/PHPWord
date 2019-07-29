@@ -31,7 +31,7 @@ class ColorScheme
     public function __construct(array $colorScheme)
     {
         if (count($colorScheme) !== count($this->colorScheme)) {
-            throw new Exception(sprintf('%s colors expected, but %s colors provided: %s', count($colorScheme), count($this->colorScheme), serialize($colorScheme)));
+            throw new Exception(sprintf('%s colors expected, but %s colors provided', count($this->colorScheme), count($colorScheme)));
         }
 
         foreach ($this->colorScheme as $name => $null) {
@@ -61,7 +61,7 @@ class ColorScheme
     public function getColor(string $name): AbstractColor
     {
         if (!array_key_exists($name, $this->colorScheme)) {
-            throw new Exception(sprintf("Missing '$name' from provided color scheme"));
+            throw new Exception(sprintf("No color exists for '$name'"));
         }
 
         return clone $this->colorScheme[$name];

@@ -16,8 +16,8 @@ final class ThemeColor extends AbstractColor implements NamedColorInterface
      */
     private static $allowedColors = array(
         'dk1'      => true,
-        'lt1'      => true,
         'dk2'      => true,
+        'lt1'      => true,
         'lt2'      => true,
         'accent1'  => true,
         'accent2'  => true,

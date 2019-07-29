@@ -51,6 +51,16 @@ abstract class Fonts
         foreach ($this->fonts as $script => $null) {
             $this->fonts[$script] = $this->readFont($script, $fonts);
         }
+
+        foreach ($fonts as $script => $null) {
+            if ($script === 'Latin' || $script === 'EastAsian' || $script === 'ComplexScript') {
+                continue;
+            }
+
+            if (!array_key_exists($script, $this->fonts)) {
+                throw new Exception(sprintf("Invalid script '%s' provided", $script));
+            }
+        }
     }
 
     protected function readFont(string $script, array $fonts): string
@@ -81,6 +91,24 @@ abstract class Fonts
     public function getFonts(): array
     {
         return $this->fonts;
+    }
+
+    public function getFont(string $script): string
+    {
+        switch ($script) {
+            case 'Latin':
+                return $this->latin;
+            case 'EastAsian':
+                return $this->eastAsian;
+            case 'ComplexScript':
+                return $this->complexScript;
+        }
+
+        if (!array_key_exists($script, $this->fonts)) {
+            throw new Exception(sprintf("No font found for script '%s' in color scheme '%s'", $script, get_class($this)));
+        }
+
+        return $this->fonts[$script];
     }
 
     public static function getDefaultFont(string $script): string
