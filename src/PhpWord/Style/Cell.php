@@ -19,7 +19,7 @@ declare(strict_types=1);
 namespace PhpOffice\PhpWord\Style;
 
 use PhpOffice\PhpWord\SimpleType\VerticalJc;
-use PhpOffice\PhpWord\Style\Colors\AbstractColor;
+use PhpOffice\PhpWord\Style\Colors\BasicColor;
 use PhpOffice\PhpWord\Style\Colors\Hex;
 use PhpOffice\PhpWord\Style\Lengths\Absolute;
 use PhpOffice\PhpWord\Style\Lengths\Length;
@@ -186,7 +186,7 @@ class Cell extends Border
     /**
      * Get background
      */
-    public function getBgColor(): AbstractColor
+    public function getBgColor(): BasicColor
     {
         if ($this->shading === null) {
             $this->setBgColor(new Hex(null));
@@ -200,7 +200,7 @@ class Cell extends Border
      *
      * @param string $value
      */
-    public function setBgColor(AbstractColor $value): self
+    public function setBgColor(BasicColor $value): self
     {
         return $this->setShading(array('fill' => $value));
     }

@@ -27,7 +27,7 @@ use PhpOffice\PhpWord\SimpleType\Jc;
 use PhpOffice\PhpWord\SimpleType\LineSpacingRule;
 use PhpOffice\PhpWord\SimpleType\NumberFormat;
 use PhpOffice\PhpWord\Style\BorderStyle;
-use PhpOffice\PhpWord\Style\Colors\Color;
+use PhpOffice\PhpWord\Style\Colors\BasicColor;
 use PhpOffice\PhpWord\Style\Image;
 use PhpOffice\PhpWord\Style\Lengths\Absolute;
 use PhpOffice\PhpWord\Style\Lengths\Length;
@@ -563,10 +563,10 @@ class Html
                 $styles['name'] = ucwords($value[0]);
                 break;
             case 'color':
-                $styles['color'] = Color::fromMixed(trim($value, '#'));
+                $styles['color'] = BasicColor::fromMixed(trim($value, '#'));
                 break;
             case 'background-color':
-                $styles['bgColor'] = Color::fromMixed(trim($value, '#'));
+                $styles['bgColor'] = BasicColor::fromMixed(trim($value, '#'));
                 break;
             case 'line-height':
                 $matches = array();
@@ -635,7 +635,7 @@ class Html
             case 'border':
                 if (preg_match('/([0-9]+[^0-9]*)\s+(\#[a-fA-F0-9]+)\s+([a-z]+)/', $value, $matches)) {
                     $styles['borderSize'] = self::cssToAbsolute($matches[1]);
-                    $styles['borderColor'] = Color::fromMixed(trim($matches[2], '#'));
+                    $styles['borderColor'] = BasicColor::fromMixed(trim($matches[2], '#'));
                     $styles['borderStyle'] = self::mapBorderStyle($matches[3]);
                 }
                 break;
@@ -768,12 +768,12 @@ class Html
     {
         $numColors = substr_count($cssBorderColor, '#');
         if ($numColors === 1) {
-            $styles['borderColor'] = Color::fromMixed(trim($cssBorderColor, '#'));
+            $styles['borderColor'] = BasicColor::fromMixed(trim($cssBorderColor, '#'));
         } elseif ($numColors > 1) {
             $colors = explode(' ', $cssBorderColor);
             $borders = array('borderTopColor', 'borderRightColor', 'borderBottomColor', 'borderLeftColor');
             for ($i = 0; $i < min(4, $numColors, count($colors)); $i++) {
-                $styles[$borders[$i]] = Color::fromMixed(trim($colors[$i], '#'));
+                $styles[$borders[$i]] = BasicColor::fromMixed(trim($colors[$i], '#'));
             }
         }
     }

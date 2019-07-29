@@ -20,7 +20,7 @@ namespace PhpOffice\PhpWord\Style;
 
 use PhpOffice\PhpWord\PhpWord;
 use PhpOffice\PhpWord\SimpleType\Jc;
-use PhpOffice\PhpWord\Style\Colors\AbstractColor;
+use PhpOffice\PhpWord\Style\Colors\BasicColor;
 use PhpOffice\PhpWord\Style\Colors\Hex;
 use PhpOffice\PhpWord\Style\Colors\HighlightColor;
 use PhpOffice\PhpWord\Style\Lengths\Absolute;
@@ -87,7 +87,7 @@ class FontTest extends \PHPUnit\Framework\TestCase
             $get = is_bool($default) ? "is{$key}" : "get{$key}";
             $result = $object->$get();
             $new = $default;
-            if ($result instanceof AbstractColor) {
+            if ($result instanceof BasicColor) {
                 $default = $default->toHexOrName();
                 $result = $result->toHexOrName();
             } elseif ($result instanceof Absolute) {
@@ -136,7 +136,7 @@ class FontTest extends \PHPUnit\Framework\TestCase
         foreach ($attributes as $key => $value) {
             $get = is_bool($value) ? "is{$key}" : "get{$key}";
             $result = $object->$get();
-            if ($result instanceof AbstractColor) {
+            if ($result instanceof BasicColor) {
                 $result = $result->toHexOrName();
                 $value = $value->toHexOrName();
             } elseif ($result instanceof Absolute) {

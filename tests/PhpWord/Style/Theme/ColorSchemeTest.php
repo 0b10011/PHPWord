@@ -109,7 +109,7 @@ class ColorSchemeTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @expectedException \Exception
-     * @expectedExceptionMessage Provided color for 'dk1' must be an instance of 'PhpOffice\PhpWord\Style\Colors\AbstractColor', 'string' provided
+     * @expectedExceptionMessage Provided color for 'dk1' must be an instance of 'PhpOffice\PhpWord\Style\Colors\SpecialColor', 'string' provided
      */
     public function testSettingBadColor()
     {

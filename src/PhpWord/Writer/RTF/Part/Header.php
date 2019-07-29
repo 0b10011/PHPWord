@@ -21,7 +21,7 @@ namespace PhpOffice\PhpWord\Writer\RTF\Part;
 use PhpOffice\PhpWord\Settings;
 use PhpOffice\PhpWord\Style;
 use PhpOffice\PhpWord\Style\Border;
-use PhpOffice\PhpWord\Style\Colors\AbstractColor;
+use PhpOffice\PhpWord\Style\Colors\BasicColor;
 use PhpOffice\PhpWord\Style\Colors\Hex;
 use PhpOffice\PhpWord\Style\Font;
 
@@ -246,8 +246,8 @@ class Header extends AbstractPart
      * Register individual font and color.
      *
      * @param array &$table
-     * @param AbstractColor|string $value
-     * @param AbstractColor|string $default
+     * @param BasicColor|string $value
+     * @param BasicColor|string $default
      */
     private function registerTableItem(&$table, $value, $default = null)
     {

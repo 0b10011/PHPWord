@@ -30,18 +30,17 @@ class ColorTest extends \PHPUnit\Framework\TestCase
             array('lt1', ThemeColor::class, 'lt1'),
             array('a0b', Hex::class, 'AA00BB'),
             array('aB01cD', Hex::class, 'AB01CD'),
-            array('', AbstractColor::class, null),
-            array('auto', AbstractColor::class, null),
-            array(null, AbstractColor::class, null),
+            array('', BasicColor::class, null),
+            array('auto', BasicColor::class, null),
+            array(null, BasicColor::class, null),
             array(new Hex('fff'), Hex::class, 'FFFFFF'),
             array(new Rgb(0, 102, 255), Rgb::class, '0066FF'),
-            array(new SystemColor('window', new Hex('fff')), SystemColor::class, 'window'),
             array(new HighlightColor('green'), HighlightColor::class, 'green'),
         );
         // Conduct test
         foreach ($values as $value) {
             $message = serialize($value[0]) . ' should be a valid color and converted to ' . $value[1];
-            $color = Color::fromMixed($value[0]);
+            $color = BasicColor::fromMixed($value[0]);
             $this->assertInstanceOf($value[1], $color, $message);
             $this->assertEquals($value[2], $color->toHexOrName(), $message);
         }
@@ -53,7 +52,7 @@ class ColorTest extends \PHPUnit\Framework\TestCase
      */
     public function testBadClass()
     {
-        $color = Color::fromMixed(new class() extends AbstractColor {
+        $color = BasicColor::fromMixed(new class() extends BasicColor {
         });
         $color->toHexOrName();
     }
@@ -64,22 +63,31 @@ class ColorTest extends \PHPUnit\Framework\TestCase
      */
     public function testInvalidColor()
     {
-        Color::fromMixed('fakeColor');
+        BasicColor::fromMixed('fakeColor');
     }
 
     public function testValueInvalidColor()
     {
-        $color = @Color::fromMixed('fakeColor');
-        $this->assertInstanceOf(AbstractColor::class, $color);
+        $color = @BasicColor::fromMixed('fakeColor');
+        $this->assertInstanceOf(BasicColor::class, $color);
         $this->assertNull($color->toHexOrName());
     }
 
     /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage Color cannot be instantiated
+     * @expectedException \Error
+     * @expectedExceptionMessage Cannot instantiate abstract class PhpOffice\PhpWord\Style\Colors\BasicColor
      */
-    public function testInstantiation()
+    public function testBasicInstantiation()
     {
-        new Color();
+        new BasicColor();
+    }
+
+    /**
+     * @expectedException \Error
+     * @expectedExceptionMessage Cannot instantiate abstract class PhpOffice\PhpWord\Style\Colors\SpecialColor
+     */
+    public function testSpecialInstantiation()
+    {
+        new SpecialColor();
     }
 }

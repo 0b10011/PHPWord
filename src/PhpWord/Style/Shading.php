@@ -18,8 +18,7 @@ declare(strict_types=1);
 
 namespace PhpOffice\PhpWord\Style;
 
-use PhpOffice\PhpWord\Style\Colors\AbstractColor;
-use PhpOffice\PhpWord\Style\Colors\Color;
+use PhpOffice\PhpWord\Style\Colors\BasicColor;
 use PhpOffice\PhpWord\Style\Colors\Hex;
 
 /**
@@ -55,14 +54,14 @@ class Shading extends AbstractStyle
     /**
      * Shading pattern color
      *
-     * @var AbstractColor
+     * @var BasicColor
      */
     private $color;
 
     /**
      * Shading background color
      *
-     * @var AbstractColor
+     * @var BasicColor
      */
     private $fill;
 
@@ -108,7 +107,7 @@ class Shading extends AbstractStyle
     /**
      * Get color
      */
-    public function getColor(): AbstractColor
+    public function getColor(): BasicColor
     {
         return $this->color;
     }
@@ -116,7 +115,7 @@ class Shading extends AbstractStyle
     /**
      * Set pattern
      */
-    public function setColor(AbstractColor $value): self
+    public function setColor(BasicColor $value): self
     {
         $this->color = $value;
 
@@ -126,7 +125,7 @@ class Shading extends AbstractStyle
     /**
      * Get fill
      */
-    public function getFill(): AbstractColor
+    public function getFill(): BasicColor
     {
         return $this->fill;
     }
@@ -134,7 +133,7 @@ class Shading extends AbstractStyle
     /**
      * Set fill
      */
-    public function setFill(AbstractColor $value): self
+    public function setFill(BasicColor $value): self
     {
         $this->fill = $value;
 

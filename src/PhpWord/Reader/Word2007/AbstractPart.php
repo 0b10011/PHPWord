@@ -27,7 +27,7 @@ use PhpOffice\PhpWord\Element\TextRun;
 use PhpOffice\PhpWord\Element\TrackChange;
 use PhpOffice\PhpWord\PhpWord;
 use PhpOffice\PhpWord\Style\BorderStyle;
-use PhpOffice\PhpWord\Style\Colors\Color;
+use PhpOffice\PhpWord\Style\Colors\BasicColor;
 use PhpOffice\PhpWord\Style\Colors\HighlightColor;
 use PhpOffice\PhpWord\Style\Lengths\Absolute;
 use PhpOffice\PhpWord\Style\Lengths\Auto;
@@ -709,7 +709,7 @@ abstract class AbstractPart
         } elseif (self::READ_EQUAL == $method) {
             $style = $attributeValue == $expected;
         } elseif (self::READ_COLOR == $method) {
-            $style = Color::fromMixed($attributeValue);
+            $style = BasicColor::fromMixed($attributeValue);
         } elseif (self::READ_HIGHLIGHT == $method) {
             $style = new HighlightColor($attributeValue);
         }

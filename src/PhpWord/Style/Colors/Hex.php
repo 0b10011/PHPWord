@@ -5,7 +5,7 @@ namespace PhpOffice\PhpWord\Style\Colors;
 
 use PhpOffice\PhpWord\Exception\Exception;
 
-class Hex extends AbstractColor implements StaticColorInterface
+class Hex extends BasicColor implements StaticColorInterface
 {
     private $hex;
 

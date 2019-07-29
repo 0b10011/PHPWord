@@ -18,7 +18,7 @@ declare(strict_types=1);
 
 namespace PhpOffice\PhpWord\Style;
 
-use PhpOffice\PhpWord\Style\Colors\AbstractColor;
+use PhpOffice\PhpWord\Style\Colors\BasicColor;
 use PhpOffice\PhpWord\Style\Colors\Hex;
 
 /**
@@ -46,7 +46,7 @@ class ShadingTest extends \PHPUnit\Framework\TestCase
 
             $this->set($object, $property, $expected);
 
-            if ($expected instanceof AbstractColor) {
+            if ($expected instanceof BasicColor) {
                 $expected = $expected->toHex();
             }
             $this->assertEquals($expected, $this->get($object, $property)); // New value
@@ -58,7 +58,7 @@ class ShadingTest extends \PHPUnit\Framework\TestCase
         $get = "get{$property}";
 
         $result = $object->$get();
-        if ($result instanceof AbstractColor) {
+        if ($result instanceof BasicColor) {
             $result = $result->toHex();
         }
 

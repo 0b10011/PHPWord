@@ -5,7 +5,7 @@ namespace PhpOffice\PhpWord\Style\Colors;
 
 use PhpOffice\PhpWord\Exception\Exception;
 
-class Rgb extends AbstractColor implements StaticColorInterface
+class Rgb extends BasicColor implements StaticColorInterface
 {
     private $red;
     private $green;

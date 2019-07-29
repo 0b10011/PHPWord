@@ -50,7 +50,7 @@ class ThemeColorTest extends \PHPUnit\Framework\TestCase
         foreach ($values as $value) {
             $message = $value . ' should be a valid color';
             $result = new ThemeColor($value);
-            $this->assertInstanceOf(AbstractColor::class, $result);
+            $this->assertInstanceOf(BasicColor::class, $result);
             $this->assertInstanceOf(NamedColorInterface::class, $result);
             $this->assertEquals($value, $result->getName(), $message);
             $this->assertEquals($value, $result->toHexOrName(), $message);

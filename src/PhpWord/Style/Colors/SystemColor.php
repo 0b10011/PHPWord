@@ -5,7 +5,7 @@ namespace PhpOffice\PhpWord\Style\Colors;
 
 use PhpOffice\PhpWord\Exception\Exception;
 
-final class SystemColor implements NamedColorInterface
+final class SystemColor extends SpecialColor implements NamedColorInterface
 {
     /**
      * Taken from http://www.datypic.com/sc/ooxml/t-a_ST_SystemColorVal.html

@@ -5,7 +5,7 @@ namespace PhpOffice\PhpWord\Style\Colors;
 
 use PhpOffice\PhpWord\Exception\Exception;
 
-final class HighlightColor extends AbstractColor implements StaticColorInterface, NamedColorInterface
+final class HighlightColor extends BasicColor implements StaticColorInterface, NamedColorInterface
 {
     private static $allowedColors = array(
         'yellow'      => 'FF0000',

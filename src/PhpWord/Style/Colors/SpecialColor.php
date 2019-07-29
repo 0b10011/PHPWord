@@ -5,7 +5,11 @@ namespace PhpOffice\PhpWord\Style\Colors;
 
 use PhpOffice\PhpWord\Exception\Exception;
 
-abstract class AbstractColor
+/**
+ * A color that can be used anywhere that accepts SystemColors.
+ * Typically, BasicColor is preferred over this.
+ */
+abstract class SpecialColor
 {
     final public function toHexOrName(bool $includeHash = false)
     {

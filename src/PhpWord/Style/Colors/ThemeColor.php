@@ -5,7 +5,7 @@ namespace PhpOffice\PhpWord\Style\Colors;
 
 use PhpOffice\PhpWord\Exception\Exception;
 
-final class ThemeColor extends AbstractColor implements NamedColorInterface
+final class ThemeColor extends BasicColor implements NamedColorInterface
 {
     /**
      * Taken from https://docs.microsoft.com/en-us/dotnet/api/documentformat.openxml.drawing.colorscheme?view=openxml-2.8.1

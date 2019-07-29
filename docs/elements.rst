@@ -438,7 +438,7 @@ Line elements can be added to sections by using ``addLine``.
 Available line style attributes:
 
 - ``weight``. Line width (``\PhpOffice\PhpWord\Style\Lengths\Absolute``).
-- ``color``. Defines the color of stroke (``\PhpOffice\PhpWord\Style\Colors\AbstractColor``).
+- ``color``. Defines the color of stroke (``\PhpOffice\PhpWord\Style\Colors\BasicColor``).
 - ``dash``. Line types: dash, rounddot, squaredot, dashdot, longdash, longdashdot, longdashdotdot.
 - ``beginArrow``. Start type of arrow: block, open, classic, diamond, oval.
 - ``endArrow``. End type of arrow: block, open, classic, diamond, oval.

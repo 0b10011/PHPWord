@@ -21,7 +21,7 @@ namespace PhpOffice\PhpWord\Writer\Word2007\Style;
 use PhpOffice\Common\XMLWriter;
 use PhpOffice\PhpWord\Exception\Exception;
 use PhpOffice\PhpWord\Style\BorderStyle;
-use PhpOffice\PhpWord\Style\Colors\AbstractColor;
+use PhpOffice\PhpWord\Style\Colors\BasicColor;
 use PhpOffice\PhpWord\Style\Colors\Hex;
 use PhpOffice\PhpWord\Style\Lengths\Absolute;
 
@@ -42,7 +42,7 @@ class MarginBorder extends AbstractStyle
     /**
      * Colors
      *
-     * @var AbstractColor[]
+     * @var BasicColor[]
      */
     private $colors = array();
 
@@ -89,7 +89,7 @@ class MarginBorder extends AbstractStyle
      * @param string $color
      * @param string $borderStyle
      */
-    private function writeSide(XMLWriter $xmlWriter, $side, Absolute $width, AbstractColor $color, BorderStyle $borderStyle)
+    private function writeSide(XMLWriter $xmlWriter, $side, Absolute $width, BasicColor $color, BorderStyle $borderStyle)
     {
         $xmlWriter->startElement('w:' . $side);
         if (!empty($this->colors)) {
@@ -133,8 +133,8 @@ class MarginBorder extends AbstractStyle
     public function setColors(array $values): self
     {
         foreach ($values as $value) {
-            if (!($value instanceof AbstractColor)) {
-                throw new Exception('An array of `AbstractColor` must be provided. `' . gettype($value) . '` provided');
+            if (!($value instanceof BasicColor)) {
+                throw new Exception('An array of `BasicColor` must be provided. `' . gettype($value) . '` provided');
             }
         }
         $this->colors = $values;

@@ -3,18 +3,15 @@ declare(strict_types=1);
 
 namespace PhpOffice\PhpWord\Style\Colors;
 
-use PhpOffice\PhpWord\Exception\Exception;
-
-final class Color
+/**
+ * A color that can be used as a color, background, border color, etc.
+ * Should be an instance of StaticColorInterface or NamedColorInterface (for ThemeColor).
+ */
+abstract class BasicColor extends SpecialColor
 {
-    final public function __construct()
+    public static function fromMixed($value = null): self
     {
-        throw new Exception('Color cannot be instantiated');
-    }
-
-    public static function fromMixed($value = null): AbstractColor
-    {
-        if ($value instanceof AbstractColor) {
+        if ($value instanceof self) {
             return $value;
         } elseif ($value === null || $value === '' || $value === 'auto') {
             return new Hex(null);

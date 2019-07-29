@@ -4,8 +4,7 @@ declare(strict_types=1);
 namespace PhpOffice\PhpWord\Style\Theme;
 
 use PhpOffice\PhpWord\Exception\Exception;
-use PhpOffice\PhpWord\Style\Colors\AbstractColor;
-use PhpOffice\PhpWord\Style\Colors\SystemColor;
+use PhpOffice\PhpWord\Style\Colors\SpecialColor;
 
 class ColorScheme
 {
@@ -41,8 +40,8 @@ class ColorScheme
             }
 
             $color = $colorScheme[$name];
-            if (!($color instanceof AbstractColor) && !($color instanceof SystemColor)) {
-                throw new Exception(sprintf("Provided color for '%s' must be an instance of '%s', '%s' provided", $name, AbstractColor::class, get_class($color)));
+            if (!($color instanceof SpecialColor)) {
+                throw new Exception(sprintf("Provided color for '%s' must be an instance of '%s', '%s' provided", $name, SpecialColor::class, gettype($color)));
             }
 
             $this->colorScheme[$name] = $color;
@@ -59,7 +58,7 @@ class ColorScheme
         return $colors;
     }
 
-    public function getColor(string $name): AbstractColor
+    public function getColor(string $name): SpecialColor
     {
         if (!array_key_exists($name, $this->colorScheme)) {
             throw new Exception(sprintf("No color exists for '$name'"));

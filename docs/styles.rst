@@ -10,13 +10,13 @@ Section
 
 Available Section style options:
 
-- ``borderBottomColor``. Border bottom color (``PhpOffice\PhpWord\Style\Colors\AbstractColor``).
+- ``borderBottomColor``. Border bottom color (``PhpOffice\PhpWord\Style\Colors\BasicColor``).
 - ``borderBottomSize``. Border bottom size (``PhpOffice\PhpWord\Style\Lengths\Absolute``).
-- ``borderLeftColor``. Border left color (``PhpOffice\PhpWord\Style\Colors\AbstractColor``).
+- ``borderLeftColor``. Border left color (``PhpOffice\PhpWord\Style\Colors\BasicColor``).
 - ``borderLeftSize``. Border left size (``PhpOffice\PhpWord\Style\Lengths\Absolute``).
-- ``borderRightColor``. Border right color (``PhpOffice\PhpWord\Style\Colors\AbstractColor``).
+- ``borderRightColor``. Border right color (``PhpOffice\PhpWord\Style\Colors\BasicColor``).
 - ``borderRightSize``. Border right size (``PhpOffice\PhpWord\Style\Lengths\Absolute``).
-- ``borderTopColor``. Border top color (``PhpOffice\PhpWord\Style\Colors\AbstractColor``).
+- ``borderTopColor``. Border top color (``PhpOffice\PhpWord\Style\Colors\BasicColor``).
 - ``borderTopSize``. Border top size (``PhpOffice\PhpWord\Style\Lengths\Absolute``).
 - ``breakType``. Section break type (nextPage, nextColumn, continuous, evenPage, oddPage).
 - ``colsNum``. Number of columns.
@@ -43,9 +43,9 @@ Font
 Available Font style options:
 
 - ``allCaps``. All caps, *true* or *false*.
-- ``bgColor``. Font background color (``\PhpOffice\PhpWord\Style\Colors\AbstractColor``).
+- ``bgColor``. Font background color (``\PhpOffice\PhpWord\Style\Colors\BasicColor``).
 - ``bold``. Bold, *true* or *false*.
-- ``color``. Font color (``\PhpOffice\PhpWord\Style\Colors\AbstractColor``).
+- ``color``. Font color (``\PhpOffice\PhpWord\Style\Colors\BasicColor``).
 - ``doubleStrikethrough``. Double strikethrough, *true* or *false*.
 - ``fgColor``. Font highlight color (``\PhpOffice\PhpWord\Style\Colors\HighlightColor``).
 - ``hint``. Font content type, *default*, *eastAsia*, or *cs*.
@@ -104,8 +104,8 @@ Available Table style options:
 
 - ``alignment``. Supports all alignment modes since 1st Edition of ECMA-376 standard up till ISO/IEC 29500:2012.
    See ``\PhpOffice\PhpWord\SimpleType\JcTable`` and ``\PhpOffice\PhpWord\SimpleType\Jc`` class constants for possible values.
-- ``bgColor``. Background color (``PhpOffice\PhpWord\Style\Colors\AbstractColor``).
-- ``border(Top|Right|Bottom|Left)Color``. Border color (``PhpOffice\PhpWord\Style\Colors\AbstractColor``).
+- ``bgColor``. Background color (``PhpOffice\PhpWord\Style\Colors\BasicColor``).
+- ``border(Top|Right|Bottom|Left)Color``. Border color (``PhpOffice\PhpWord\Style\Colors\BasicColor``).
 - ``border(Top|Right|Bottom|Left)Size``. Border size (``PhpOffice\PhpWord\Style\Lengths\Absolute``).
 - ``cellMargin(Top|Right|Bottom|Left)``. Cell margin (``PhpOffice\PhpWord\Style\Lengths\Absolute``).
 - ``indent``. Table indent from leading margin (``PhpOffice\PhpWord\Style\Lengths\Length``).
@@ -136,8 +136,8 @@ Available Row style options:
 
 Available Cell style options:
 
-- ``bgColor``. Background color (``PhpOffice\PhpWord\Style\Colors\AbstractColor``).
-- ``border(Top|Right|Bottom|Left)Color``. Border color (``PhpOffice\PhpWord\Style\Colors\AbstractColor``).
+- ``bgColor``. Background color (``PhpOffice\PhpWord\Style\Colors\BasicColor``).
+- ``border(Top|Right|Bottom|Left)Color``. Border color (``PhpOffice\PhpWord\Style\Colors\BasicColor``).
 - ``border(Top|Right|Bottom|Left)Size``. Border size (``PhpOffice\PhpWord\Style\Lengths\Absolute``).
 - ``gridSpan``. Number of columns spanned.
 - ``textDirection(btLr|tbRl)``. Direction of text.

@@ -122,7 +122,7 @@ class CellTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @expectedException \TypeError
-     * @expectedExceptionMessage Argument 1 passed to PhpOffice\PhpWord\Style\Cell::setBgColor() must be an instance of PhpOffice\PhpWord\Style\Colors\AbstractColor, instance of PhpOffice\PhpWord\Style\Colors\SystemColor given
+     * @expectedExceptionMessage Argument 1 passed to PhpOffice\PhpWord\Style\Cell::setBgColor() must be an instance of PhpOffice\PhpWord\Style\Colors\BasicColor, instance of PhpOffice\PhpWord\Style\Colors\SystemColor given
      */
     public function testSetBgColorSystemColor()
     {
