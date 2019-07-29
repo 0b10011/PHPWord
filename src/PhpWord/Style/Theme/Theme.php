@@ -9,6 +9,7 @@ use PhpOffice\PhpWord\Style\Colors\SystemColor;
 class Theme
 {
     private $colorScheme;
+    private $fontScheme;
 
     public function getColorScheme(): ColorScheme
     {

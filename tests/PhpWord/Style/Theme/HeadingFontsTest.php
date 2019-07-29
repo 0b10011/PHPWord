@@ -104,4 +104,13 @@ class HeadingFontsTest extends \PHPUnit\Framework\TestCase
         $headingFonts = new HeadingFonts();
         $headingFonts->getFont('BadScript');
     }
+
+    /**
+     * @expectedException \Exception
+     * @expectedExceptionMessage No font found for script 'BadScript' in color scheme 'PhpOffice\PhpWord\Style\Theme\Fonts'
+     */
+    public function testGettingBadDefaultFont()
+    {
+        HeadingFonts::getDefaultFont('BadScript');
+    }
 }

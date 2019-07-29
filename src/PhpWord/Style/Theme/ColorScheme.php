@@ -11,7 +11,7 @@ class ColorScheme
     /**
      * Should match list in
      * \PhpOffice\PhpWord\Style\Colors\ThemeColor
-     * @var [type]
+     * @var array
      */
     private $colorScheme = array(
         'dk1'      => null,

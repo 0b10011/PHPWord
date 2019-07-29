@@ -95,4 +95,13 @@ class BodyFontsTest extends \PHPUnit\Framework\TestCase
         $bodyFonts = new BodyFonts();
         $bodyFonts->getFont('BadScript');
     }
+
+    /**
+     * @expectedException \Exception
+     * @expectedExceptionMessage No font found for script 'BadScript' in color scheme 'PhpOffice\PhpWord\Style\Theme\Fonts'
+     */
+    public function testGettingBadDefaultFont()
+    {
+        HeadingFonts::getDefaultFont('BadScript');
+    }
 }

@@ -114,7 +114,7 @@ abstract class Fonts
     public static function getDefaultFont(string $script): string
     {
         if (!array_key_exists($script, static::$defaultFonts)) {
-            throw new Exception(sprintf("No font found for script '%s' in color scheme '%s'", $script, get_class($this)));
+            throw new Exception(sprintf("No font found for script '%s' in color scheme '%s'", $script, get_class()));
         }
 
         return static::$defaultFonts[$script];
