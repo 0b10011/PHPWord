@@ -18,7 +18,10 @@ declare(strict_types=1);
 
 namespace PhpOffice\PhpWord\Writer\Word2007\Style;
 
-use PhpOffice\PhpWord\Style\Lengths\{Absolute, Auto, Length, Percent};
+use PhpOffice\PhpWord\Style\Lengths\Absolute;
+use PhpOffice\PhpWord\Style\Lengths\Auto;
+use PhpOffice\PhpWord\Style\Lengths\Length;
+use PhpOffice\PhpWord\Style\Lengths\Percent;
 use PhpOffice\PhpWord\Style\Table;
 use PhpOffice\PhpWord\Style\TablePosition;
 use PhpOffice\PhpWord\TestHelperDOCX;
@@ -61,19 +64,20 @@ class TableTest extends \PHPUnit\Framework\TestCase
 
     /**
      * Test write styles
-     * @expectedException Exception
+     * @expectedException \Exception
      * @expectedExceptionMessage Unsupported width `class@anonymous
      */
     public function testWidths()
     {
-        $widths = [
-            [new Auto(), 'auto', null],
-            [Absolute::from('twip', 54), 'dxa', 54],
-            [new Percent(50), 'pct', 50],
+        $widths = array(
+            array(new Auto(), 'auto', null),
+            array(Absolute::from('twip', 54), 'dxa', 54),
+            array(new Percent(50), 'pct', 50),
 
             // Invalid class must be last
-            [new class extends Length {}, null, null],
-        ];
+            array(new class() extends Length {
+            }, null, null),
+        );
         foreach ($widths as $info) {
             list($width, $expectedType, $expectedWidth) = $info;
 
