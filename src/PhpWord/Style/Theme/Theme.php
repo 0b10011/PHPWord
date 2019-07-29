@@ -31,4 +31,13 @@ class Theme
 
         return clone $this->colorScheme;
     }
+
+    public function getFontScheme(): FontScheme
+    {
+        if (!isset($this->fontScheme)) {
+            $this->fontScheme = new FontScheme();
+        }
+
+        return clone $this->fontScheme;
+    }
 }
