@@ -18,7 +18,7 @@ declare(strict_types=1);
 
 namespace PhpOffice\PhpWord\Writer\Word2007\Style;
 
-use PhpOffice\PhpWord\Style\Lengths\Absolute;
+use PhpOffice\PhpWord\Style\Lengths\{Absolute, Auto, Length, Percent};
 use PhpOffice\PhpWord\Style\Table;
 use PhpOffice\PhpWord\Style\TablePosition;
 use PhpOffice\PhpWord\TestHelperDOCX;
@@ -57,6 +57,41 @@ class TableTest extends \PHPUnit\Framework\TestCase
         $path = '/w:document/w:body/w:tbl/w:tblPr/w:tblLayout';
         $this->assertTrue($doc->elementExists($path));
         $this->assertEquals(Table::LAYOUT_FIXED, $doc->getElementAttribute($path, 'w:type'));
+    }
+
+    /**
+     * Test write styles
+     * @expectedException Exception
+     * @expectedExceptionMessage Unsupported width `class@anonymous
+     */
+    public function testWidths()
+    {
+        $widths = [
+            [new Auto(), 'auto', null],
+            [Absolute::from('twip', 54), 'dxa', 54],
+            [new Percent(50), 'pct', 50],
+
+            // Invalid class must be last
+            [new class extends Length {}, null, null],
+        ];
+        foreach ($widths as $info) {
+            list($width, $expectedType, $expectedWidth) = $info;
+
+            $tableStyle = new Table();
+            $tableStyle->setWidth($width);
+
+            $phpWord = new \PhpOffice\PhpWord\PhpWord();
+            $section = $phpWord->addSection();
+            $table = $section->addTable($tableStyle);
+            $table->addRow();
+
+            $doc = TestHelperDOCX::getDocument($phpWord, 'Word2007');
+
+            $path = '/w:document/w:body/w:tbl/w:tblPr/w:tblW';
+            $this->assertTrue($doc->elementExists($path));
+            $this->assertEquals($expectedType, $doc->getElementAttribute($path, 'w:type'));
+            $this->assertEquals($expectedWidth, $doc->getElementAttribute($path, 'w:w'));
+        }
     }
 
     /**
