@@ -84,7 +84,6 @@ class Table extends AbstractElement
         foreach ($cellWidths as $width) {
             $xmlWriter->startElement('w:gridCol');
             $xmlWriter->writeAttribute('w:w', $width->toInt('twip'));
-            $xmlWriter->writeAttribute('w:type', 'dxa');
             $xmlWriter->endElement();
         }
         $xmlWriter->endElement(); // w:tblGrid
@@ -128,6 +127,7 @@ class Table extends AbstractElement
         $cellStyle = $cell->getStyle();
         if ($cellStyle instanceof CellStyle) {
             $styleWriter = new CellStyleWriter($xmlWriter, $cellStyle);
+            // Override width set in style.
             $styleWriter->setWidth($cell->getWidth());
             $styleWriter->write();
         }

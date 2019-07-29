@@ -130,11 +130,11 @@ class Cell extends AbstractStyle
     }
 
     /**
-     * Set width.
+     * Override width set in style.
      */
     public function setWidth(Length $value): self
     {
-        $this->width = $value;
+        $this->width = $value->toInt('twip') === null ? null : $value;
 
         return $this;
     }

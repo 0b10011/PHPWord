@@ -435,7 +435,8 @@ abstract class AbstractElement
             $styleObject->setStyleByArray($styleValue);
             $style = $styleObject;
         } else {
-            $style = $returnObject ? $styleObject : $styleValue;
+            $class = get_class($styleObject);
+            $style = $returnObject && !($styleValue instanceof $class) ? $styleObject : $styleValue;
         }
 
         return $style;

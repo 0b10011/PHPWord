@@ -17,6 +17,7 @@ This release marked the addition of return type declarations (PHP 7+).
 
 ### Fixed
 - Fix HTML border-color parsing. @troosan #1551 #1570
+- Fixed specifying cell widths, background color, etc on `PhpOffice\PhpWord\Style\Cell` @0b10011 #1669
 
 ### Miscellaneous
 -
