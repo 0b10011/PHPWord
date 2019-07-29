@@ -5,6 +5,7 @@ namespace PhpOffice\PhpWord\Style\Theme;
 
 use PhpOffice\PhpWord\Exception\Exception;
 use PhpOffice\PhpWord\Style\Colors\AbstractColor;
+use PhpOffice\PhpWord\Style\Colors\SystemColor;
 
 class ColorScheme
 {
@@ -40,8 +41,8 @@ class ColorScheme
             }
 
             $color = $colorScheme[$name];
-            if (!($color instanceof AbstractColor)) {
-                throw new Exception(sprintf("Provided color for '%s' must be an instance of '%s', '%s' provided", $name, AbstractColor::class, gettype($color)));
+            if (!($color instanceof AbstractColor) && !($color instanceof SystemColor)) {
+                throw new Exception(sprintf("Provided color for '%s' must be an instance of '%s', '%s' provided", $name, AbstractColor::class, get_class($color)));
             }
 
             $this->colorScheme[$name] = $color;
