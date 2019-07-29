@@ -606,9 +606,13 @@ class Table extends Border
      */
     public function hasMargin()
     {
-        $margins = $this->getCellMargin();
+        foreach ($this->getCellMargin() as $margin) {
+            if ($margin->toInt('twip') !== null) {
+                return true;
+            }
+        }
 
-        return $margins !== array_filter($margins, 'is_null');
+        return false;
     }
 
     /**
