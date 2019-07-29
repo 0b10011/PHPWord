@@ -8,6 +8,11 @@ use PhpOffice\PhpWord\Style\Colors\AbstractColor;
 
 class ColorScheme
 {
+    /**
+     * Should match list in
+     * \PhpOffice\PhpWord\Style\Colors\ThemeColor
+     * @var [type]
+     */
     private $colorScheme = array(
         'dk1'      => null,
         'dk2'      => null,

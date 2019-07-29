@@ -9,6 +9,8 @@ final class ThemeColor extends AbstractColor implements NamedColorInterface
 {
     /**
      * Taken from https://docs.microsoft.com/en-us/dotnet/api/documentformat.openxml.drawing.colorscheme?view=openxml-2.8.1
+     * Should match list in
+     * \PhpOffice\PhpWord\Style\Theme\ColorScheme
      * @todo Check if 'extLst' (Extension List) can add additional colors to this list.
      * @var array
      */
