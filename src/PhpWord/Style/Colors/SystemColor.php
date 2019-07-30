@@ -57,6 +57,11 @@ final class SystemColor extends SpecialColor implements NamedColorInterface
         $this->lastColor = clone $lastColor;
     }
 
+    public function isSet(): bool
+    {
+        return true;
+    }
+
     public function getName(): string
     {
         return $this->name;

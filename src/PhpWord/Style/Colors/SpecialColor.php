@@ -21,4 +21,6 @@ abstract class SpecialColor
         }
         throw new Exception(sprintf('All colors must implement NamedColorInterface or StaticColorInterface. \'%s\' does not implement either.', get_class($this)));
     }
+
+    abstract public function isSet(): bool;
 }

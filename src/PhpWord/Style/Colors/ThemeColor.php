@@ -40,6 +40,11 @@ final class ThemeColor extends BasicColor implements NamedColorInterface
         $this->name = $name;
     }
 
+    public function isSet(): bool
+    {
+        return true;
+    }
+
     public function getName(): string
     {
         return $this->name;

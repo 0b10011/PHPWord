@@ -22,6 +22,11 @@ class Rgb extends BasicColor implements StaticColorInterface
         $this->blue = $blue;
     }
 
+    public function isSet(): bool
+    {
+        return true;
+    }
+
     public function toRgb(): array
     {
         return array($this->red, $this->green, $this->blue);

@@ -38,6 +38,11 @@ final class HighlightColor extends BasicColor implements StaticColorInterface, N
         $this->color = $color;
     }
 
+    public function isSet(): bool
+    {
+        return $this->color !== null;
+    }
+
     public function getName()
     {
         return $this->color;
