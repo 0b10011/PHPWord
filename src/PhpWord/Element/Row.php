@@ -19,6 +19,7 @@ declare(strict_types=1);
 namespace PhpOffice\PhpWord\Element;
 
 use PhpOffice\PhpWord\Style\Lengths\Absolute;
+use PhpOffice\PhpWord\Style\Lengths\Length;
 use PhpOffice\PhpWord\Style\Row as RowStyle;
 
 /**
@@ -64,11 +65,11 @@ class Row extends AbstractElement
     /**
      * Add a cell
      *
-     * @param Absolute $width
+     * @param Length $width
      * @param null|mixed $style
      * @return \PhpOffice\PhpWord\Element\Cell
      */
-    public function addCell(Absolute $width = null, $style = null)
+    public function addCell(Length $width = null, $style = null)
     {
         $cell = new Cell($width, $style);
         $cell->setParentContainer($this);

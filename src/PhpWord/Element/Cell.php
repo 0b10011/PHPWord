@@ -35,7 +35,7 @@ class Cell extends AbstractContainer
     /**
      * Cell width
      *
-     * @var Absolute
+     * @var Length
      */
     private $width;
 
@@ -49,11 +49,10 @@ class Cell extends AbstractContainer
     /**
      * Create new instance
      *
-     * @see http://officeopenxml.com/WPtableGrid.php
-     * @param Absolute $width The element returns Absolute for the width, rather than Length like the style does. See link for documentation.
+     * @param Length $width Can be set here or via $style
      * @param array|\PhpOffice\PhpWord\Style\Cell $style
      */
-    public function __construct(Absolute $width = null, $style = null)
+    public function __construct(Length $width = null, $style = null)
     {
         $this->width = $width ?? new Absolute(null);
         $this->style = $this->setNewStyle(new CellStyle(), $style, true);
@@ -72,7 +71,7 @@ class Cell extends AbstractContainer
     /**
      * Get cell width
      */
-    public function getWidth(): Absolute
+    public function getWidth(): Length
     {
         return $this->width;
     }
