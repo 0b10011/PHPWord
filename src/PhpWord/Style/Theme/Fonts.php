@@ -95,15 +95,6 @@ abstract class Fonts
 
     public function getFont(string $script): string
     {
-        switch ($script) {
-            case 'Latin':
-                return $this->latin;
-            case 'EastAsian':
-                return $this->eastAsian;
-            case 'ComplexScript':
-                return $this->complexScript;
-        }
-
         if (!array_key_exists($script, $this->fonts)) {
             throw new Exception(sprintf("No font found for script '%s' in color scheme '%s'", $script, get_class($this)));
         }

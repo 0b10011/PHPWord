@@ -50,8 +50,8 @@ class FontSchemeTest extends \PHPUnit\Framework\TestCase
             new HeadingFonts(array('Latin' => 'Custom Font')),
             new BodyFonts(array('Latin' => 'Another Custom Font'))
         );
-        $this->assertEquals('Custom Font', $fontScheme->getHeadingFonts()->getFont('Latin'));
-        $this->assertEquals('Another Custom Font', $fontScheme->getBodyFonts()->getFont('Latin'));
+        $this->assertEquals('Custom Font', $fontScheme->getHeadingFonts()->getLatin());
+        $this->assertEquals('Another Custom Font', $fontScheme->getBodyFonts()->getLatin());
     }
 
     /**
