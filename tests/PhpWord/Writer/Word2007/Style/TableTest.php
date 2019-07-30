@@ -76,6 +76,10 @@ class TableTest extends \PHPUnit\Framework\TestCase
 
             // Invalid class must be last
             array(new class() extends Length {
+                public function isSet(): bool
+                {
+                    return true;
+                }
             }, null, null),
         );
         foreach ($widths as $info) {

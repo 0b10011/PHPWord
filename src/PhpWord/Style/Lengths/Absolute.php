@@ -44,6 +44,11 @@ class Absolute extends Length
         $this->twips = $twips;
     }
 
+    public function isSet(): bool
+    {
+        return $this->twips !== null;
+    }
+
     public static function from(string $unit, float $length = null): self
     {
         if ($length === null) {

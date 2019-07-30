@@ -12,6 +12,11 @@ class Percent extends Length
         $this->percent = $percent;
     }
 
+    public function isSet(): bool
+    {
+        return $this->percent !== null;
+    }
+
     public function toInt()
     {
         $float = $this->toFloat();
