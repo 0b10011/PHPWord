@@ -18,6 +18,7 @@ declare(strict_types=1);
 
 namespace PhpOffice\PhpWord;
 
+use PhpOffice\PhpWord\Exception\Exception;
 use PhpOffice\PhpWord\Style\Lengths\Absolute;
 
 /**

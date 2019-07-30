@@ -140,4 +140,14 @@ class SettingsTest extends \PHPUnit\Framework\TestCase
         // Test with invalid file
         $this->assertEmpty(Settings::loadConfig(__DIR__ . '/../../phpunit.xml.dist'));
     }
+
+    /**
+     * Test loading bad config
+     * @expectedException \Exception
+     * @expectedExceptionMessage No method found for key `defaultFontClr` to set config value
+     */
+    public function testLoadBadConfig()
+    {
+        Settings::loadConfig(__DIR__ . '/_files/broken-phpword.ini');
+    }
 }
