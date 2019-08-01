@@ -159,7 +159,7 @@ class AbsoluteTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @expectedException \PHPUnit_Framework_Error_Warning
+     * @expectedException \PHPUnit\Framework\Error\Warning
      * @expectedExceptionMessage Border size `not a number` could not be converted to a float
      */
     public function testFromInvalid()

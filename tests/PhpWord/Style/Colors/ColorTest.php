@@ -62,7 +62,7 @@ class ColorTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @expectedException \PHPUnit_Framework_Error_Warning
+     * @expectedException \PHPUnit\Framework\Error\Warning
      * @expectedExceptionMessage Color `fakeColor` is not a valid color
      */
     public function testInvalidColor()

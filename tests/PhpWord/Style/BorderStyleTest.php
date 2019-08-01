@@ -91,7 +91,7 @@ class BorderStyleTest extends \PHPUnit\Framework\TestCase
 
     /**
      * Test getting style from bad value
-     * @expectedException \PHPUnit_Framework_Error_Warning
+     * @expectedException \PHPUnit\Framework\Error\Warning
      * @expectedExceptionMessage Border style `badstyle` is not a valid option
      */
     public function testFromMixedBadValue()
