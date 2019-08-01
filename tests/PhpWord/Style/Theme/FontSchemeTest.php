@@ -29,10 +29,8 @@ class FontSchemeTest extends \PHPUnit\Framework\TestCase
 
         $this->assertEquals('Office', $fontScheme->getName());
 
-        $headingFonts = $fontScheme->getHeadingFonts();
-        $this->assertInstanceOf(HeadingFonts::class, $headingFonts);
+        $this->assertInstanceOf(HeadingFonts::class, $fontScheme->getHeadingFonts());
 
-        $bodyFonts = $fontScheme->getBodyFonts();
         $this->assertInstanceOf(BodyFonts::class, $fontScheme->getBodyFonts());
     }
 
@@ -60,7 +58,7 @@ class FontSchemeTest extends \PHPUnit\Framework\TestCase
      */
     public function testBodyAsHeading()
     {
-        $fontScheme = new FontScheme(
+        new FontScheme(
             'Body as Heading',
             new BodyFonts(),
             new BodyFonts()
@@ -73,7 +71,7 @@ class FontSchemeTest extends \PHPUnit\Framework\TestCase
      */
     public function testHeadingAsBody()
     {
-        $fontScheme = new FontScheme(
+        new FontScheme(
             'Heading as Body',
             new HeadingFonts(),
             new HeadingFonts()

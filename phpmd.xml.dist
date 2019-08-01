@@ -20,7 +20,7 @@
         <!-- AbstractContainer needs more coupling (default: 13) -->
         <!-- Html needs 22 (default: 13) -->
         <properties>
-            <property name="minimum" value="23" />
+            <property name="maximum" value="23" />
         </properties>
     </rule>
     <rule ref="rulesets/design.xml/NumberOfChildren">

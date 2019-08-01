@@ -217,7 +217,7 @@ class Header extends AbstractPart
     {
         $colors = $style->getBorderColor();
         foreach ($colors as $color) {
-            if ($color->isSet()) {
+            if ($color->isSpecified()) {
                 $this->registerTableItem($this->colorTable, $color);
             }
         }

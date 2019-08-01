@@ -40,7 +40,7 @@ final class ThemeColor extends BasicColor implements NamedColorInterface
         $this->name = $name;
     }
 
-    public function isSet(): bool
+    public function isSpecified(): bool
     {
         return true;
     }

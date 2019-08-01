@@ -22,7 +22,7 @@ class Rgb extends BasicColor implements StaticColorInterface
         $this->blue = $blue;
     }
 
-    public function isSet(): bool
+    public function isSpecified(): bool
     {
         return true;
     }

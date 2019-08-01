@@ -76,7 +76,7 @@ class TableTest extends \PHPUnit\Framework\TestCase
 
             // Invalid class must be last
             array(new class() extends Length {
-                public function isSet(): bool
+                public function isSpecified(): bool
                 {
                     return true;
                 }

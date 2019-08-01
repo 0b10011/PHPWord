@@ -44,7 +44,7 @@ class Absolute extends Length
         $this->twips = $twips;
     }
 
-    public function isSet(): bool
+    public function isSpecified(): bool
     {
         return $this->twips !== null;
     }

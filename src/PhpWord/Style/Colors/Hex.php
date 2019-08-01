@@ -34,7 +34,7 @@ class Hex extends BasicColor implements StaticColorInterface
         }
     }
 
-    public function isSet(): bool
+    public function isSpecified(): bool
     {
         return $this->hex !== null;
     }

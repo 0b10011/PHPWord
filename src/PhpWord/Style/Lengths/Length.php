@@ -5,5 +5,5 @@ namespace PhpOffice\PhpWord\Style\Lengths;
 
 abstract class Length
 {
-    abstract public function isSet(): bool;
+    abstract public function isSpecified(): bool;
 }

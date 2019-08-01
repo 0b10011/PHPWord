@@ -5,7 +5,7 @@ namespace PhpOffice\PhpWord\Style\Lengths;
 
 class Auto extends Length
 {
-    public function isSet(): bool
+    public function isSpecified(): bool
     {
         return true;
     }

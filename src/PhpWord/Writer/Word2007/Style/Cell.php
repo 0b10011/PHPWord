@@ -134,7 +134,7 @@ class Cell extends AbstractStyle
      */
     public function setWidth(Length $value): self
     {
-        $this->width = $value->isSet() ? $value : null;
+        $this->width = $value->isSpecified() ? $value : null;
 
         return $this;
     }

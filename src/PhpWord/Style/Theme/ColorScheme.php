@@ -34,7 +34,7 @@ class ColorScheme
             throw new Exception(sprintf('%s colors expected, but %s colors provided', count($this->colorScheme), count($colorScheme)));
         }
 
-        foreach ($this->colorScheme as $name => $null) {
+        foreach (array_keys($this->colorScheme) as $name) {
             if (!array_key_exists($name, $colorScheme)) {
                 throw new Exception(sprintf("Missing '$name' from provided color scheme"));
             }

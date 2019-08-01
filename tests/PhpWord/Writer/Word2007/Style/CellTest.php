@@ -85,7 +85,7 @@ class CellTest extends \PHPUnit\Framework\TestCase
             list($width, $expectedType, $expectedWidth) = $info;
             $cellStyle = new CellStyle();
             $cellStyle->setWidth($width);
-            $cell = $row->addCell(null, $cellStyle);
+            $row->addCell(null, $cellStyle);
         }
 
         $doc = TestHelperDOCX::getDocument($phpWord, 'Word2007');
@@ -146,7 +146,7 @@ class CellTest extends \PHPUnit\Framework\TestCase
         foreach ($colors as $color) {
             $cellStyle = new CellStyle();
             $cellStyle->setBgColor($color);
-            $cell = $row->addCell(null, $cellStyle);
+            $row->addCell(null, $cellStyle);
         }
 
         $doc = TestHelperDOCX::getDocument($phpWord, 'Word2007');

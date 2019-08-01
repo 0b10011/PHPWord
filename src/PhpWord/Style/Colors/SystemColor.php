@@ -57,7 +57,7 @@ final class SystemColor extends SpecialColor implements NamedColorInterface
         $this->lastColor = clone $lastColor;
     }
 
-    public function isSet(): bool
+    public function isSpecified(): bool
     {
         return true;
     }

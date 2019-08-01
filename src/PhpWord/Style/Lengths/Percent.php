@@ -12,7 +12,7 @@ class Percent extends Length
         $this->percent = $percent;
     }
 
-    public function isSet(): bool
+    public function isSpecified(): bool
     {
         return $this->percent !== null;
     }

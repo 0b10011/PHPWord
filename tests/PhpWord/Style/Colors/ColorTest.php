@@ -53,7 +53,7 @@ class ColorTest extends \PHPUnit\Framework\TestCase
     public function testBadClass()
     {
         $color = BasicColor::fromMixed(new class() extends BasicColor {
-            public function isSet(): bool
+            public function isSpecified(): bool
             {
                 return false;
             }
