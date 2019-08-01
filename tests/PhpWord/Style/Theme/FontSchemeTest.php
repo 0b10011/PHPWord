@@ -56,7 +56,7 @@ class FontSchemeTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @expectedException \TypeError
-     * @expectedExceptionMessage Argument 2 passed to PhpOffice\PhpWord\Style\Theme\FontScheme::__construct() must be an instance of PhpOffice\PhpWord\Style\Theme\HeadingFonts, instance of PhpOffice\PhpWord\Style\Theme\BodyFonts given
+     * @expectedExceptionMessage Argument 2 passed to PhpOffice\PhpWord\Style\Theme\FontScheme::__construct() must be an instance of PhpOffice\PhpWord\Style\Theme\HeadingFonts
      */
     public function testBodyAsHeading()
     {
@@ -69,7 +69,7 @@ class FontSchemeTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @expectedException \TypeError
-     * @expectedExceptionMessage Argument 3 passed to PhpOffice\PhpWord\Style\Theme\FontScheme::__construct() must be an instance of PhpOffice\PhpWord\Style\Theme\BodyFonts, instance of PhpOffice\PhpWord\Style\Theme\HeadingFonts given
+     * @expectedExceptionMessage Argument 3 passed to PhpOffice\PhpWord\Style\Theme\FontScheme::__construct() must be an instance of PhpOffice\PhpWord\Style\Theme\BodyFonts
      */
     public function testHeadingAsBody()
     {
