@@ -139,7 +139,7 @@ class Font extends AbstractStyle
         $xmlWriter->writeElementIf($style->getScale()->isSpecified(), 'w:w', 'w:val', $style->getScale()->toInt());
         $spacing = $style->getSpacing()->toInt('twip');
         $xmlWriter->writeElementIf($spacing !== null, 'w:spacing', 'w:val', $spacing);
-        $xmlWriter->writeElementIf($style->getKerning() !== null, 'w:kern', 'w:val', $style->getKerning() * 2);
+        $xmlWriter->writeElementIf($style->getKerning()->isSpecified(), 'w:kern', 'w:val', $style->getKerning()->toInt('hpt'));
 
         // noProof
         $xmlWriter->writeElementIf($style->isNoProof() !== null, 'w:noProof', $this->writeOnOf($style->isNoProof()));

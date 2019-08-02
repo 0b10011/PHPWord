@@ -195,11 +195,13 @@ class Font extends AbstractStyle
     private $spacing;
 
     /**
-     * Font kerning: halfpoint
+     * The smallest font size
+     * which should have kerning automatically adjusted.
      *
-     * @var int|float
+     * @var Absolute
      * @since 0.12.0
      * @see  http://www.schemacentral.com/sc/ooxml/e-w_kern-1.html
+     * @see http://www.officeopenxml.com/WPtextSpacing.php
      */
     private $kerning;
 
@@ -269,7 +271,8 @@ class Font extends AbstractStyle
             ->setFgColor(new HighlightColor(null))
             ->setBgColor(new Hex(null))
             ->setSpacing(new Absolute(null))
-            ->setScale(new Percent(null));
+            ->setScale(new Percent(null))
+            ->setKerning(new Absolute(null));
         $this->type = $type;
         $this->setParagraph($paragraph);
     }
@@ -686,24 +689,23 @@ class Font extends AbstractStyle
     }
 
     /**
-     * Get font kerning
-     *
-     * @return int|float
+     * Get the smallest font size
+     * which should have kerning automatically adjusted.
+     * @see http://www.officeopenxml.com/WPtextSpacing.php
      */
-    public function getKerning()
+    public function getKerning(): Absolute
     {
         return $this->kerning;
     }
 
     /**
-     * Set font kerning
-     *
-     * @param int|float $value
-     * @return self
+     * Set the smallest font size
+     * which should have kerning automatically adjusted.
+     * @see http://www.officeopenxml.com/WPtextSpacing.php
      */
-    public function setKerning($value = null)
+    public function setKerning(Absolute $value): self
     {
-        $this->kerning = $this->setNumericVal($value, null);
+        $this->kerning = $value;
 
         return $this;
     }

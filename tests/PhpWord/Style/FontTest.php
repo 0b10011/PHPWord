@@ -80,7 +80,7 @@ class FontTest extends \PHPUnit\Framework\TestCase
             'bgColor'             => new Hex(null),
             'scale'               => new Percent(null),
             'spacing'             => new Absolute(null),
-            'kerning'             => null,
+            'kerning'             => new Absolute(null),
             'lang'                => null,
             'hidden'              => false,
         );
@@ -127,7 +127,7 @@ class FontTest extends \PHPUnit\Framework\TestCase
             'lineHeight'          => 2,
             'scale'               => new Percent(150),
             'spacing'             => Absolute::from('twip', 240),
-            'kerning'             => 10,
+            'kerning'             => Absolute::from('hpt', 10),
             'rtl'                 => true,
             'noProof'             => true,
             'lang'                => new Language(Language::EN_US),
