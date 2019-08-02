@@ -22,6 +22,7 @@ use PhpOffice\PhpWord\Style\Colors\BasicColor;
 use PhpOffice\PhpWord\Style\Colors\Hex;
 use PhpOffice\PhpWord\Style\Colors\HighlightColor;
 use PhpOffice\PhpWord\Style\Lengths\Absolute;
+use PhpOffice\PhpWord\Style\Lengths\Percent;
 
 /**
  * Font style
@@ -177,9 +178,10 @@ class Font extends AbstractStyle
     /**
      * Expanded/compressed text: 0-600 (percent)
      *
-     * @var int
+     * @var Percent
      * @since 0.12.0
      * @see  http://www.schemacentral.com/sc/ooxml/e-w_w-1.html
+     * @see http://www.officeopenxml.com/WPtextSpacing.php
      */
     private $scale;
 
@@ -266,7 +268,8 @@ class Font extends AbstractStyle
             ->setColor(new Hex(null))
             ->setFgColor(new HighlightColor(null))
             ->setBgColor(new Hex(null))
-            ->setSpacing(new Absolute(null));
+            ->setSpacing(new Absolute(null))
+            ->setScale(new Percent(null));
         $this->type = $type;
         $this->setParagraph($paragraph);
     }
@@ -645,24 +648,21 @@ class Font extends AbstractStyle
     }
 
     /**
-     * Get scale
-     *
-     * @return int
+     * Get horizontal scaling of characters
+     * @see http://www.officeopenxml.com/WPtextSpacing.php
      */
-    public function getScale()
+    public function getScale(): Percent
     {
         return $this->scale;
     }
 
     /**
-     * Set scale
-     *
-     * @param int $value
-     * @return self
+     * Set horizontal scaling of characters
+     * @see http://www.officeopenxml.com/WPtextSpacing.php
      */
-    public function setScale($value = null)
+    public function setScale(Percent $value): self
     {
-        $this->scale = $this->setIntVal($value, null);
+        $this->scale = $value;
 
         return $this;
     }

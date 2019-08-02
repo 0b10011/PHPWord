@@ -27,6 +27,7 @@ use PhpOffice\PhpWord\Style\Cell;
 use PhpOffice\PhpWord\Style\Colors;
 use PhpOffice\PhpWord\Style\Font;
 use PhpOffice\PhpWord\Style\Lengths\Absolute;
+use PhpOffice\PhpWord\Style\Lengths\Percent;
 use PhpOffice\PhpWord\TestHelperDOCX;
 
 /**
@@ -234,7 +235,7 @@ class DocumentTest extends \PHPUnit\Framework\TestCase
                 'size'    => Absolute::from('pt', 20),
                 'bold'    => true,
                 'allCaps' => true,
-                'scale'   => 200,
+                'scale'   => new Percent(200),
                 'spacing' => Absolute::from('pt', 240),
                 'kerning' => Absolute::from('pt', 10),
             )

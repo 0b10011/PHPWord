@@ -24,6 +24,7 @@ use PhpOffice\PhpWord\Style\Colors\BasicColor;
 use PhpOffice\PhpWord\Style\Colors\Hex;
 use PhpOffice\PhpWord\Style\Colors\HighlightColor;
 use PhpOffice\PhpWord\Style\Lengths\Absolute;
+use PhpOffice\PhpWord\Style\Lengths\Percent;
 use PhpOffice\PhpWord\TestHelperDOCX;
 
 /**
@@ -77,7 +78,7 @@ class FontTest extends \PHPUnit\Framework\TestCase
             'rtl'                 => false,
             'fgColor'             => new HighlightColor(null),
             'bgColor'             => new Hex(null),
-            'scale'               => null,
+            'scale'               => new Percent(null),
             'spacing'             => new Absolute(null),
             'kerning'             => null,
             'lang'                => null,
@@ -124,7 +125,7 @@ class FontTest extends \PHPUnit\Framework\TestCase
             'fgColor'             => new HighlightColor('yellow'),
             'bgColor'             => new Hex('FFFF00'),
             'lineHeight'          => 2,
-            'scale'               => 150,
+            'scale'               => new Percent(150),
             'spacing'             => Absolute::from('twip', 240),
             'kerning'             => 10,
             'rtl'                 => true,
