@@ -787,7 +787,7 @@ class Table extends Border
     {
         foreach ($values as $value) {
             if (!($value instanceof Length)) {
-                throw new Exception('Column widths must be specified with a `Length`');
+                throw new Exception(sprintf('Column widths must be specified with `%s`', Length::class));
             }
         }
 

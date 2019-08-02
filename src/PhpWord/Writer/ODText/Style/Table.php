@@ -22,6 +22,7 @@ use PhpOffice\PhpWord\Exception\Exception;
 use PhpOffice\PhpWord\Style\Lengths\Absolute;
 use PhpOffice\PhpWord\Style\Lengths\Auto;
 use PhpOffice\PhpWord\Style\Lengths\Percent;
+use PhpOffice\PhpWord\Style\Table as TableStyle;
 
 /**
  * Table style writer
@@ -35,10 +36,11 @@ class Table extends AbstractStyle
      */
     public function write()
     {
-        /** @var \PhpOffice\PhpWord\Style\Table $style Type hint */
         $style = $this->getStyle();
-        if (!$style instanceof \PhpOffice\PhpWord\Style\Table) {
+        if ($style === null) {
             return;
+        } elseif (!$style instanceof TableStyle) {
+            throw new Exception(sprintf('Incorrect value provided for style. %s expected, %s provided', TableStyle::class, get_class($style)));
         }
         $xmlWriter = $this->getXmlWriter();
 
