@@ -62,7 +62,6 @@ class Table extends AbstractElement
     /**
      * Add a row
      *
-     * @param int $height
      * @param null|mixed $style
      * @return \PhpOffice\PhpWord\Element\Row
      */

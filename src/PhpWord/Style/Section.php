@@ -294,8 +294,6 @@ class Section extends Border
     }
 
     /**
-     * @param int|float|null $value
-     *
      * @return \PhpOffice\PhpWord\Style\Section
      *
      * @since 0.12.0
@@ -320,8 +318,6 @@ class Section extends Border
     }
 
     /**
-     * @param int|float|null $value
-     *
      * @return \PhpOffice\PhpWord\Style\Section
      *
      * @since 0.12.0
@@ -391,8 +387,6 @@ class Section extends Border
 
     /**
      * Set Margin Right
-     *
-     * @param int|float $value
      */
     public function setMarginRight(Absolute $value): self
     {
@@ -415,8 +409,6 @@ class Section extends Border
 
     /**
      * Set Margin Bottom
-     *
-     * @param int|float $value
      */
     public function setMarginBottom(Absolute $value): self
     {
@@ -439,8 +431,6 @@ class Section extends Border
 
     /**
      * Set gutter
-     *
-     * @param int|float $value
      */
     public function setGutter(Absolute $value): self
     {
@@ -463,8 +453,6 @@ class Section extends Border
 
     /**
      * Set Header Height
-     *
-     * @param int|float $value
      */
     public function setHeaderHeight(Absolute $value): self
     {

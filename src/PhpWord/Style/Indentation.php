@@ -116,10 +116,8 @@ class Indentation extends AbstractStyle
 
     /**
      * Set first line
-     *
-     * @param int|float $value
      */
-    public function setFirstLine(Absolute $value = null): self
+    public function setFirstLine(Absolute $value): self
     {
         $this->firstLine = $value;
 
