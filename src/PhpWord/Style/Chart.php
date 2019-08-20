@@ -18,6 +18,8 @@ declare(strict_types=1);
 
 namespace PhpOffice\PhpWord\Style;
 
+use PhpOffice\PhpWord\Style\Lengths\Absolute;
+
 /**
  * Chart style
  *
@@ -28,14 +30,14 @@ class Chart extends AbstractStyle
     /**
      * Width (in EMU)
      *
-     * @var int
+     * @var Absolute
      */
     private $width = 1000000;
 
     /**
      * Height (in EMU)
      *
-     * @var int
+     * @var Absolute
      */
     private $height = 1000000;
 
@@ -153,46 +155,44 @@ class Chart extends AbstractStyle
 
     /**
      * Get width
-     *
-     * @return int
      */
-    public function getWidth()
+    public function getWidth(): Absolute
     {
+        if (is_int($this->width)) {
+            $this->width = Absolute::from('emu', $this->width);
+        }
+
         return $this->width;
     }
 
     /**
      * Set width
-     *
-     * @param int $value
-     * @return self
      */
-    public function setWidth($value = null)
+    public function setWidth(Absolute $value): self
     {
-        $this->width = $this->setIntVal($value, $this->width);
+        $this->width = $value;
 
         return $this;
     }
 
     /**
      * Get height
-     *
-     * @return int
      */
-    public function getHeight()
+    public function getHeight(): Absolute
     {
+        if (is_int($this->height)) {
+            $this->height = Absolute::from('emu', $this->height);
+        }
+
         return $this->height;
     }
 
     /**
      * Set height
-     *
-     * @param int $value
-     * @return self
      */
-    public function setHeight($value = null)
+    public function setHeight(Absolute $value): self
     {
-        $this->height = $this->setIntVal($value, $this->height);
+        $this->height = $value;
 
         return $this;
     }
