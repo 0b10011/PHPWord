@@ -18,6 +18,8 @@ declare(strict_types=1);
 
 namespace PhpOffice\PhpWord\Style;
 
+use PhpOffice\PhpWord\Style\Lengths\Absolute;
+
 /**
  * Test class for PhpOffice\PhpWord\Style\Image
  *
@@ -38,14 +40,19 @@ class LineTest extends \PHPUnit\Framework\TestCase
             'beginArrow'    => \PhpOffice\PhpWord\Style\Line::ARROW_STYLE_BLOCK,
             'endArrow'      => \PhpOffice\PhpWord\Style\Line::ARROW_STYLE_OVAL,
             'dash'          => \PhpOffice\PhpWord\Style\Line::DASH_STYLE_LONG_DASH_DOT_DOT,
-            'weight'        => 10,
+            'weight'        => Absolute::from('pt', 10),
             'color'         => 'red',
         );
         foreach ($properties as $key => $value) {
             $set = "set{$key}";
             $get = "get{$key}";
             $object->$set($value);
-            $this->assertEquals($value, $object->$get());
+            $result = $object->$get();
+            if ($value instanceof Absolute) {
+                $value = $value->toInt('pt');
+                $result = $result->toInt('pt');
+            }
+            $this->assertEquals($value, $result);
         }
     }
 
@@ -61,13 +68,18 @@ class LineTest extends \PHPUnit\Framework\TestCase
             'beginArrow'    => \PhpOffice\PhpWord\Style\Line::ARROW_STYLE_BLOCK,
             'endArrow'      => \PhpOffice\PhpWord\Style\Line::ARROW_STYLE_OVAL,
             'dash'          => \PhpOffice\PhpWord\Style\Line::DASH_STYLE_LONG_DASH_DOT_DOT,
-            'weight'        => 10,
+            'weight'        => Absolute::from('pt', 10),
             'color'         => 'red',
         );
         foreach ($properties as $key => $value) {
             $get = "get{$key}";
             $object->setStyleValue("{$key}", $value);
-            $this->assertEquals($value, $object->$get());
+            $result = $object->$get();
+            if ($value instanceof Absolute) {
+                $value = $value->toInt('pt');
+                $result = $result->toInt('pt');
+            }
+            $this->assertEquals($value, $result);
         }
     }
 
@@ -98,10 +110,10 @@ class LineTest extends \PHPUnit\Framework\TestCase
      */
     public function testSetGetWeight()
     {
-        $expected = 10;
+        $expected = Absolute::from('pt', 10);
         $object = new Line();
         $object->setWeight($expected);
-        $this->assertEquals($expected, $object->getWeight());
+        $this->assertEquals($expected->toInt('pt'), $object->getWeight()->toInt('pt'));
     }
 
     /**

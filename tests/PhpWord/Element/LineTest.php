@@ -68,7 +68,7 @@ class LineTest extends \PHPUnit\Framework\TestCase
                 'beginArrow'       => \PhpOffice\PhpWord\Style\Line::ARROW_STYLE_BLOCK,
                 'endArrow'         => \PhpOffice\PhpWord\Style\Line::ARROW_STYLE_OVAL,
                 'dash'             => \PhpOffice\PhpWord\Style\Line::DASH_STYLE_LONG_DASH_DOT_DOT,
-                'weight'           => 10,
+                'weight'           => Absolute::from('pt', 10),
             )
         );
 
