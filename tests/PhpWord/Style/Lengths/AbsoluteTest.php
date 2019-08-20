@@ -52,7 +52,7 @@ class AbsoluteTest extends \PHPUnit\Framework\TestCase
             $this->assertEquals($value / 2.54 * 72 * 8, $result->toFloat('eop'));
 
             $result = Absolute::from('cm', $value);
-            $this->assertEquals($value / 2.54 * 72 * 12700, $result->toFloat('emu'));
+            $this->assertEquals($value / 2.54 * 72 * 12700, $result->toFloat('emu'), '', 0.00000001);
 
             $result = Absolute::from('in', $value);
             $this->assertEquals($value * 1440, $result->toFloat('twip'));
