@@ -18,6 +18,7 @@ declare(strict_types=1);
 
 namespace PhpOffice\PhpWord\Writer\RTF;
 
+use PhpOffice\PhpWord\Style\Colors\Hex;
 use PhpOffice\PhpWord\Style\Lengths\Absolute;
 use PhpOffice\PhpWord\Writer\RTF;
 use PhpOffice\PhpWord\Writer\RTF\Style\Border;
@@ -46,8 +47,8 @@ class StyleTest extends \PHPUnit\Framework\TestCase
     {
         $border = new Border();
         $border->setSizes(array(1, 2, 3, 4));
-        $border->setColors(array('#FF0000', '#FF0000', '#FF0000', '#FF0000'));
-        $border->setSizes(array(20, 20, 20, 20));
+        $border->setColors(array(new Hex('FF0000'), new Hex('FF0000'), new Hex('FF0000'), new Hex('FF0000')));
+        $border->setSizes(array(Absolute::from('twip', 20), Absolute::from('twip', 20), Absolute::from('twip', 20), Absolute::from('twip', 20)));
 
         $content = $border->write();
 

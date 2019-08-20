@@ -18,6 +18,9 @@ declare(strict_types=1);
 
 namespace PhpOffice\PhpWord\Writer\RTF\Style;
 
+use PhpOffice\PhpWord\Style\Colors\BasicColor;
+use PhpOffice\PhpWord\Style\Lengths\Absolute;
+
 /**
  * Border style writer
  *
@@ -28,14 +31,14 @@ class Border extends AbstractStyle
     /**
      * Sizes
      *
-     * @var array
+     * @var Absolute[]
      */
     private $sizes = array();
 
     /**
      * Colors
      *
-     * @var array
+     * @var BasicColor[]
      */
     private $colors = array();
 
@@ -56,13 +59,12 @@ class Border extends AbstractStyle
         $content .= '\pgbrdropt32';
 
         for ($i = 0; $i < $sizeCount; $i++) {
-            if ($this->sizes[$i] !== null) {
-                $color = null;
-                if (isset($this->colors[$i])) {
-                    $color = $this->colors[$i];
-                }
-                $content .= $this->writeSide($sides[$i], $this->sizes[$i], $color);
+            if (!$this->sizes[$i]->isSpecified()) {
+                continue;
             }
+
+            $color = $this->colors[$i] ?? new Hex(null);
+            $content .= $this->writeSide($sides[$i], $this->sizes[$i], $color);
         }
 
         return $content;
@@ -72,18 +74,18 @@ class Border extends AbstractStyle
      * Write side
      *
      * @param string $side
-     * @param int $width
+     * @param int $width FIXME Switch to Absolute or Length maybe?
      * @param string $color
      * @return string
      */
-    private function writeSide($side, $width, $color = '')
+    private function writeSide($side, Absolute $width, BasicColor $color)
     {
         /** @var \PhpOffice\PhpWord\Writer\RTF $rtfWriter */
         $rtfWriter = $this->getParentWriter();
         $colorIndex = 0;
         if ($rtfWriter !== null) {
             $colorTable = $rtfWriter->getColorTable();
-            $index = array_search($color, $colorTable);
+            $index = array_search($color->toHexOrName(), $colorTable);
             if ($index !== false && $colorIndex !== null) {
                 $colorIndex = $index + 1;
             }
@@ -93,7 +95,7 @@ class Border extends AbstractStyle
 
         $content .= '\pgbrdr' . substr($side, 0, 1);
         $content .= '\brdrs'; // Single-thickness border; @todo Get other type of border
-        $content .= '\brdrw' . round($width); // Width
+        $content .= '\brdrw' . $width->toInt('twip'); // Width
         $content .= '\brdrcf' . $colorIndex; // Color
         $content .= '\brsp480'; // Space in twips between borders and the paragraph (24pt, following OOXML)
         $content .= ' ';
