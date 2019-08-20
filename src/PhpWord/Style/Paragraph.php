@@ -383,21 +383,16 @@ class Paragraph extends Border
 
     /**
      * Get hanging
-     *
-     * @return Absolute
      */
-    public function getHanging()
+    public function getHanging(): Absolute
     {
         return $this->getChildStyleValue($this->indentation, 'hanging') ?? new Absolute(null);
     }
 
     /**
      * Set hanging
-     *
-     * @param int $value
-     * @return self
      */
-    public function setHanging($value = null)
+    public function setHanging(Absolute $value): self
     {
         return $this->setIndentation(array('hanging' => $value));
     }
