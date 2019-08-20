@@ -179,10 +179,9 @@ class ElementTest extends \PHPUnit\Framework\TestCase
         $section->addShape(
             'curve',
             array(
-                'points'  => '1,100 200,1 1,50 200,50',
-                // FIXME Uncomment
-                // 'connector' => 'elbow',
-                'outline' => array(
+                'points'    => '1,100 200,1 1,50 200,50',
+                'connector' => 'elbow',
+                'outline'   => array(
                     'color'      => new Hex('66cc00'),
                     'weight'     => Absolute::from('emu', 2),
                     'dash'       => 'dash',

@@ -109,7 +109,7 @@ class NumberingLevel extends AbstractStyle
     /**
      * Tab position
      *
-     * @var int
+     * @var Absolute
      */
     private $tabPos;
 
@@ -392,33 +392,22 @@ class NumberingLevel extends AbstractStyle
 
     /**
      * Get tab
-     *
-     * @return int
      */
-    public function getTabPos()
+    public function getTabPos(): Absolute
     {
+        if ($this->tabPos === null) {
+            $this->tabPos = new Absolute(null);
+        }
+
         return $this->tabPos;
     }
 
     /**
      * Set tab
-     *
-     * @return self
      */
-    public function setTab(int $value)
+    public function setTabPos(Absolute $value): self
     {
-        return $this->setTabPos($value);
-    }
-
-    /**
-     * Set tab
-     *
-     * @param int $value FIXME Switch to Absolute or Length maybe?
-     * @return self
-     */
-    public function setTabPos($value)
-    {
-        $this->tabPos = $this->setIntVal($value, $this->tabPos);
+        $this->tabPos = $value;
 
         return $this;
     }

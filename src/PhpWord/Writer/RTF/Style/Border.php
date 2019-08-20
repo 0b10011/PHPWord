@@ -74,8 +74,6 @@ class Border extends AbstractStyle
      * Write side
      *
      * @param string $side
-     * @param int $width FIXME Switch to Absolute or Length maybe?
-     * @param string $color
      * @return string
      */
     private function writeSide($side, Absolute $width, BasicColor $color)

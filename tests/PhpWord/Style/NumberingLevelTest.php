@@ -46,7 +46,7 @@ class NumberingLevelTest extends \PHPUnit\Framework\TestCase
             'alignment' => Jc::START,
             'left'      => Absolute::from('twip', 360),
             'hanging'   => Absolute::from('twip', 360),
-            'tabPos'    => 360,
+            'tabPos'    => Absolute::from('twip', 360),
             'font'      => 'Arial',
             'hint'      => 'default',
         );

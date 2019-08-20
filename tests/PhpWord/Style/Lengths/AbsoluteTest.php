@@ -107,13 +107,6 @@ class AbsoluteTest extends \PHPUnit\Framework\TestCase
 
             $result = Absolute::from('pc', $value);
             $this->assertEquals($value, $result->toFloat('pc'), '', 0.00001);
-
-            // FIXME If necessary, add support and uncomment
-            // $result = Absolute::from('deg', $value);
-            // $this->assertEquals((int) round($value * 60000), $result->toFloat('angle'));
-            //
-            // $result = Absolute::from('angle', $value);
-            // $this->assertEquals(round($value / 60000), $result->toFloat('deg'));
         }
     }
 

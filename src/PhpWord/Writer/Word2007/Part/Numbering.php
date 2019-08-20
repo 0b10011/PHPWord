@@ -148,7 +148,7 @@ class Numbering extends AbstractPart
         $xmlWriter->startElement('w:tabs');
         $xmlWriter->startElement('w:tab');
         $xmlWriter->writeAttribute('w:val', 'num');
-        $xmlWriter->writeAttributeIf($tabPos !== null, 'w:pos', $tabPos);
+        $xmlWriter->writeAttributeIf($tabPos->isSpecified(), 'w:pos', $tabPos->toInt('twip'));
         $xmlWriter->endElement(); // w:tab
         $xmlWriter->endElement(); // w:tabs
 

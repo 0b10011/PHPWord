@@ -273,7 +273,7 @@ class ListItem extends AbstractStyle
             for ($i = 0; $i < $numProperties; $i++) {
                 $property = $properties[$i];
                 $value = $levelProperties[$i];
-                if ($property === 'left' || $property === 'hanging') {
+                if ($property === 'left' || $property === 'hanging' || $property === 'tabPos') {
                     $value = Absolute::from('twip', (int) $value);
                 }
                 $level[$property] = $value;
