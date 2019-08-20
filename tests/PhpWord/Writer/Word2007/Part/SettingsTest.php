@@ -24,6 +24,7 @@ use PhpOffice\PhpWord\ComplexType\TrackChangesView;
 use PhpOffice\PhpWord\PhpWord;
 use PhpOffice\PhpWord\SimpleType\Zoom;
 use PhpOffice\PhpWord\Style\Language;
+use PhpOffice\PhpWord\Style\Lengths\Absolute;
 use PhpOffice\PhpWord\TestHelperDOCX;
 
 /**
@@ -414,7 +415,7 @@ class SettingsTest extends \PHPUnit\Framework\TestCase
     public function testHyphenationZone()
     {
         $phpWord = new PhpWord();
-        $phpWord->getSettings()->setHyphenationZone(100);
+        $phpWord->getSettings()->setHyphenationZone(Absolute::from('twip', 100));
 
         $doc = TestHelperDOCX::getDocument($phpWord);
 

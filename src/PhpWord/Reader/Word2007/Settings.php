@@ -22,6 +22,7 @@ use PhpOffice\Common\XMLReader;
 use PhpOffice\PhpWord\ComplexType\TrackChangesView;
 use PhpOffice\PhpWord\PhpWord;
 use PhpOffice\PhpWord\Style\Language;
+use PhpOffice\PhpWord\Style\Lengths\Absolute;
 
 /**
  * Settings reader
@@ -168,7 +169,7 @@ class Settings extends AbstractPart
         $value = $xmlReader->getAttribute('w:val', $node);
 
         if ($value !== null) {
-            $phpWord->getSettings()->setHyphenationZone($value);
+            $phpWord->getSettings()->setHyphenationZone(Absolute::from('twip', (int) $value));
         }
     }
 }

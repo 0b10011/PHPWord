@@ -20,6 +20,7 @@ namespace PhpOffice\PhpWord\Metadata;
 
 use PhpOffice\PhpWord\ComplexType\ProofState;
 use PhpOffice\PhpWord\SimpleType\Zoom;
+use PhpOffice\PhpWord\Style\Lengths\Absolute;
 
 /**
  * Test class for PhpOffice\PhpWord\Metadata\Settings
@@ -203,16 +204,16 @@ class SettingsTest extends \PHPUnit\Framework\TestCase
 
     public function testHyphenationZone()
     {
-        $hyphenationZoneInTwip = 100;
+        $hyphenationZone = Absolute::from('twip', 100);
         $oSettings = new Settings();
-        $oSettings->setHyphenationZone($hyphenationZoneInTwip);
-        $this->assertSame($hyphenationZoneInTwip, $oSettings->getHyphenationZone());
+        $oSettings->setHyphenationZone($hyphenationZone);
+        $this->assertSame($hyphenationZone->toInt('twip'), $oSettings->getHyphenationZone()->toInt('twip'));
     }
 
     public function testDefaultHyphenationZone()
     {
         $oSettings = new Settings();
-        $this->assertNull($oSettings->getHyphenationZone());
+        $this->assertNull($oSettings->getHyphenationZone()->toInt('twip'));
     }
 
     public function testDoNotHyphenateCaps()
