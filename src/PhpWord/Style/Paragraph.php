@@ -454,30 +454,25 @@ class Paragraph extends Border
     /**
      * Set space after paragraph
      *
-     * @param int $value
      * @return self
      */
-    public function setSpaceAfter($value = null)
+    public function setSpaceAfter(Absolute $value)
     {
         return $this->setSpace(array('after' => $value));
     }
 
     /**
      * Get spacing between lines
-     *
-     * @return int|float
      */
-    public function getSpacing()
+    public function getSpacing(): Absolute
     {
-        return $this->getChildStyleValue($this->spacing, 'line');
+        return $this->getChildStyleValue($this->spacing, 'line') ?? new Absolute(null);
     }
 
     /**
      * Set spacing between lines
-     *
-     * @param int|float $value
      */
-    public function setSpacing($value = null): self
+    public function setSpacing(Absolute $value): self
     {
         return $this->setSpace(array('line' => $value));
     }
