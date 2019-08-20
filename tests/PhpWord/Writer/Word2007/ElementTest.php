@@ -521,7 +521,7 @@ class ElementTest extends \PHPUnit\Framework\TestCase
     public function testListItemRunStyleWriting()
     {
         $phpWord = new PhpWord();
-        $phpWord->addParagraphStyle('MyParagraphStyle', array('spaceBefore' => 400));
+        $phpWord->addParagraphStyle('MyParagraphStyle', array('spaceBefore' => Absolute::from('twip', 400)));
 
         $section = $phpWord->addSection();
         $listItemRun = $section->addListItemRun(0, null, 'MyParagraphStyle');
