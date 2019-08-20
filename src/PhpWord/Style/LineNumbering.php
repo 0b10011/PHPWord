@@ -18,6 +18,8 @@ declare(strict_types=1);
 
 namespace PhpOffice\PhpWord\Style;
 
+use PhpOffice\PhpWord\Style\Lengths\Absolute;
+
 /**
  * Line numbering style
  *
@@ -67,6 +69,7 @@ class LineNumbering extends AbstractStyle
      */
     public function __construct($style = array())
     {
+        $this->setDistance(new Absolute(null));
         $this->setStyleByArray($style);
     }
 
@@ -118,23 +121,18 @@ class LineNumbering extends AbstractStyle
 
     /**
      * Get distance
-     *
-     * @return int|float
      */
-    public function getDistance()
+    public function getDistance(): Absolute
     {
         return $this->distance;
     }
 
     /**
      * Set distance
-     *
-     * @param int|float $value
-     * @return self
      */
-    public function setDistance($value = null)
+    public function setDistance(Absolute $value): self
     {
-        $this->distance = $this->setNumericVal($value, $this->distance);
+        $this->distance = $value;
 
         return $this;
     }

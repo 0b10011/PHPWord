@@ -76,7 +76,7 @@ class SectionTest extends \PHPUnit\Framework\TestCase
             array(
                 'start'     => 1,
                 'increment' => 1,
-                'distance'  => 240,
+                'distance'  => Absolute::from('twip', 240),
                 'restart'   => 'newPage',
             )
         );

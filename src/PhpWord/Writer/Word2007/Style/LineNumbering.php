@@ -40,7 +40,7 @@ class LineNumbering extends AbstractStyle
         $xmlWriter->startElement('w:lnNumType');
         $xmlWriter->writeAttribute('w:start', $style->getStart() - 1);
         $xmlWriter->writeAttribute('w:countBy', $style->getIncrement());
-        $xmlWriter->writeAttribute('w:distance', $style->getDistance());
+        $xmlWriter->writeAttribute('w:distance', $style->getDistance()->toInt('twip'));
         $xmlWriter->writeAttribute('w:restart', $style->getRestart());
         $xmlWriter->endElement();
     }
