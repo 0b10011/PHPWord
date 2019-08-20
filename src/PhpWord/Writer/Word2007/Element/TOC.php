@@ -21,6 +21,7 @@ namespace PhpOffice\PhpWord\Writer\Word2007\Element;
 use PhpOffice\Common\XMLWriter;
 use PhpOffice\PhpWord\Element\TOC as TOCElement;
 use PhpOffice\PhpWord\Style\Font;
+use PhpOffice\PhpWord\Style\Lengths\Absolute;
 use PhpOffice\PhpWord\Writer\Word2007\Style\Font as FontStyleWriter;
 use PhpOffice\PhpWord\Writer\Word2007\Style\Paragraph as ParagraphStyleWriter;
 use PhpOffice\PhpWord\Writer\Word2007\Style\Tab as TabStyleWriter;
@@ -74,7 +75,7 @@ class TOC extends AbstractElement
         $fontStyle = $element->getStyleFont();
         $isObject = ($fontStyle instanceof Font) ? true : false;
         $rId = $title->getRelationId();
-        $indent = ($title->getDepth() - 1) * $tocStyle->getIndent()->toInt('twip');
+        $indent = Absolute::from('twip', ($title->getDepth() - 1) * $tocStyle->getIndent()->toInt('twip'));
 
         $xmlWriter->startElement('w:p');
 
@@ -130,10 +131,8 @@ class TOC extends AbstractElement
 
     /**
      * Write style
-     *
-     * @param int $indent
      */
-    private function writeStyle(XMLWriter $xmlWriter, TOCElement $element, $indent)
+    private function writeStyle(XMLWriter $xmlWriter, TOCElement $element, Absolute $indent)
     {
         $tocStyle = $element->getStyleTOC();
         $fontStyle = $element->getStyleFont();
@@ -163,6 +162,7 @@ class TOC extends AbstractElement
         $xmlWriter->endElement();
 
         // Indent
+        $indent = $indent->toInt('twip');
         if ($indent > 0) {
             $xmlWriter->startElement('w:ind');
             $xmlWriter->writeAttribute('w:left', $indent);
