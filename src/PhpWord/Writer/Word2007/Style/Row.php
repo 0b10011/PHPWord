@@ -18,6 +18,8 @@ declare(strict_types=1);
 
 namespace PhpOffice\PhpWord\Writer\Word2007\Style;
 
+use PhpOffice\PhpWord\Style\Lengths\Absolute;
+
 /**
  * Row style writer
  *
@@ -26,7 +28,7 @@ namespace PhpOffice\PhpWord\Writer\Word2007\Style;
 class Row extends AbstractStyle
 {
     /**
-     * @var int Row height
+     * @var Absolute Row height
      */
     private $height;
 
@@ -45,7 +47,7 @@ class Row extends AbstractStyle
 
         if ($this->height !== null) {
             $xmlWriter->startElement('w:trHeight');
-            $xmlWriter->writeAttribute('w:val', $this->height);
+            $xmlWriter->writeAttribute('w:val', $this->height->toInt('twip'));
             $xmlWriter->writeAttribute('w:hRule', ($style->isExactHeight() ? 'exact' : 'atLeast'));
             $xmlWriter->endElement();
         }
@@ -57,10 +59,8 @@ class Row extends AbstractStyle
 
     /**
      * Set height.
-     *
-     * @param int $value
      */
-    public function setHeight($value = null)
+    public function setHeight(Absolute $value)
     {
         $this->height = $value;
     }

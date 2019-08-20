@@ -102,7 +102,7 @@ class Table extends AbstractElement
         $rowStyle = $row->getStyle();
         if ($rowStyle instanceof RowStyle) {
             $styleWriter = new RowStyleWriter($xmlWriter, $rowStyle);
-            $styleWriter->setHeight($row->getHeight()->toInt('twip'));
+            $styleWriter->setHeight($row->getHeight());
             $styleWriter->write();
         }
 
