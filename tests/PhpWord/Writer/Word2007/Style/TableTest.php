@@ -128,16 +128,16 @@ class TableTest extends \PHPUnit\Framework\TestCase
     public function testTablePosition()
     {
         $tablePosition = array(
-            'leftFromText'   => 10,
-            'rightFromText'  => 20,
-            'topFromText'    => 30,
-            'bottomFromText' => 40,
+            'leftFromText'   => Absolute::from('twip', 10),
+            'rightFromText'  => Absolute::from('twip', 20),
+            'topFromText'    => Absolute::from('twip', 30),
+            'bottomFromText' => Absolute::from('twip', 40),
             'vertAnchor'     => TablePosition::VANCHOR_PAGE,
             'horzAnchor'     => TablePosition::HANCHOR_MARGIN,
             'tblpXSpec'      => TablePosition::XALIGN_CENTER,
-            'tblpX'          => 50,
+            'tblpX'          => Absolute::from('twip', 50),
             'tblpYSpec'      => TablePosition::YALIGN_TOP,
-            'tblpY'          => 60,
+            'tblpY'          => Absolute::from('twip', 60),
         );
         $tableStyle = new Table();
         $tableStyle->setPosition($tablePosition);

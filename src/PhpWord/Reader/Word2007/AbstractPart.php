@@ -539,16 +539,16 @@ abstract class AbstractPart
     private function readTablePosition(XMLReader $xmlReader, DOMElement $domNode)
     {
         $styleDefs = array(
-            'leftFromText'   => array(self::READ_VALUE, '.', 'w:leftFromText'),
-            'rightFromText'  => array(self::READ_VALUE, '.', 'w:rightFromText'),
-            'topFromText'    => array(self::READ_VALUE, '.', 'w:topFromText'),
-            'bottomFromText' => array(self::READ_VALUE, '.', 'w:bottomFromText'),
+            'leftFromText'   => array(self::READ_TWIP, '.', 'w:leftFromText'),
+            'rightFromText'  => array(self::READ_TWIP, '.', 'w:rightFromText'),
+            'topFromText'    => array(self::READ_TWIP, '.', 'w:topFromText'),
+            'bottomFromText' => array(self::READ_TWIP, '.', 'w:bottomFromText'),
             'vertAnchor'     => array(self::READ_VALUE, '.', 'w:vertAnchor'),
             'horzAnchor'     => array(self::READ_VALUE, '.', 'w:horzAnchor'),
             'tblpXSpec'      => array(self::READ_VALUE, '.', 'w:tblpXSpec'),
-            'tblpX'          => array(self::READ_VALUE, '.', 'w:tblpX'),
+            'tblpX'          => array(self::READ_TWIP, '.', 'w:tblpX'),
             'tblpYSpec'      => array(self::READ_VALUE, '.', 'w:tblpYSpec'),
-            'tblpY'          => array(self::READ_VALUE, '.', 'w:tblpY'),
+            'tblpY'          => array(self::READ_TWIP, '.', 'w:tblpY'),
         );
 
         return $this->readStyleDefs($xmlReader, $domNode, $styleDefs);

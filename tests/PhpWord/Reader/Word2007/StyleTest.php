@@ -89,16 +89,16 @@ class StyleTest extends AbstractTestReader
         $this->assertInstanceOf('PhpOffice\PhpWord\Style\TablePosition', $elements[0]->getStyle()->getPosition());
         /** @var \PhpOffice\PhpWord\Style\TablePosition $tableStyle */
         $tableStyle = $elements[0]->getStyle()->getPosition();
-        $this->assertEquals(10, $tableStyle->getLeftFromText());
-        $this->assertEquals(20, $tableStyle->getRightFromText());
-        $this->assertEquals(30, $tableStyle->getTopFromText());
-        $this->assertEquals(40, $tableStyle->getBottomFromText());
+        $this->assertEquals(10, $tableStyle->getLeftFromText()->toInt('twip'));
+        $this->assertEquals(20, $tableStyle->getRightFromText()->toInt('twip'));
+        $this->assertEquals(30, $tableStyle->getTopFromText()->toInt('twip'));
+        $this->assertEquals(40, $tableStyle->getBottomFromText()->toInt('twip'));
         $this->assertEquals(TablePosition::VANCHOR_PAGE, $tableStyle->getVertAnchor());
         $this->assertEquals(TablePosition::HANCHOR_MARGIN, $tableStyle->getHorzAnchor());
         $this->assertEquals(TablePosition::XALIGN_CENTER, $tableStyle->getTblpXSpec());
-        $this->assertEquals(50, $tableStyle->getTblpX());
+        $this->assertEquals(50, $tableStyle->getTblpX()->toInt('twip'));
         $this->assertEquals(TablePosition::YALIGN_TOP, $tableStyle->getTblpYSpec());
-        $this->assertEquals(60, $tableStyle->getTblpY());
+        $this->assertEquals(60, $tableStyle->getTblpY()->toInt('twip'));
     }
 
     /**
