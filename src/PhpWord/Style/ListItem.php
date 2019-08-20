@@ -19,6 +19,7 @@ declare(strict_types=1);
 namespace PhpOffice\PhpWord\Style;
 
 use PhpOffice\PhpWord\Style;
+use PhpOffice\PhpWord\Style\Lengths\Absolute;
 
 /**
  * List item style
@@ -271,7 +272,11 @@ class ListItem extends AbstractStyle
             $level['level'] = $key;
             for ($i = 0; $i < $numProperties; $i++) {
                 $property = $properties[$i];
-                $level[$property] = $levelProperties[$i];
+                $value = $levelProperties[$i];
+                if ($property === 'left' || $property === 'hanging') {
+                    $value = Absolute::from('twip', (int) $value);
+                }
+                $level[$property] = $value;
             }
             $style['levels'][$key] = $level;
         }

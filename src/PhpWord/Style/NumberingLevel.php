@@ -20,6 +20,7 @@ namespace PhpOffice\PhpWord\Style;
 
 use PhpOffice\PhpWord\SimpleType\Jc;
 use PhpOffice\PhpWord\SimpleType\NumberFormat;
+use PhpOffice\PhpWord\Style\Lengths\Absolute;
 
 /**
  * Numbering level definition
@@ -343,46 +344,48 @@ class NumberingLevel extends AbstractStyle
 
     /**
      * Get left
-     *
-     * @return int
+     * @see http://www.officeopenxml.com/WPindentation.php
      */
-    public function getLeft()
+    public function getLeft(): Absolute
     {
+        if ($this->left === null) {
+            $this->left = new Absolute(null);
+        }
+
         return $this->left;
     }
 
     /**
      * Set left
-     *
-     * @param int $value
-     * @return self
+     * @see http://www.officeopenxml.com/WPindentation.php
      */
-    public function setLeft($value)
+    public function setLeft(Absolute $value): self
     {
-        $this->left = $this->setIntVal($value, $this->left);
+        $this->left = $value;
 
         return $this;
     }
 
     /**
      * Get hanging
-     *
-     * @return int
+     * @see http://www.officeopenxml.com/WPindentation.php
      */
-    public function getHanging()
+    public function getHanging(): Absolute
     {
+        if ($this->hanging === null) {
+            $this->hanging = new Absolute(null);
+        }
+
         return $this->hanging;
     }
 
     /**
      * Set hanging
-     *
-     * @param int $value
-     * @return self
+     * @see http://www.officeopenxml.com/WPindentation.php
      */
-    public function setHanging($value)
+    public function setHanging(Absolute $value): self
     {
-        $this->hanging = $this->setIntVal($value, $this->hanging);
+        $this->hanging = $value;
 
         return $this;
     }
@@ -410,7 +413,7 @@ class NumberingLevel extends AbstractStyle
     /**
      * Set tab
      *
-     * @param int $value
+     * @param int $value FIXME Switch to Absolute or Length maybe?
      * @return self
      */
     public function setTabPos($value)

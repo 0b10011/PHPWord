@@ -19,6 +19,7 @@ declare(strict_types=1);
 namespace PhpOffice\PhpWord\Style;
 
 use PhpOffice\PhpWord\SimpleType\Jc;
+use PhpOffice\PhpWord\Style\Lengths\Absolute;
 
 /**
  * Test class for PhpOffice\PhpWord\Style\NumberingLevel
@@ -43,8 +44,8 @@ class NumberingLevelTest extends \PHPUnit\Framework\TestCase
             'suffix'    => 'space',
             'text'      => '%1.',
             'alignment' => Jc::START,
-            'left'      => 360,
-            'hanging'   => 360,
+            'left'      => Absolute::from('twip', 360),
+            'hanging'   => Absolute::from('twip', 360),
             'tabPos'    => 360,
             'font'      => 'Arial',
             'hint'      => 'default',

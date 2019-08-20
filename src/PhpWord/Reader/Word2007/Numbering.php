@@ -20,6 +20,7 @@ namespace PhpOffice\PhpWord\Reader\Word2007;
 
 use PhpOffice\Common\XMLReader;
 use PhpOffice\PhpWord\PhpWord;
+use PhpOffice\PhpWord\Style\Lengths\Absolute;
 
 /**
  * Numbering reader
@@ -103,8 +104,8 @@ class Numbering extends AbstractPart
         $level['text'] = $xmlReader->getAttribute('w:val', $subnode, 'w:lvlText');
         $level['alignment'] = $xmlReader->getAttribute('w:val', $subnode, 'w:lvlJc');
         $level['tab'] = (int) $xmlReader->getAttribute('w:pos', $subnode, 'w:pPr/w:tabs/w:tab');
-        $level['left'] = (int) $xmlReader->getAttribute('w:left', $subnode, 'w:pPr/w:ind');
-        $level['hanging'] = (int) $xmlReader->getAttribute('w:hanging', $subnode, 'w:pPr/w:ind');
+        $level['left'] = Absolute::from('twip', (int) $xmlReader->getAttribute('w:left', $subnode, 'w:pPr/w:ind'));
+        $level['hanging'] = Absolute::from('twip', (int) $xmlReader->getAttribute('w:hanging', $subnode, 'w:pPr/w:ind'));
         $level['font'] = $xmlReader->getAttribute('w:ascii', $subnode, 'w:rPr/w:rFonts');
         $level['hint'] = $xmlReader->getAttribute('w:hint', $subnode, 'w:rPr/w:rFonts');
 

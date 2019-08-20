@@ -153,8 +153,8 @@ class Numbering extends AbstractPart
         $xmlWriter->endElement(); // w:tabs
 
         $xmlWriter->startElement('w:ind');
-        $xmlWriter->writeAttributeIf($left !== null, 'w:left', $left);
-        $xmlWriter->writeAttributeIf($hanging !== null, 'w:hanging', $hanging);
+        $xmlWriter->writeAttributeIf($left->isSpecified(), 'w:left', $left->toInt('twip'));
+        $xmlWriter->writeAttributeIf($hanging->isSpecified(), 'w:hanging', $hanging->toInt('twip'));
         $xmlWriter->endElement(); // w:ind
 
         $xmlWriter->endElement(); // w:pPr
