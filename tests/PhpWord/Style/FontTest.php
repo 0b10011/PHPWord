@@ -124,7 +124,7 @@ class FontTest extends \PHPUnit\Framework\TestCase
             'allCaps'             => false,
             'fgColor'             => new HighlightColor('yellow'),
             'bgColor'             => new Hex('FFFF00'),
-            'lineHeight'          => 2,
+            'lineHeight'          => new Percent(200),
             'scale'               => new Percent(150),
             'spacing'             => Absolute::from('twip', 240),
             'kerning'             => Absolute::from('hpt', 10),
@@ -157,7 +157,7 @@ class FontTest extends \PHPUnit\Framework\TestCase
         $section = $phpWord->addSection();
 
         // Test style array
-        $text = $section->addText('This is a test', array('line-height' => 2.0));
+        $text = $section->addText('This is a test', array('line-height' => new Percent(200)));
 
         $doc = TestHelperDOCX::getDocument($phpWord);
         $element = $doc->getElement('/w:document/w:body/w:p/w:pPr/w:spacing');
@@ -169,7 +169,7 @@ class FontTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('auto', $lineRule);
 
         // Test setter
-        $text->getFontStyle()->setLineHeight(3.0);
+        $text->getFontStyle()->setLineHeight(new Percent(300));
         $doc = TestHelperDOCX::getDocument($phpWord);
         $element = $doc->getElement('/w:document/w:body/w:p/w:pPr/w:spacing');
 
@@ -186,14 +186,14 @@ class FontTest extends \PHPUnit\Framework\TestCase
     public function testLineHeightFloatval()
     {
         $object = new Font(null, array('alignment' => Jc::CENTER));
-        $object->setLineHeight('1.5pt');
-        $this->assertEquals(1.5, $object->getLineHeight());
+        $object->setLineHeight(new Percent(1.5));
+        $this->assertEquals(1.5, $object->getLineHeight()->toFloat());
     }
 
     /**
      * Test line height exception by using nonnumeric value
      *
-     * @expectedException \PhpOffice\PhpWord\Exception\InvalidStyleException
+     * @expectedException \TypeError
      */
     public function testLineHeightException()
     {

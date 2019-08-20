@@ -66,6 +66,7 @@ class Spacing extends AbstractStyle
     {
         $this->setBefore(new Absolute(null));
         $this->setAfter(new Absolute(null));
+        $this->setLine(new Absolute(null));
         $this->setStyleByArray($style);
     }
 
@@ -106,21 +107,21 @@ class Spacing extends AbstractStyle
     }
 
     /**
-     * Get line
-     *
-     * @return int|float
+     * Get vertical spacing between lines of text within paragraph.
+     * Spacing may vary for same value depending on value of line rule.
+     * See `getLineRule()``.
      */
-    public function getLine()
+    public function getLine(): Absolute
     {
         return $this->line;
     }
 
     /**
-     * Set distance
-     *
-     * @param int|float $value
+     * Set vertical spacing between lines of text within paragraph.
+     * Spacing may vary for same value depending on value of line rule.
+     * See `setLineRule()``.
      */
-    public function setLine($value): self
+    public function setLine(Absolute $value): self
     {
         $this->line = $value;
 

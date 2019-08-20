@@ -19,10 +19,10 @@ declare(strict_types=1);
 namespace PhpOffice\PhpWord\Style;
 
 use PhpOffice\Common\Text;
-use PhpOffice\PhpWord\Exception\InvalidStyleException;
 use PhpOffice\PhpWord\SimpleType\Jc;
 use PhpOffice\PhpWord\SimpleType\TextAlignment;
 use PhpOffice\PhpWord\Style\Lengths\Absolute;
+use PhpOffice\PhpWord\Style\Lengths\Percent;
 
 /**
  * Paragraph style
@@ -101,7 +101,7 @@ class Paragraph extends Border
     /**
      * Text line height
      *
-     * @var int|float
+     * @var Percent
      */
     private $lineHeight;
 
@@ -505,10 +505,8 @@ class Paragraph extends Border
 
     /**
      * Get line height
-     *
-     * @return int|float
      */
-    public function getLineHeight()
+    public function getLineHeight(): Percent
     {
         return $this->lineHeight;
     }
@@ -516,23 +514,13 @@ class Paragraph extends Border
     /**
      * Set the line height
      *
-     * @param int|float|string $lineHeight
-     *
-     * @throws \PhpOffice\PhpWord\Exception\InvalidStyleException
      * @return self
      */
-    public function setLineHeight($lineHeight)
+    public function setLineHeight(Percent $lineHeight)
     {
-        if (is_string($lineHeight)) {
-            $lineHeight = (float) (preg_replace('/[^0-9\.\,]/', '', $lineHeight));
-        }
-
-        if ((!is_int($lineHeight) && !is_float($lineHeight)) || !$lineHeight) {
-            throw new InvalidStyleException('Line height must be a valid number');
-        }
-
         $this->lineHeight = $lineHeight;
-        $this->setSpacing(($lineHeight - 1) * self::LINE_HEIGHT);
+        $lineHeight = $lineHeight->toFloat();
+        $this->setSpacing(Absolute::from('twip', ($lineHeight - 100) / 100 * self::LINE_HEIGHT));
         $this->setSpacingLineRule(\PhpOffice\PhpWord\SimpleType\LineSpacingRule::AUTO);
 
         return $this;

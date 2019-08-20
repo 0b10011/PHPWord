@@ -21,6 +21,7 @@ namespace PhpOffice\PhpWord\Style;
 use PhpOffice\PhpWord\PhpWord;
 use PhpOffice\PhpWord\SimpleType\LineSpacingRule;
 use PhpOffice\PhpWord\Style\Lengths\Absolute;
+use PhpOffice\PhpWord\Style\Lengths\Percent;
 use PhpOffice\PhpWord\TestHelperDOCX;
 
 /**
@@ -150,7 +151,7 @@ class ParagraphTest extends \PHPUnit\Framework\TestCase
         $section = $phpWord->addSection();
 
         // Test style array
-        $text = $section->addText('This is a test', array(), array('line-height' => 2.0));
+        $text = $section->addText('This is a test', array(), array('line-height' => new Percent(200)));
 
         $doc = TestHelperDOCX::getDocument($phpWord);
         $element = $doc->getElement('/w:document/w:body/w:p/w:pPr/w:spacing');
@@ -162,7 +163,7 @@ class ParagraphTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('auto', $lineRule);
 
         // Test setter
-        $text->getParagraphStyle()->setLineHeight(3.0);
+        $text->getParagraphStyle()->setLineHeight(new Percent(300));
         $doc = TestHelperDOCX::getDocument($phpWord);
         $element = $doc->getElement('/w:document/w:body/w:p/w:pPr/w:spacing');
 
@@ -179,14 +180,15 @@ class ParagraphTest extends \PHPUnit\Framework\TestCase
     public function testLineHeightValidation()
     {
         $object = new Paragraph();
-        $object->setLineHeight('12.5pt');
-        $this->assertEquals(12.5, $object->getLineHeight());
+        $object->setLineHeight(new Percent(12.5));
+        $this->assertEquals(12.5, $object->getLineHeight()->toFloat());
+        $this->assertEquals(13, $object->getLineHeight()->toInt());
     }
 
     /**
      * Test line height exception by using nonnumeric value
      *
-     * @expectedException \PhpOffice\PhpWord\Exception\InvalidStyleException
+     * @expectedException \TypeError
      */
     public function testLineHeightException()
     {

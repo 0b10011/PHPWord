@@ -36,7 +36,7 @@ class SpacingTest extends \PHPUnit\Framework\TestCase
         $properties = array(
             'before'   => array(null, Absolute::from('twip', 10)),
             'after'    => array(null, Absolute::from('twip', 10)),
-            'line'     => array(null, 10),
+            'line'     => array(null, Absolute::from('pt', 10)),
             'lineRule' => array('auto', 'exact'),
         );
         foreach ($properties as $property => $value) {

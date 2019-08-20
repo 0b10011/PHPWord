@@ -368,7 +368,7 @@ class DocumentTest extends \PHPUnit\Framework\TestCase
     public function testWriteTextBreak()
     {
         $fArray = array('size' => Absolute::from('pt', 12));
-        $pArray = array('spacing' => 240);
+        $pArray = array('spacing' => Absolute::from('twip', 240));
         $fName = 'fStyle';
         $pName = 'pStyle';
 

@@ -735,21 +735,16 @@ class Font extends AbstractStyle
 
     /**
      * Get line height
-     *
-     * @return int|float
      */
-    public function getLineHeight()
+    public function getLineHeight(): Percent
     {
         return $this->getParagraph()->getLineHeight();
     }
 
     /**
-     * Set lineheight
-     *
-     * @param int|float|string $value
-     * @return self
+     * Set line height
      */
-    public function setLineHeight($value)
+    public function setLineHeight(Percent $value): self
     {
         $this->setParagraph(array('lineHeight' => $value));
 

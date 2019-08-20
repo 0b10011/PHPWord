@@ -57,7 +57,7 @@ class ParagraphTest extends \PHPUnit\Framework\TestCase
     {
         $phpWord = new \PhpOffice\PhpWord\PhpWord();
         $section = $phpWord->addSection();
-        $section->addText('test', null, array('spacing' => 240, 'spacingLineRule' => 'exact'));
+        $section->addText('test', null, array('spacing' => Absolute::from('twip', 240), 'spacingLineRule' => 'exact'));
         $doc = TestHelperDOCX::getDocument($phpWord, 'Word2007');
 
         $path = '/w:document/w:body/w:p/w:pPr/w:spacing';
@@ -70,7 +70,7 @@ class ParagraphTest extends \PHPUnit\Framework\TestCase
     {
         $phpWord = new \PhpOffice\PhpWord\PhpWord();
         $section = $phpWord->addSection();
-        $section->addText('test', null, array('spacing' => 240, 'spacingLineRule' => 'auto'));
+        $section->addText('test', null, array('spacing' => Absolute::from('twip', 240), 'spacingLineRule' => 'auto'));
         $doc = TestHelperDOCX::getDocument($phpWord, 'Word2007');
 
         $path = '/w:document/w:body/w:p/w:pPr/w:spacing';

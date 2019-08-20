@@ -18,6 +18,8 @@ declare(strict_types=1);
 
 namespace PhpOffice\PhpWord\Element;
 
+use PhpOffice\PhpWord\Style\Lengths\Absolute;
+
 /**
  * Test class for PhpOffice\PhpWord\Element\ListItemRun
  *
@@ -65,7 +67,7 @@ class ListItemRunTest extends \PHPUnit\Framework\TestCase
      */
     public function testConstructArray()
     {
-        $oListItemRun = new ListItemRun(0, null, array('spacing' => 100));
+        $oListItemRun = new ListItemRun(0, null, array('spacing' => Absolute::from('twip', 100)));
 
         $this->assertInstanceOf('PhpOffice\\PhpWord\\Element\\ListItemRun', $oListItemRun);
         $this->assertCount(0, $oListItemRun->getElements());

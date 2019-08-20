@@ -572,21 +572,15 @@ class Html
                 $matches = array();
                 if (preg_match('/([0-9]+\.?[0-9]*[a-z]+)/', $value, $matches)) {
                     //matches number with a unit, e.g. 12px, 15pt, 20mm, ...
-                    $spacingLineRule = LineSpacingRule::EXACT;
-                    $spacing = self::cssToAbsolute($matches[1])->toFloat('twip');
-                } elseif (preg_match('/([0-9]+)%/', $value, $matches)) {
+                    $styles['spacingLineRule'] = LineSpacingRule::EXACT;
+                    $styles['line-spacing'] = array('line' => self::cssToAbsolute($matches[1]));
+                } elseif (preg_match('/([0-9]+\.?[0-9]*)%/', $value, $matches)) {
                     //matches percentages
-                    $spacingLineRule = LineSpacingRule::AUTO;
-                    //we are subtracting 1 line height because the Spacing writer is adding one line
-                    $spacing = ((((int) $matches[1]) / 100) * Paragraph::LINE_HEIGHT) - Paragraph::LINE_HEIGHT;
+                    $styles['line-height'] = new Percent((float) $matches[1]);
                 } else {
                     //any other, wich is a multiplier. E.g. 1.2
-                    $spacingLineRule = LineSpacingRule::AUTO;
-                    //we are subtracting 1 line height because the Spacing writer is adding one line
-                    $spacing = ($value * Paragraph::LINE_HEIGHT) - Paragraph::LINE_HEIGHT;
+                    $styles['line-height'] = new Percent($value * 100);
                 }
-                $styles['spacingLineRule'] = $spacingLineRule;
-                $styles['line-spacing'] = array('line' => $spacing);
                 break;
             case 'letter-spacing':
                 $styles['letter-spacing'] = self::cssToAbsolute($value);
