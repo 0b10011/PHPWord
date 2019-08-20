@@ -37,6 +37,10 @@ class Absolute extends Length
         // 1440 twips in an inch
         // 25.4 millimeters in an inch
         'mm' => 1440 / 25.4,
+
+        // 20 twips in a point
+        // 12700 emus in a point
+        'emu' => 20 / 12700,
     );
 
     public function __construct(float $twips = null)

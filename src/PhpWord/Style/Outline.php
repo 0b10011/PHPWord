@@ -18,6 +18,8 @@ declare(strict_types=1);
 
 namespace PhpOffice\PhpWord\Style;
 
+use PhpOffice\PhpWord\Style\Lengths\Absolute;
+
 /**
  * Outline defines the line/border of the object
  *
@@ -65,7 +67,7 @@ class Outline extends AbstractStyle
     /**
      * Outline weight
      *
-     * @var int|float
+     * @var Absolute
      */
     private $weight;
 
@@ -124,23 +126,22 @@ class Outline extends AbstractStyle
 
     /**
      * Get weight
-     *
-     * @return int|float
      */
-    public function getWeight()
+    public function getWeight(): Absolute
     {
+        if ($this->weight === null) {
+            $this->weight = new Absolute(null);
+        }
+
         return $this->weight;
     }
 
     /**
      * Set weight
-     *
-     * @param int|float $value
-     * @return self
      */
-    public function setWeight($value = null)
+    public function setWeight(Absolute $value): self
     {
-        $this->weight = $this->setNumericVal($value, null);
+        $this->weight = $value;
 
         return $this;
     }

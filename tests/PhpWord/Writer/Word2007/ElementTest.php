@@ -184,7 +184,7 @@ class ElementTest extends \PHPUnit\Framework\TestCase
                 // 'connector' => 'elbow',
                 'outline' => array(
                     'color'      => new Hex('66cc00'),
-                    'weight'     => 2,
+                    'weight'     => Absolute::from('emu', 2),
                     'dash'       => 'dash',
                     'startArrow' => 'diamond',
                     'endArrow'   => 'block',
@@ -200,7 +200,7 @@ class ElementTest extends \PHPUnit\Framework\TestCase
                 'outline' => array(
                     'color'      => new Hex('cc00ff'),
                     'line'       => 'thickThin',
-                    'weight'     => 3,
+                    'weight'     => Absolute::from('emu', 3),
                     'startArrow' => 'oval',
                     'endArrow'   => 'classic',
                     'endCap'     => 'round',
@@ -215,7 +215,7 @@ class ElementTest extends \PHPUnit\Framework\TestCase
                 'points'  => '1,30 20,10 55,20 75,10 100,40 115,50, 120,15 200,50',
                 'outline' => array(
                     'color'      => new Hex('cc6666'),
-                    'weight'     => 2,
+                    'weight'     => Absolute::from('emu', 2),
                     'startArrow' => 'none',
                     'endArrow'   => 'classic',
                 ),
@@ -229,7 +229,7 @@ class ElementTest extends \PHPUnit\Framework\TestCase
                 'roundness' => 0.2,
                 'frame'     => array('width' => Absolute::from('pt', 100), 'height' => Absolute::from('pt', 100), 'left' => Absolute::from('pt', 1), 'top' => Absolute::from('pt', 1)),
                 'fill'      => array('color' => new Hex('FFCC33')),
-                'outline'   => array('color' => new Hex('990000'), 'weight' => 1),
+                'outline'   => array('color' => new Hex('990000'), 'weight' => Absolute::from('emu', 1)),
                 'shadow'    => array('color' => new Hex('EEEEEE'), 'offset' => '3pt,3pt'),
             )
         );
@@ -240,7 +240,7 @@ class ElementTest extends \PHPUnit\Framework\TestCase
             array(
                 'frame'     => array('width' => Absolute::from('pt', 100), 'height' => Absolute::from('pt', 70), 'left' => Absolute::from('pt', 1), 'top' => Absolute::from('pt', 1)),
                 'fill'      => array('color' => new Hex('33CC99')),
-                'outline'   => array('color' => new Hex('333333'), 'weight' => 2),
+                'outline'   => array('color' => new Hex('333333'), 'weight' => Absolute::from('emu', 2)),
                 'extrusion' => array('type' => 'perspective', 'color' => new Hex('EEEEEE')),
             )
         );
