@@ -143,7 +143,6 @@ class ListItem extends AbstractStyle
 
     /**
      * Set numbering Id. Same numId means same list
-     * @param mixed $numInt
      */
     public function setNumId($numInt)
     {
