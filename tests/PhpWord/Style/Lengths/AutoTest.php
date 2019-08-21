@@ -30,5 +30,6 @@ class AutoTest extends \PHPUnit\Framework\TestCase
     {
         $this->assertInstanceOf(Auto::class, new Auto());
         $this->assertInstanceOf(Auto::class, new Auto());
+        $this->assertTrue((new Auto())->isSpecified());
     }
 }
