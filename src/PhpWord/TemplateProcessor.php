@@ -1057,7 +1057,7 @@ class TemplateProcessor
         }
 
         if ($startPosition < 0) {
-            throw new Exception(sprintf('Provided end position `%s` was longer than the length `%s`', $endPosition, $length));
+            throw new Exception(sprintf('Start position must be at least 0. `%s` provided', $startPosition));
         } elseif ($endPosition < $startPosition) {
             throw new Exception(sprintf('Provided end position `%s` is smaller than the start position `%s`', $endPosition, $startPosition));
         } elseif ($endPosition > $length) {
