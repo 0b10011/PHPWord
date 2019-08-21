@@ -26,6 +26,7 @@ use PhpOffice\PhpWord\Style\Colors\SystemColor;
 use PhpOffice\PhpWord\Style\Colors\ThemeColor;
 use PhpOffice\PhpWord\Style\Lengths\Absolute;
 use PhpOffice\PhpWord\Style\Lengths\Auto;
+use PhpOffice\PhpWord\Style\Lengths\Length;
 use PhpOffice\PhpWord\Style\Lengths\Percent;
 use PhpOffice\PhpWord\Style\Table;
 use PhpOffice\PhpWord\TestHelperDOCX;
@@ -65,6 +66,28 @@ class CellTest extends \PHPUnit\Framework\TestCase
         $cellStyle->setWidth(new Auto());
         $width = $cellStyle->getWidth();
         $this->assertInstanceOf(Auto::class, $width);
+    }
+
+    /**
+     * @cover Cell
+     * @expectedException Exception
+     * @expectedExceptionMessage Unsupported width `class@anonymous
+     */
+    public function testSetBadWidth()
+    {
+        $phpWord = new \PhpOffice\PhpWord\PhpWord();
+        $section = $phpWord->addSection();
+        $table = $section->addTable(new Table());
+        $row = $table->addRow();
+        $cellStyle = new CellStyle();
+        $cellStyle->setWidth(new class extends Length {
+            public function isSpecified(): bool {
+                return true;
+            }
+        });
+        $row->addCell(null, $cellStyle);
+
+        $doc = TestHelperDOCX::getDocument($phpWord, 'Word2007');
     }
 
     public function testWidth()
