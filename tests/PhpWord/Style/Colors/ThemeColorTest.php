@@ -54,6 +54,7 @@ class ThemeColorTest extends \PHPUnit\Framework\TestCase
             $this->assertInstanceOf(NamedColorInterface::class, $result);
             $this->assertEquals($value, $result->getName(), $message);
             $this->assertEquals($value, $result->toHexOrName(), $message);
+            $this->assertTrue($result->isSpecified());
         }
     }
 }
