@@ -138,9 +138,9 @@ class Shape extends AbstractStyle
     {
         $percent = $value->toFloat();
         if ($percent > 100) {
-            throw new Exception(sprintf('Provided roundness %f%% must be no greater than 100%', $percent));
+            throw new Exception(sprintf('Provided roundness %f%% must be no greater than 100%%', $percent));
         } elseif ($percent < 0) {
-            throw new Exception(sprintf('Provided roundness %f%% must be no less than 0%', $percent));
+            throw new Exception(sprintf('Provided roundness %f%% must be no less than 0%%', $percent));
         }
 
         $this->roundness = $value;

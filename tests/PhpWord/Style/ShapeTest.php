@@ -37,7 +37,7 @@ class ShapeTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @covers \PhpOffice\PhpWord\Style\Shape::getRoundness
+     * @covers \PhpOffice\PhpWord\Style\Shape::setRoundness
      * @depends testGetRoundness
      */
     public function testSetRoundness()
@@ -47,5 +47,29 @@ class ShapeTest extends \PHPUnit\Framework\TestCase
         $shape->setRoundness(new Percent(50));
         $this->assertNotEquals(new Percent(0), $shape->getRoundness());
         $this->assertEquals(new Percent(50), $shape->getRoundness());
+    }
+
+    /**
+     * @covers \PhpOffice\PhpWord\Style\Shape::setRoundness
+     * @depends testSetRoundness
+     * @expectedException \PhpOffice\PhpWord\Exception\Exception
+     * @expectedExceptionMessage Provided roundness -1.000000% must be no less than 0%
+     */
+    public function testSetRoundnessNegative()
+    {
+        $shape = new Shape();
+        $shape->setRoundness(new Percent(-1));
+    }
+
+    /**
+     * @covers \PhpOffice\PhpWord\Style\Shape::setRoundness
+     * @depends testSetRoundness
+     * @expectedException \PhpOffice\PhpWord\Exception\Exception
+     * @expectedExceptionMessage Provided roundness 101.000000% must be no greater than 100%
+     */
+    public function testSetRoundnessTooLarge()
+    {
+        $shape = new Shape();
+        $shape->setRoundness(new Percent(101));
     }
 }
