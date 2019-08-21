@@ -858,7 +858,7 @@ class Html
                 case '%':
                     return new Percent($size);
                 case 'em':
-                    return new Percent(100);
+                    return new Percent($size * 100);
             }
         }
 

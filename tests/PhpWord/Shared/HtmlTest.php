@@ -688,8 +688,29 @@ class HtmlTest extends AbstractWebServerEmbeddedTest
 
     /**
      * Test css size to point
+     * @covers PhpOffice\PhpWord\Shared\Html::cssToLength()
      */
-    public function testCssSizeParser()
+    public function testCssToLength()
+    {
+        $this->assertEquals(900, Html::cssToLength('9em')->toFloat());
+        $this->assertEquals(0, Html::cssToLength('0')->toFloat('pt'));
+        $this->assertEquals(10, Html::cssToLength('10pt')->toFloat('pt'));
+        $this->assertEquals(7.5, Html::cssToLength('10px')->toFloat('pt'));
+        $this->assertEquals(720, Html::cssToLength('10in')->toFloat('pt'));
+        $this->assertEquals(7.2, Html::cssToLength('0.1in')->toFloat('pt'));
+        $this->assertEquals(120, Html::cssToLength('10pc')->toFloat('pt'));
+        $this->assertEquals(28.346457, Html::cssToLength('10mm')->toFloat('pt'), '', .00001);
+        $this->assertEquals(283.464567, Html::cssToLength('10cm')->toFloat('pt'), '', .0000001);
+        $this->assertEquals('10', Html::cssToLength('10%')->toFloat(), '', .0000001);
+        // Invalid length
+        $this->assertNull(Html::cssToLength('54mb')->toFloat('pt'), '', .0000001);
+    }
+
+    /**
+     * Test css size to point
+     * @covers PhpOffice\PhpWord\Shared\Html::cssToAbsolute()
+     */
+    public function testCssToAbsolute()
     {
         $this->assertNull(Html::cssToAbsolute('10em')->toFloat('pt'));
         $this->assertEquals(0, Html::cssToAbsolute('0')->toFloat('pt'));
@@ -700,5 +721,9 @@ class HtmlTest extends AbstractWebServerEmbeddedTest
         $this->assertEquals(120, Html::cssToAbsolute('10pc')->toFloat('pt'));
         $this->assertEquals(28.346457, Html::cssToAbsolute('10mm')->toFloat('pt'), '', .00001);
         $this->assertEquals(283.464567, Html::cssToAbsolute('10cm')->toFloat('pt'), '', .0000001);
+        // Percents only work for length
+        $this->assertNull(Html::cssToAbsolute('10%')->toFloat('pt'), '', .0000001);
+        // Invalid length
+        $this->assertNull(Html::cssToAbsolute('10mb')->toFloat('pt'), '', .0000001);
     }
 }
