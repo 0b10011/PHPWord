@@ -688,7 +688,7 @@ class HtmlTest extends AbstractWebServerEmbeddedTest
 
     /**
      * Test css size to point
-     * @covers PhpOffice\PhpWord\Shared\Html::cssToLength()
+     * @covers \PhpOffice\PhpWord\Shared\Html::cssToLength()
      */
     public function testCssToLength()
     {
@@ -708,7 +708,7 @@ class HtmlTest extends AbstractWebServerEmbeddedTest
 
     /**
      * Test css size to point
-     * @covers PhpOffice\PhpWord\Shared\Html::cssToAbsolute()
+     * @covers \PhpOffice\PhpWord\Shared\Html::cssToAbsolute()
      */
     public function testCssToAbsolute()
     {

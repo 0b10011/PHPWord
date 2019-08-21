@@ -18,8 +18,8 @@ declare(strict_types=1);
 
 namespace PhpOffice\PhpWord\Style;
 
-use PhpOffice\PhpWord\Style\Lengths\Absolute;
 use PhpOffice\PhpWord\Style\Colors\Hex;
+use PhpOffice\PhpWord\Style\Lengths\Absolute;
 
 /**
  * Test class for PhpOffice\PhpWord\Style\Paper
@@ -29,7 +29,7 @@ use PhpOffice\PhpWord\Style\Colors\Hex;
 class OutlineTest extends \PHPUnit\Framework\TestCase
 {
     /**
-     * @covers PhpOffice\PhpWord\Style\Outline::getWeight
+     * @covers \PhpOffice\PhpWord\Style\Outline::getWeight
      */
     public function testGetWeight()
     {

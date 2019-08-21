@@ -59,7 +59,7 @@ class NumberingLevelTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @covers PhpOffice\PhpWord\Style\NumberingLevel::getLeft
+     * @covers \PhpOffice\PhpWord\Style\NumberingLevel::getLeft
      */
     public function testGetLeft()
     {
@@ -68,7 +68,7 @@ class NumberingLevelTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @covers PhpOffice\PhpWord\Style\NumberingLevel::setLeft
+     * @covers \PhpOffice\PhpWord\Style\NumberingLevel::setLeft
      * @depends testGetLeft
      */
     public function testSetLeft()
@@ -81,7 +81,7 @@ class NumberingLevelTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @covers PhpOffice\PhpWord\Style\NumberingLevel::getHanging
+     * @covers \PhpOffice\PhpWord\Style\NumberingLevel::getHanging
      */
     public function testGetHanging()
     {
@@ -90,7 +90,7 @@ class NumberingLevelTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @covers PhpOffice\PhpWord\Style\NumberingLevel::setHanging
+     * @covers \PhpOffice\PhpWord\Style\NumberingLevel::setHanging
      * @depends testGetHanging
      */
     public function testSetHanging()
@@ -103,7 +103,7 @@ class NumberingLevelTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @covers PhpOffice\PhpWord\Style\NumberingLevel::getTabPos
+     * @covers \PhpOffice\PhpWord\Style\NumberingLevel::getTabPos
      */
     public function testGetTabPos()
     {
@@ -112,7 +112,7 @@ class NumberingLevelTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @covers PhpOffice\PhpWord\Style\NumberingLevel::setTabPos
+     * @covers \PhpOffice\PhpWord\Style\NumberingLevel::setTabPos
      * @depends testGetTabPos
      */
     public function testSetTabPos()

@@ -69,8 +69,8 @@ class CellTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @covers PhpOffice\PhpWord\Writer\Word2007\Style\Cell
-     * @expectedException Exception
+     * @covers \PhpOffice\PhpWord\Writer\Word2007\Style\Cell
+     * @expectedException \Exception
      * @expectedExceptionMessage Unsupported width `class@anonymous
      */
     public function testSetBadWidth()
@@ -80,8 +80,9 @@ class CellTest extends \PHPUnit\Framework\TestCase
         $table = $section->addTable(new Table());
         $row = $table->addRow();
         $cellStyle = new CellStyle();
-        $cellStyle->setWidth(new class extends Length {
-            public function isSpecified(): bool {
+        $cellStyle->setWidth(new class() extends Length {
+            public function isSpecified(): bool
+            {
                 return true;
             }
         });
