@@ -18,6 +18,8 @@ declare(strict_types=1);
 
 namespace PhpOffice\PhpWord\Style;
 
+use PhpOffice\PhpWord\Style\Colors\BasicColor;
+use PhpOffice\PhpWord\Style\Colors\Hex;
 use PhpOffice\PhpWord\Style\Lengths\Absolute;
 
 /**
@@ -74,7 +76,7 @@ class Outline extends AbstractStyle
     /**
      * Outline color
      *
-     * @var string
+     * @var BasicColor
      */
     private $color;
 
@@ -148,21 +150,20 @@ class Outline extends AbstractStyle
 
     /**
      * Get color
-     *
-     * @return string
      */
-    public function getColor()
+    public function getColor(): BasicColor
     {
+        if ($this->color === null) {
+            $this->color = new Hex(null);
+        }
+
         return $this->color;
     }
 
     /**
      * Set color
-     *
-     * @param string $value
-     * @return self
      */
-    public function setColor($value = null)
+    public function setColor(BasicColor $value): self
     {
         $this->color = $value;
 
