@@ -70,6 +70,7 @@ class SystemColorTest extends \PHPUnit\Framework\TestCase
             $result = new SystemColor($value, new Hex('000'));
             $this->assertEquals($value, $result->getName(), $message);
             $this->assertEquals($value, $result->toHexOrName(), $message);
+            $this->assertTrue($result->isSpecified(), $message);
         }
     }
 }
