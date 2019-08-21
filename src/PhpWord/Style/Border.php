@@ -116,7 +116,7 @@ class Border extends AbstractStyle
         $this
             ->setBorderSize(new Absolute(null))
             ->setBorderColor(new Hex(null))
-            ->setBorderStyle(new BorderStyle(null));
+            ->setBorderStyle(new BorderStyle('single'));
     }
 
     /**

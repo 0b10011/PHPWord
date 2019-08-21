@@ -43,9 +43,9 @@ class BorderStyle
 
     private $style;
 
-    public function __construct(string $style = null)
+    public function __construct(string $style)
     {
-        if ($style !== null && !static::isValid($style)) {
+        if (!static::isValid($style)) {
             throw new Exception(sprintf("Provided border style must be valid. '%s' provided. Allowed: '%s'", $style, implode('\', \'', array_keys(self::$allowedStyles))));
         }
 
@@ -67,7 +67,7 @@ class BorderStyle
         if (!static::isValid($style)) {
             trigger_error(sprintf('Border style `%s` is not a valid option', $style), E_USER_WARNING);
 
-            return new self(null);
+            return new self('single');
         }
 
         return new self($style);

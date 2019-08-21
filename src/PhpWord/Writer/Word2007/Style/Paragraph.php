@@ -20,6 +20,9 @@ namespace PhpOffice\PhpWord\Writer\Word2007\Style;
 
 use PhpOffice\Common\XMLWriter;
 use PhpOffice\PhpWord\Style;
+use PhpOffice\PhpWord\Style\BorderStyle;
+use PhpOffice\PhpWord\Style\Colors\BasicColor;
+use PhpOffice\PhpWord\Style\Lengths\Absolute;
 use PhpOffice\PhpWord\Style\Paragraph as ParagraphStyle;
 use PhpOffice\PhpWord\Writer\Word2007\Element\ParagraphAlignment;
 
@@ -128,16 +131,7 @@ class Paragraph extends AbstractStyle
         $this->writeNumbering($xmlWriter, $styles['numbering']);
 
         // Border
-        if ($style->hasBorder()) {
-            $xmlWriter->startElement('w:pBdr');
-
-            $styleWriter = new MarginBorder($xmlWriter);
-            $styleWriter->setSizes($style->getBorderSize());
-            $styleWriter->setColors($style->getBorderColor());
-            $styleWriter->write();
-
-            $xmlWriter->endElement();
-        }
+        $this->writeBorders($xmlWriter, $style);
 
         if (!$this->withoutPPR) {
             $xmlWriter->endElement(); // w:pPr
@@ -187,6 +181,72 @@ class Paragraph extends AbstractStyle
             $xmlWriter->writeAttribute('w:val', $numLevel);
             $xmlWriter->endElement(); // w:outlineLvl
         }
+    }
+
+    /**
+     * Writes paragraph borders
+     * @todo Implement space
+     * @todo Implement shadow
+     * @todo Implement between
+     * @see http://officeopenxml.com/WPborders.php
+     */
+    private function writeBorders(XMLWriter $xmlWriter, ParagraphStyle $style)
+    {
+        if (!$style->hasBorder()) {
+            return;
+        }
+
+        $xmlWriter->startElement('w:pBdr');
+
+        $this->writeBorder(
+            $xmlWriter,
+            'top',
+            $style->getBorderTopStyle(),
+            $style->getBorderTopSize(),
+            new Absolute(null),
+            $style->getBorderTopColor(),
+            false
+        );
+        $this->writeBorder(
+            $xmlWriter,
+            'bottom',
+            $style->getBorderBottomStyle(),
+            $style->getBorderBottomSize(),
+            new Absolute(null),
+            $style->getBorderBottomColor(),
+            false
+        );
+        $this->writeBorder(
+            $xmlWriter,
+            'left',
+            $style->getBorderLeftStyle(),
+            $style->getBorderLeftSize(),
+            new Absolute(null),
+            $style->getBorderLeftColor(),
+            false
+        );
+        $this->writeBorder(
+            $xmlWriter,
+            'right',
+            $style->getBorderRightStyle(),
+            $style->getBorderRightSize(),
+            new Absolute(null),
+            $style->getBorderRightColor(),
+            false
+        );
+
+        $xmlWriter->endElement();
+    }
+
+    private function writeBorder(XMLWriter $xmlWriter, string $side, BorderStyle $style, Absolute $size, Absolute $space, BasicColor $color, bool $shadow)
+    {
+        $xmlWriter->startElement('w:' . $side);
+        $xmlWriter->writeAttribute('w:val', $style->getStyle());
+        $xmlWriter->writeAttributeIf($size->isSpecified(), 'w:sz', max(2, min(96, $size->toInt('eop'))));
+        $xmlWriter->writeAttributeIf($space->isSpecified(), 'w:space', $space->toInt('pt'));
+        $xmlWriter->writeAttribute('w:color', $color->toHexOrName() ?? 'auto');
+        $xmlWriter->writeAttribute('w:shadow', $shadow ? 'true' : 'false');
+        $xmlWriter->endElement();
     }
 
     /**

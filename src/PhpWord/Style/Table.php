@@ -200,8 +200,8 @@ class Table extends Border
             $this->firstRowStyle
                 ->setBorderInsideHSize(new Absolute(null))
                 ->setBorderInsideVSize(new Absolute(null))
-                ->setBorderInsideHStyle(new BorderStyle(null))
-                ->setBorderInsideVStyle(new BorderStyle(null))
+                ->setBorderInsideHStyle(new BorderStyle('single'))
+                ->setBorderInsideVStyle(new BorderStyle('single'))
                 ->setBorderInsideHColor(new Hex(null))
                 ->setBorderInsideVColor(new Hex(null))
                 ->setCellSpacing(new Absolute(null))

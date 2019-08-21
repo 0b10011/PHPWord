@@ -105,6 +105,6 @@ class BorderStyleTest extends \PHPUnit\Framework\TestCase
     public function testValueFromMixedBadValue()
     {
         $borderStyle = @BorderStyle::fromMixed('badstyle');
-        $this->assertNull($borderStyle->getStyle());
+        $this->assertEquals('single', $borderStyle->getStyle());
     }
 }
