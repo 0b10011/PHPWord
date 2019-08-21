@@ -32,24 +32,25 @@ class RgbTest extends \PHPUnit\Framework\TestCase
         // Prepare test values [ original, expected ]
         $values = array(
             // 6 characters
-            array(array(252, 148, 189), 'FC94BD', 'Valid RGB should be accepted'),
-            array(array(239, 3, 203), 'EF03CB', 'Valid RGB should be accepted'),
-            array(array(114, 174, 205), '72AECD', 'Valid RGB should be accepted'),
+            array(array(252, 148, 189), true, 'FC94BD', 'Valid RGB should be accepted'),
+            array(array(239, 3, 203), true, 'EF03CB', 'Valid RGB should be accepted'),
+            array(array(114, 174, 205), true, '72AECD', 'Valid RGB should be accepted'),
 
-            array(array(0, 0, 0), '000000', 'Black should be valid'),
-            array(array(255, 255, 255), 'FFFFFF', 'White should be valid'),
+            array(array(0, 0, 0), true, '000000', 'Black should be valid'),
+            array(array(255, 255, 255), true, 'FFFFFF', 'White should be valid'),
 
             // Invalid
-            array(array(0, 255, 256), null, '4 character hex values should fail'),
+            array(array(0, 255, 256), false, null, '4 character hex values should fail'),
         );
         // Conduct test
         foreach ($values as $value) {
-            $message = 'RGB(' . implode(', ', $value[0]) . '): ' . $value[2];
+            $message = 'RGB(' . implode(', ', $value[0]) . '): ' . $value[3];
             $result = new Rgb(...$value[0]);
-            $this->assertEquals($value[1], $result->toHex(), $message);
-            $this->assertEquals($value[1] === null ? null : '#' . $value[1], $result->toHex(true), $message);
-            $this->assertEquals($value[1], $result->toHexOrName(), $message);
-            $this->assertEquals($value[1] === null ? null : '#' . $value[1], $result->toHexOrName(true), $message);
+            $this->assertEquals($value[2], $result->toHex(), $message);
+            $this->assertEquals($value[2] === null ? null : '#' . $value[2], $result->toHex(true), $message);
+            $this->assertEquals($value[2], $result->toHexOrName(), $message);
+            $this->assertEquals($value[2] === null ? null : '#' . $value[2], $result->toHexOrName(true), $message);
+            $this->assertEquals($value[1], $result->isSpecified(), $message);
             $this->assertEquals($value[0], $result->toRgb(), $message);
         }
     }
