@@ -29,7 +29,7 @@ use PhpOffice\PhpWord\Style\Colors\Hex;
 class OutlineTest extends \PHPUnit\Framework\TestCase
 {
     /**
-     * @cover Outline::getWeight
+     * @covers PhpOffice\PhpWord\Style\Outline::getWeight
      */
     public function testGetWeight()
     {
@@ -38,7 +38,7 @@ class OutlineTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @cover Outline::setWeight
+     * covers PhpOffice\PhpWord\Style\Outline::setWeight
      * @depends testGetWeight
      */
     public function testSetWeight()
@@ -50,7 +50,7 @@ class OutlineTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @cover Outline::getColor
+     * covers PhpOffice\PhpWord\Style\Outline::getColor
      */
     public function testGetColor()
     {
@@ -59,7 +59,7 @@ class OutlineTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @cover Outline::setColor
+     * covers PhpOffice\PhpWord\Style\Outline::setColor
      * @depends testGetColor
      */
     public function testSetColor()

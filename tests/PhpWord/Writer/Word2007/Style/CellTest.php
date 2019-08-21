@@ -69,7 +69,7 @@ class CellTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @cover Cell
+     * @covers PhpOffice\PhpWord\Writer\Word2007\Style\Cell
      * @expectedException Exception
      * @expectedExceptionMessage Unsupported width `class@anonymous
      */
