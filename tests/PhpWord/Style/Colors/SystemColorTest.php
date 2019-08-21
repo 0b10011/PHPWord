@@ -71,6 +71,11 @@ class SystemColorTest extends \PHPUnit\Framework\TestCase
             $this->assertEquals($value, $result->getName(), $message);
             $this->assertEquals($value, $result->toHexOrName(), $message);
             $this->assertTrue($result->isSpecified(), $message);
+
+            // Last color
+            $this->assertEquals("#000000", $result->getLastColor()->toHex(true));
+            $this->assertEquals("000000", $result->getLastColor()->toHex());
+            $this->assertEquals([0, 0, 0], $result->getLastColor()->toRgb());
         }
     }
 }
