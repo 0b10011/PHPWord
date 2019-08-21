@@ -298,7 +298,7 @@ class Settings extends AbstractPart
 
     private function setHyphenationZone(Absolute $hyphenationZone)
     {
-        if ($hyphenationZone === null) {
+        if (!$hyphenationZone->isSpecified()) {
             return;
         }
 
