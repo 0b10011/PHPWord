@@ -218,21 +218,6 @@ abstract class AbstractStyle
     }
 
     /**
-     * Set numeric value
-     *
-     * @param int|float|null $default
-     * @return int|float|null
-     */
-    protected function setNumericVal($value, $default = null)
-    {
-        if (!is_numeric($value)) {
-            $value = $default;
-        }
-
-        return $value;
-    }
-
-    /**
      * Set integer value: Convert string that contains only numeric into integer
      *
      * @param int|null $value
@@ -248,24 +233,6 @@ abstract class AbstractStyle
             $value = $default;
         } else {
             $value = (int) $value;
-        }
-
-        return $value;
-    }
-
-    /**
-     * Set float value: Convert string that contains only numeric into float
-     *
-     * @param float|null $default
-     * @return float|null
-     */
-    protected function setFloatVal($value, $default = null)
-    {
-        if (is_string($value) && (preg_match('/[^\d\.\,]/', $value) == 0)) {
-            $value = (float) $value;
-        }
-        if (!is_numeric($value)) {
-            $value = $default;
         }
 
         return $value;

@@ -37,7 +37,7 @@ class AbstractStyleTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * Test setBoolVal, setIntVal, setFloatVal, setEnumVal with normal value
+     * Test setBoolVal, setIntVal, setEnumVal with normal value
      */
     public function testSetValNormal()
     {
@@ -45,13 +45,11 @@ class AbstractStyleTest extends \PHPUnit\Framework\TestCase
 
         $this->assertTrue(self::callProtectedMethod($stub, 'setBoolVal', array(true, false)));
         $this->assertEquals(12, self::callProtectedMethod($stub, 'setIntVal', array(12, 200)));
-        $this->assertEquals(871.1, self::callProtectedMethod($stub, 'setFloatVal', array(871.1, 2.1)));
-        $this->assertEquals(871.1, self::callProtectedMethod($stub, 'setFloatVal', array('871.1', 2.1)));
         $this->assertEquals('a', self::callProtectedMethod($stub, 'setEnumVal', array('a', array('a', 'b'), 'b')));
     }
 
     /**
-     * Test setBoolVal, setIntVal, setFloatVal, setEnumVal with default value
+     * Test setBoolVal, setIntVal, setEnumVal with default value
      */
     public function testSetValDefault()
     {
@@ -59,7 +57,6 @@ class AbstractStyleTest extends \PHPUnit\Framework\TestCase
 
         $this->assertNotTrue(self::callProtectedMethod($stub, 'setBoolVal', array('a', false)));
         $this->assertEquals(200, self::callProtectedMethod($stub, 'setIntVal', array('foo', 200)));
-        $this->assertEquals(2.1, self::callProtectedMethod($stub, 'setFloatVal', array('foo', 2.1)));
         $this->assertEquals('b', self::callProtectedMethod($stub, 'setEnumVal', array(null, array('a', 'b'), 'b')));
     }
 
