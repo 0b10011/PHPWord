@@ -70,4 +70,30 @@ class TablePositionTest extends \PHPUnit\Framework\TestCase
             $this->assertEquals($value, $result, "Read value for attribute $key should be the same as the written value");
         }
     }
+
+    /**
+     * @covers \PhpOffice\PhpWord\Style\TablePosition
+     */
+    public function testSetGetAbsolute()
+    {
+        $attributes = array(
+            'TopFromText',
+            'BottomFromText',
+            'LeftFromText',
+            'RightFromText',
+            'TblpX',
+            'TblpY',
+        );
+
+        $level = new TablePosition();
+        foreach ($attributes as $attribute) {
+            $get = "get$attribute";
+            $set = "set$attribute";
+
+            $this->assertEquals(new Absolute(null), $level->$get());
+            $level->$set(Absolute::from('pt', 5));
+            $this->assertNotEquals(new Absolute(null), $level->$get());
+            $this->assertEquals(Absolute::from('pt', 5), $level->$get());
+        }
+    }
 }
