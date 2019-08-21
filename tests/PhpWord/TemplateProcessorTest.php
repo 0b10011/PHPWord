@@ -311,6 +311,26 @@ final class TemplateProcessorTest extends \PHPUnit\Framework\TestCase
         );
     }
 
+    /**
+     * @covers ::setValue
+     * @test
+     */
+    public function testSetValueMultipleReplacements()
+    {
+        $mainPart = '<?xml version="1.0" encoding="UTF-8"?>
+        <w:p>
+            <w:r>
+                <w:t xml:space="preserve">Hello ${firstname} ${lastname}</w:t>
+            </w:r>
+        </w:p>';
+
+        Settings::setOutputEscapingEnabled(true);
+        $templateProcessor = new TestableTemplateProcesor($mainPart);
+        $templateProcessor->setValue(array('firstname', 'lastname'), array('Jane', 'Doe'));
+
+        $this->assertContains('Hello Jane Doe', $templateProcessor->getMainPart());
+    }
+
     public function testSetComplexValue()
     {
         $title = new TextRun();
