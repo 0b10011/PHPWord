@@ -46,7 +46,7 @@ class Shape extends AbstractElement
         $styleWriter = new ShapeStyleWriter($xmlWriter, $style);
 
         $type = $element->getType();
-        if ($type == 'rect' && $style->getRoundness() !== null) {
+        if ($type == 'rect' && $style->getRoundness()->isSpecified()) {
             $type = 'roundrect';
         }
         $method = "write{$type}";
@@ -122,7 +122,7 @@ class Shape extends AbstractElement
      */
     private function writeRoundRect(XMLWriter $xmlWriter, ShapeStyle $style)
     {
-        $xmlWriter->writeAttribute('arcsize', $style->getRoundness());
+        $xmlWriter->writeAttribute('arcsize', $style->getRoundness()->toFloat() / 100);
     }
 
     /**

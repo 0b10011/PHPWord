@@ -86,18 +86,13 @@ class FontTest extends \PHPUnit\Framework\TestCase
         );
         foreach ($attributes as $key => $default) {
             $get = is_bool($default) ? "is{$key}" : "get{$key}";
-            $result = $object->$get();
             $new = $default;
-            if ($result instanceof BasicColor) {
-                $default = $default->toHexOrName();
-                $result = $result->toHexOrName();
-            } elseif ($result instanceof Absolute) {
-                $default = $default->toInt('pt');
-                $result = $result->toInt('pt');
+            if ($key === 'underline') {
+                $new = null;
             }
-            $this->assertEquals($default, $result, "Attribute `$key` should start at default");
+            $this->assertEquals($default, $object->$get(), "Attribute `$key` should start at default");
             $object->setStyleValue($key, $new);
-            $this->assertEquals($default, $result, "Attribute `$key` should remain at default if set to `null`");
+            $this->assertEquals($default, $object->$get(), "Attribute `$key` should remain at default if set to `null`");
         }
     }
 

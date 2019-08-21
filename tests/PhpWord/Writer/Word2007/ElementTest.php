@@ -25,6 +25,7 @@ use PhpOffice\PhpWord\Element\TrackChange;
 use PhpOffice\PhpWord\PhpWord;
 use PhpOffice\PhpWord\Style\Colors\Hex;
 use PhpOffice\PhpWord\Style\Lengths\Absolute;
+use PhpOffice\PhpWord\Style\Lengths\Percent;
 use PhpOffice\PhpWord\TestHelperDOCX;
 
 /**
@@ -225,7 +226,7 @@ class ElementTest extends \PHPUnit\Framework\TestCase
         $section->addShape(
             'rect',
             array(
-                'roundness' => 0.2,
+                'roundness' => new Percent(20),
                 'frame'     => array('width' => Absolute::from('pt', 100), 'height' => Absolute::from('pt', 100), 'left' => Absolute::from('pt', 1), 'top' => Absolute::from('pt', 1)),
                 'fill'      => array('color' => new Hex('FFCC33')),
                 'outline'   => array('color' => new Hex('990000'), 'weight' => Absolute::from('emu', 1)),

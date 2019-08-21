@@ -18,6 +18,9 @@ declare(strict_types=1);
 
 namespace PhpOffice\PhpWord\Style;
 
+use PhpOffice\PhpWord\Exception\Exception;
+use PhpOffice\PhpWord\Style\Lengths\Percent;
+
 /**
  * Shape style
  *
@@ -40,11 +43,11 @@ class Shape extends AbstractStyle
     private $points;
 
     /**
-     * Roundness measure of corners; 0 = straightest (rectangular); 1 = roundest (circle/oval)
+     * Roundness measure of corners; 0% = straightest (rectangular); 100% = roundest (circle/oval)
      *
      * Only for rect
      *
-     * @var int|float
+     * @var Percent
      */
     private $roundness;
 
@@ -118,23 +121,29 @@ class Shape extends AbstractStyle
 
     /**
      * Get roundness
-     *
-     * @return int|float
      */
-    public function getRoundness()
+    public function getRoundness(): Percent
     {
+        if ($this->roundness === null) {
+            $this->roundness = new Percent(0);
+        }
+
         return $this->roundness;
     }
 
     /**
      * Set roundness
-     *
-     * @param int|float $value
-     * @return self
      */
-    public function setRoundness($value = null)
+    public function setRoundness(Percent $value): self
     {
-        $this->roundness = $this->setNumericVal($value, null);
+        $percent = $value->toFloat();
+        if ($percent > 100) {
+            throw new Exception(sprintf('Provided roundness %f%% must be no greater than 100%', $percent));
+        } elseif ($percent < 0) {
+            throw new Exception(sprintf('Provided roundness %f%% must be no less than 0%', $percent));
+        }
+
+        $this->roundness = $value;
 
         return $this;
     }
