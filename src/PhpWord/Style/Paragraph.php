@@ -51,8 +51,10 @@ use PhpOffice\PhpWord\Style\Lengths\Percent;
  *
  * @see  http://www.schemacentral.com/sc/ooxml/t-w_CT_PPr.html
  */
-class Paragraph extends Border
+class Paragraph extends AbstractStyle
 {
+    use Border;
+
     /**
      * @const Absolute One line height equals 240 twip
      */

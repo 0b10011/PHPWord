@@ -119,12 +119,9 @@ class Cell extends AbstractStyle
 
         $xmlWriter->startElement('w:tcBorders');
 
-        $styleWriter = new MarginBorder($xmlWriter);
-        $styleWriter->setSizes($style->getBorderSize());
-        $styleWriter->setColors($style->getBorderColor());
-        $styleWriter->setStyles($style->getBorderStyle());
-        $styleWriter->setAttributes(array('defaultColor' => CellStyle::DEFAULT_BORDER_COLOR));
-        $styleWriter->write();
+        foreach ($style->getBorders() as $side => $border) {
+            $this->writeBorder($xmlWriter, $side, $border);
+        }
 
         $xmlWriter->endElement();
     }

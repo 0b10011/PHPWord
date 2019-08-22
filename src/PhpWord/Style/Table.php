@@ -27,8 +27,10 @@ use PhpOffice\PhpWord\Style\Lengths\Absolute;
 use PhpOffice\PhpWord\Style\Lengths\Auto;
 use PhpOffice\PhpWord\Style\Lengths\Length;
 
-class Table extends Border
+class Table extends AbstractStyle
 {
+    use Border;
+
     //values for http://www.datypic.com/sc/ooxml/t-w_ST_TblLayoutType.html
     /**
      * AutoFit Table Layout
@@ -186,8 +188,6 @@ class Table extends Border
      */
     public function __construct($tableStyle = null, $firstRowStyle = null)
     {
-        parent::__construct();
-
         $this->setIndent(new Auto());
         $this->setWidth(new Auto());
         $this->setCellSpacing(new Absolute(null));
@@ -198,12 +198,6 @@ class Table extends Border
             $this->firstRowStyle = clone $this;
             $this->firstRowStyle->isFirstRow = true;
             $this->firstRowStyle
-                ->setBorderInsideHSize(new Absolute(null))
-                ->setBorderInsideVSize(new Absolute(null))
-                ->setBorderInsideHStyle(new BorderStyle('single'))
-                ->setBorderInsideVStyle(new BorderStyle('single'))
-                ->setBorderInsideHColor(new Hex(null))
-                ->setBorderInsideVColor(new Hex(null))
                 ->setCellSpacing(new Absolute(null))
                 ->setCellMargin(new Absolute(null));
             unset($this->firstRowStyle->firstRowStyle);
@@ -213,6 +207,23 @@ class Table extends Border
         if ($tableStyle !== null && is_array($tableStyle)) {
             $this->setStyleByArray($tableStyle);
         }
+    }
+
+    protected function getAllowedSides(): array
+    {
+        $sides = [
+            'top',
+            'bottom',
+            'start',
+            'end',
+        ];
+
+        if (!$this->isFirstRow) {
+            $sides[] = 'insideH';
+            $sides[] = 'insideV';
+        }
+
+        return $sides;
     }
 
     public function setCellSpacing(Absolute $cellSpacing): self
@@ -257,232 +268,6 @@ class Table extends Border
     public function setBgColor(BasicColor $value)
     {
         $this->setShading(array('fill' => $value));
-
-        return $this;
-    }
-
-    /**
-     * Get TLRBHV Border Size
-     *
-     * @return Absolute[]
-     */
-    public function getBorderSize(): array
-    {
-        return array(
-            $this->getBorderTopSize(),
-            $this->getBorderLeftSize(),
-            $this->getBorderRightSize(),
-            $this->getBorderBottomSize(),
-            $this->getBorderInsideHSize(),
-            $this->getBorderInsideVSize(),
-        );
-    }
-
-    /**
-     * Set TLRBHV Border Size
-     *
-     * @param Absolute $value Border size
-     * @return self
-     */
-    public function setBorderSize(Absolute $value): Border
-    {
-        $this->setBorderTopSize($value);
-        $this->setBorderLeftSize($value);
-        $this->setBorderRightSize($value);
-        $this->setBorderBottomSize($value);
-        $this->setBorderInsideHSize($value);
-        $this->setBorderInsideVSize($value);
-
-        return $this;
-    }
-
-    /**
-     * Get TLRBHV Border Color
-     *
-     * @return BasicColor[]
-     */
-    public function getBorderColor(): array
-    {
-        return array(
-            $this->getBorderTopColor(),
-            $this->getBorderLeftColor(),
-            $this->getBorderRightColor(),
-            $this->getBorderBottomColor(),
-            $this->getBorderInsideHColor(),
-            $this->getBorderInsideVColor(),
-        );
-    }
-
-    /**
-     * Set TLRBHV Border Color
-     *
-     * @return self
-     */
-    public function setBorderColor(BasicColor $value)
-    {
-        $this->setBorderTopColor($value);
-        $this->setBorderLeftColor($value);
-        $this->setBorderRightColor($value);
-        $this->setBorderBottomColor($value);
-        $this->setBorderInsideHColor($value);
-        $this->setBorderInsideVColor($value);
-
-        return $this;
-    }
-
-    /**
-     * Get TLRBHV Border Size
-     *
-     * @return BorderStyle[]
-     */
-    public function getBorderStyle(): array
-    {
-        return array(
-            $this->getBorderTopStyle(),
-            $this->getBorderLeftStyle(),
-            $this->getBorderRightStyle(),
-            $this->getBorderBottomStyle(),
-            $this->getBorderInsideHStyle(),
-            $this->getBorderInsideVStyle(),
-        );
-    }
-
-    /**
-     * Set TLRBHV Border style
-     *
-     * @param BorderStyle $value Border style
-     * @return self
-     */
-    public function setBorderStyle(BorderStyle $value): Border
-    {
-        $this->setBorderTopStyle($value);
-        $this->setBorderLeftStyle($value);
-        $this->setBorderRightStyle($value);
-        $this->setBorderBottomStyle($value);
-        $this->setBorderInsideHStyle($value);
-        $this->setBorderInsideVStyle($value);
-
-        return $this;
-    }
-
-    /**
-     * Get border size inside horizontal
-     */
-    public function getBorderInsideHSize(): Absolute
-    {
-        return $this->borderInsideHSize;
-    }
-
-    /**
-     * Set border size inside horizontal
-     */
-    public function setBorderInsideHSize(Absolute $value): self
-    {
-        if (!$this->isFirstRow) {
-            $this->borderInsideHSize = $value;
-        }
-
-        return $this;
-    }
-
-    /**
-     * Get border color inside horizontal
-     */
-    public function getBorderInsideHColor(): BasicColor
-    {
-        return $this->borderInsideHColor;
-    }
-
-    /**
-     * Set border color inside horizontal
-     */
-    public function setBorderInsideHColor(BasicColor $value): self
-    {
-        if (!$this->isFirstRow) {
-            $this->borderInsideHColor = $value;
-        }
-
-        return $this;
-    }
-
-    /**
-     * Get border style inside horizontal
-     */
-    public function getBorderInsideHStyle(): BorderStyle
-    {
-        return $this->borderInsideHStyle;
-    }
-
-    /**
-     * Set border style inside horizontal
-     */
-    public function setBorderInsideHStyle(BorderStyle $value): self
-    {
-        if (!$this->isFirstRow) {
-            $this->borderInsideHStyle = $value;
-        }
-
-        return $this;
-    }
-
-    /**
-     * Get border size inside vertical
-     */
-    public function getBorderInsideVSize(): Absolute
-    {
-        return $this->borderInsideVSize;
-    }
-
-    /**
-     * Set border size inside vertical
-     */
-    public function setBorderInsideVSize(Absolute $value): self
-    {
-        if (!$this->isFirstRow) {
-            $this->borderInsideVSize = $value;
-        }
-
-        return $this;
-    }
-
-    /**
-     * Get border color inside vertical
-     */
-    public function getBorderInsideVColor(): BasicColor
-    {
-        return $this->borderInsideVColor;
-    }
-
-    /**
-     * Set border color inside vertical
-     */
-    public function setBorderInsideVColor(BasicColor $value): self
-    {
-        if (!$this->isFirstRow) {
-            $this->borderInsideVColor = $value;
-        }
-
-        return $this;
-    }
-
-    /**
-     * Get border style inside vertical
-     */
-    public function getBorderInsideVStyle(): BorderStyle
-    {
-        return $this->borderInsideVStyle;
-    }
-
-    /**
-     * Set border style inside vertical
-     *
-     * @return self
-     */
-    public function setBorderInsideVStyle(BorderStyle $value)
-    {
-        if (!$this->isFirstRow) {
-            $this->borderInsideVStyle = $value;
-        }
 
         return $this;
     }

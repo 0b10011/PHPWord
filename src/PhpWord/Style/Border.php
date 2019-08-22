@@ -22,435 +22,61 @@ use PhpOffice\PhpWord\Style\Colors\BasicColor;
 use PhpOffice\PhpWord\Style\Colors\Hex;
 use PhpOffice\PhpWord\Style\Lengths\Absolute;
 
-/**
- * Border style
- */
-class Border extends AbstractStyle
+trait Border
 {
-    /**
-     * Border Top Size
-     *
-     * @var Absolute
-     */
-    protected $borderTopSize;
+    protected $borders = [];
 
-    /**
-     * Border Top Color
-     *
-     * @var BasicColor
-     */
-    protected $borderTopColor;
-
-    /**
-     * Border Top Style
-     *
-     * @var BorderStyle
-     */
-    protected $borderTopStyle;
-
-    /**
-     * Border Left Size
-     *
-     * @var Absolute
-     */
-    protected $borderLeftSize;
-
-    /**
-     * Border Left Color
-     *
-     * @var BasicColor
-     */
-    protected $borderLeftColor;
-
-    /**
-     * Border Left Style
-     *
-     * @var BorderStyle
-     */
-    protected $borderLeftStyle;
-
-    /**
-     * Border Right Size
-     *
-     * @var Absolute
-     */
-    protected $borderRightSize;
-
-    /**
-     * Border Right Color
-     *
-     * @var BasicColor
-     */
-    protected $borderRightColor;
-
-    /**
-     * Border Right Style
-     *
-     * @var BorderStyle
-     */
-    protected $borderRightStyle;
-
-    /**
-     * Border Bottom Size
-     *
-     * @var Absolute
-     */
-    protected $borderBottomSize;
-
-    /**
-     * Border Bottom Color
-     *
-     * @var BasicColor
-     */
-    protected $borderBottomColor;
-
-    /**
-     * Border Bottom Style
-     *
-     * @var BorderStyle
-     */
-    protected $borderBottomStyle;
-
-    public function __construct()
-    {
-        $this
-            ->setBorderSize(new Absolute(null))
-            ->setBorderColor(new Hex(null))
-            ->setBorderStyle(new BorderStyle('single'));
+    protected function getAllowedSides(): array {
+        return [
+            'top',
+            'bottom',
+            'left',
+            'right',
+        ];
     }
 
     /**
-     * Get border size
+     * Get all borders
      *
-     * @return Absolute[]
+     * @return BorderSide[]
      */
-    public function getBorderSize(): array
+    public function getBorders(): array
     {
-        return array(
-            $this->getBorderTopSize(),
-            $this->getBorderLeftSize(),
-            $this->getBorderRightSize(),
-            $this->getBorderBottomSize(),
-        );
+        $borders = [];
+        foreach ($this->borders as $side => $border) {
+            $borders[$side] = clone $border;
+        }
+        return $borders;
     }
 
     /**
-     * Set border size
+     * Get specific border
      */
-    public function setBorderSize(Absolute $value): self
+    public function getBorder(string $side): BorderSide
     {
-        $this
-            ->setBorderTopSize($value)
-            ->setBorderLeftSize($value)
-            ->setBorderRightSize($value)
-            ->setBorderBottomSize($value);
+        if (in_array($side, $this->getAllowedSides())) {
+
+        }
+        return $this->borders[$side];
+    }
+
+    /**
+     * Set same border for all sides
+     */
+    public function setBorder(BorderSide $borderSide): self
+    {
+        foreach ($this->getAllowedSides() as $name) {
+            $this->borders[$name] = clone $borderSide;
+        }
 
         return $this;
     }
 
     /**
-     * Get border color
-     *
-     * @return BasicColor[]
-     */
-    public function getBorderColor(): array
-    {
-        return array(
-            $this->getBorderTopColor(),
-            $this->getBorderLeftColor(),
-            $this->getBorderRightColor(),
-            $this->getBorderBottomColor(),
-        );
-    }
-
-    /**
-     * Set border color
-     *
-     * @return self
-     */
-    public function setBorderColor(BasicColor $value)
-    {
-        $this->setBorderTopColor($value);
-        $this->setBorderLeftColor($value);
-        $this->setBorderRightColor($value);
-        $this->setBorderBottomColor($value);
-
-        return $this;
-    }
-
-    /**
-     * Get border style
-     *
-     * @return BorderStyle[]
-     */
-    public function getBorderStyle(): array
-    {
-        return array(
-            $this->getBorderTopStyle(),
-            $this->getBorderLeftStyle(),
-            $this->getBorderRightStyle(),
-            $this->getBorderBottomStyle(),
-        );
-    }
-
-    /**
-     * Set border style
-     *
-     * @return self
-     */
-    public function setBorderStyle(BorderStyle $value)
-    {
-        $this->setBorderTopStyle($value);
-        $this->setBorderLeftStyle($value);
-        $this->setBorderRightStyle($value);
-        $this->setBorderBottomStyle($value);
-
-        return $this;
-    }
-
-    /**
-     * Get border top size
-     */
-    public function getBorderTopSize(): Absolute
-    {
-        return $this->borderTopSize;
-    }
-
-    /**
-     * Set border top size
-     */
-    public function setBorderTopSize(Absolute $value): self
-    {
-        $this->borderTopSize = $value;
-
-        return $this;
-    }
-
-    /**
-     * Get border top color
-     */
-    public function getBorderTopColor(): BasicColor
-    {
-        return $this->borderTopColor;
-    }
-
-    /**
-     * Set border top color
-     *
-     * @return self
-     */
-    public function setBorderTopColor(BasicColor $value)
-    {
-        $this->borderTopColor = $value;
-
-        return $this;
-    }
-
-    /**
-     * Get border top style
-     */
-    public function getBorderTopStyle(): BorderStyle
-    {
-        return $this->borderTopStyle;
-    }
-
-    /**
-     * Set border top style
-     *
-     * @return self
-     */
-    public function setBorderTopStyle(BorderStyle $value)
-    {
-        $this->borderTopStyle = $value;
-
-        return $this;
-    }
-
-    /**
-     * Get border left size
-     */
-    public function getBorderLeftSize(): Absolute
-    {
-        return $this->borderLeftSize;
-    }
-
-    /**
-     * Set border left size
-     */
-    public function setBorderLeftSize(Absolute $value): self
-    {
-        $this->borderLeftSize = $value;
-
-        return $this;
-    }
-
-    /**
-     * Get border left color
-     */
-    public function getBorderLeftColor(): BasicColor
-    {
-        return $this->borderLeftColor;
-    }
-
-    /**
-     * Set border left color
-     *
-     * @return self
-     */
-    public function setBorderLeftColor(BasicColor $value)
-    {
-        $this->borderLeftColor = $value;
-
-        return $this;
-    }
-
-    /**
-     * Get border left style
-     */
-    public function getBorderLeftStyle(): BorderStyle
-    {
-        return $this->borderLeftStyle;
-    }
-
-    /**
-     * Set border left style
-     *
-     * @return self
-     */
-    public function setBorderLeftStyle(BorderStyle $value)
-    {
-        $this->borderLeftStyle = $value;
-
-        return $this;
-    }
-
-    /**
-     * Get border right size
-     */
-    public function getBorderRightSize(): Absolute
-    {
-        return $this->borderRightSize;
-    }
-
-    /**
-     * Set border right size
-     */
-    public function setBorderRightSize(Absolute $value): self
-    {
-        $this->borderRightSize = $value;
-
-        return $this;
-    }
-
-    /**
-     * Get border right color
-     */
-    public function getBorderRightColor(): BasicColor
-    {
-        return $this->borderRightColor;
-    }
-
-    /**
-     * Set border right color
-     *
-     * @return self
-     */
-    public function setBorderRightColor(BasicColor $value)
-    {
-        $this->borderRightColor = $value;
-
-        return $this;
-    }
-
-    /**
-     * Get border right style
-     */
-    public function getBorderRightStyle(): BorderStyle
-    {
-        return $this->borderRightStyle;
-    }
-
-    /**
-     * Set border right style
-     *
-     * @return self
-     */
-    public function setBorderRightStyle(BorderStyle $value)
-    {
-        $this->borderRightStyle = $value;
-
-        return $this;
-    }
-
-    /**
-     * Get border bottom size
-     */
-    public function getBorderBottomSize(): Absolute
-    {
-        return $this->borderBottomSize;
-    }
-
-    /**
-     * Set border bottom size
-     */
-    public function setBorderBottomSize(Absolute $value): self
-    {
-        $this->borderBottomSize = $value;
-
-        return $this;
-    }
-
-    /**
-     * Get border bottom color
-     */
-    public function getBorderBottomColor(): BasicColor
-    {
-        return $this->borderBottomColor;
-    }
-
-    /**
-     * Set border bottom color
-     *
-     * @return self
-     */
-    public function setBorderBottomColor(BasicColor $value)
-    {
-        $this->borderBottomColor = $value;
-
-        return $this;
-    }
-
-    /**
-     * Get border bottom style
-     */
-    public function getBorderBottomStyle(): BorderStyle
-    {
-        return $this->borderBottomStyle;
-    }
-
-    /**
-     * Set border bottom style
-     *
-     * @return self
-     */
-    public function setBorderBottomStyle(BorderStyle $value)
-    {
-        $this->borderBottomStyle = $value;
-
-        return $this;
-    }
-
-    /**
-     * Check if any of the border is not null
+     * Check if any borders have been added
      */
     public function hasBorder(): bool
     {
-        foreach ($this->getBorderSize() as $border) {
-            if ($border->toInt('twip') !== null) {
-                return true;
-            }
-        }
-
-        return false;
+        return !empty($this->borders);
     }
 }

@@ -24,8 +24,10 @@ use PhpOffice\PhpWord\Style\Lengths\Absolute;
 /**
  * Section settings
  */
-class Section extends Border
+class Section extends AbstractStyle
 {
+    use Border;
+
     /**
      * Page orientation
      *
@@ -183,8 +185,6 @@ class Section extends Border
      */
     public function __construct()
     {
-        parent::__construct();
-
         $this->setPaperSize();
     }
 

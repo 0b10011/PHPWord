@@ -18,6 +18,7 @@ declare(strict_types=1);
 
 namespace PhpOffice\PhpWord\Writer\Word2007\Style;
 
+use PhpOffice\Common\XMLWriter;
 use PhpOffice\PhpWord\Style\Section as SectionStyle;
 
 /**
@@ -27,6 +28,8 @@ use PhpOffice\PhpWord\Style\Section as SectionStyle;
  */
 class Section extends AbstractStyle
 {
+    use Border;
+
     /**
      * Write style.
      */
@@ -71,18 +74,7 @@ class Section extends AbstractStyle
         $xmlWriter->endElement();
 
         // Borders
-        if ($style->hasBorder()) {
-            $xmlWriter->startElement('w:pgBorders');
-            $xmlWriter->writeAttribute('w:offsetFrom', 'page');
-
-            $styleWriter = new MarginBorder($xmlWriter);
-            $styleWriter->setSizes($style->getBorderSize());
-            $styleWriter->setColors($style->getBorderColor());
-            $styleWriter->setAttributes(array('space' => '24'));
-            $styleWriter->write();
-
-            $xmlWriter->endElement();
-        }
+        $this->writeBorders($xmlWriter, $style);
 
         // Columns
         $colsSpace = $style->getColsSpace();
@@ -98,5 +90,36 @@ class Section extends AbstractStyle
         // Line numbering
         $styleWriter = new LineNumbering($xmlWriter, $style->getLineNumbering());
         $styleWriter->write();
+    }
+
+    /**
+     * Writes section borders
+     * @see http://www.officeopenxml.com/WPsectionBorders.php
+     */
+    private function writeBorders(XMLWriter $xmlWriter, SectionStyle $style)
+    {
+        if (!$style->hasBorder()) {
+            return;
+        }
+
+        $xmlWriter->startElement('w:pgBorders');
+        // Border should be drawn on 'allPages', 'firstPage', or 'notFirstPage'
+        $xmlWriter->writeAttribute('w:display', 'allPages');
+        // Distance should be from 'page' edge or 'text' margin
+        $xmlWriter->writeAttribute('w:offsetFrom', 'page');
+        // Drawn in 'back' or 'front' of text
+        $xmlWriter->writeAttribute('w:zOrder', 'back');
+
+        if (!$style->hasBorder()) {
+            return;
+        }
+
+        $xmlWriter->startElement('w:pBdr');
+
+        foreach ($style->getBorders() as $side => $border) {
+            $this->writeBorder($xmlWriter, $side, $border);
+        }
+
+        $xmlWriter->endElement();
     }
 }

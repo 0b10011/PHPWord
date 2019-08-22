@@ -60,8 +60,7 @@ class Section extends AbstractStyle
         if ($style->hasBorder()) {
             $styleWriter = new Border($style);
             $styleWriter->setParentWriter($this->getParentWriter());
-            $styleWriter->setSizes($style->getBorderSize());
-            $styleWriter->setColors($style->getBorderColor());
+            $styleWriter->setBorders($style->getBorders());
             $content .= $styleWriter->write();
         }
 

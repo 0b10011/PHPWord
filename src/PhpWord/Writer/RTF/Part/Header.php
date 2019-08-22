@@ -20,6 +20,7 @@ namespace PhpOffice\PhpWord\Writer\RTF\Part;
 
 use PhpOffice\PhpWord\Settings;
 use PhpOffice\PhpWord\Style;
+use PhpOffice\PhpWord\Style\Section as SectionStyle;
 use PhpOffice\PhpWord\Style\Border;
 use PhpOffice\PhpWord\Style\Colors\BasicColor;
 use PhpOffice\PhpWord\Style\Colors\Hex;
@@ -213,10 +214,11 @@ class Header extends AbstractPart
     /**
      * Register border colors.
      */
-    private function registerBorderColor(Border $style): self
+    private function registerBorderColor(SectionStyle $style): self
     {
-        $colors = $style->getBorderColor();
-        foreach ($colors as $color) {
+        $borders = $style->getBorders();
+        foreach ($borders as $border) {
+            $color = $border->getColor();
             if ($color->isSpecified()) {
                 $this->registerTableItem($this->colorTable, $color);
             }
@@ -249,7 +251,7 @@ class Header extends AbstractPart
      * @param BasicColor|string $value
      * @param BasicColor|string $default
      */
-    private function registerTableItem(&$table, $value, $default = null)
+    private function registerTableItem(&$table, $value, $default)
     {
         if (in_array($value, $table) === false && $value !== null && $value != $default) {
             $table[] = $value;

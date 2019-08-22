@@ -323,6 +323,7 @@ class HtmlTest extends AbstractWebServerEmbeddedTest
         $this->assertEquals(Jc::START, $doc->getElementAttribute('/w:document/w:body/w:tbl/w:tblPr/w:jc', 'w:val'));
 
         //check border colors
+        echo $doc->printXml();
         $this->assertEquals('00EE00', $doc->getElementAttribute('/w:document/w:body/w:tbl/w:tr[1]/w:tc[2]/w:tcPr/w:tcBorders/w:top', 'w:color'));
         $this->assertEquals('00EE00', $doc->getElementAttribute('/w:document/w:body/w:tbl/w:tr[1]/w:tc[2]/w:tcPr/w:tcBorders/w:right', 'w:color'));
         $this->assertEquals('00EE00', $doc->getElementAttribute('/w:document/w:body/w:tbl/w:tr[1]/w:tc[2]/w:tcPr/w:tcBorders/w:bottom', 'w:color'));

@@ -125,11 +125,17 @@ class Table extends AbstractStyle
         if ($style->hasMargin()) {
             $xmlWriter->startElement('w:tblCellMar');
 
-            $styleWriter = new MarginBorder($xmlWriter);
-            $styleWriter->setSizes($style->getCellMargin());
-            $styleWriter->write();
+            $sides = ['top', 'left', 'right', 'bottom'];
+            foreach ($style->getCellMargin() as $key => $width) {
+                $width = $width->toInt('twip') ?? 0;
 
-            $xmlWriter->endElement(); // w:tblCellMar
+                $xmlWriter->startElement('w:' . $sides[$key]);
+                $xmlWriter->writeAttributeIf($width !== 0, 'w:w', $width);
+                $xmlWriter->writeAttribute('w:type', $width === 0 ? 'nil' : 'dxa');
+                $xmlWriter->endElement();
+            }
+
+            $xmlWriter->endElement();
         }
     }
 
@@ -138,16 +144,17 @@ class Table extends AbstractStyle
      */
     private function writeBorder(XMLWriter $xmlWriter, TableStyle $style)
     {
-        if ($style->hasBorder()) {
-            $xmlWriter->startElement('w:tblBorders');
-
-            $styleWriter = new MarginBorder($xmlWriter);
-            $styleWriter->setSizes($style->getBorderSize());
-            $styleWriter->setColors($style->getBorderColor());
-            $styleWriter->write();
-
-            $xmlWriter->endElement(); // w:tblBorders
+        if (!$style->hasBorder()) {
+            return;
         }
+
+        $xmlWriter->startElement('w:tblBorders');
+
+        foreach ($style->getBorders() as $side => $border) {
+            $this->writeBorder($xmlWriter, $side, $border);
+        }
+
+        $xmlWriter->endElement(); // w:tblBorders
     }
 
     /**

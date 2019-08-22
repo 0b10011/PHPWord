@@ -612,7 +612,7 @@ class Html
                 self::mapBorderColor($styles, $value);
                 break;
             case 'border-width':
-                $styles['borderSize'] = self::cssToAbsolute($value);
+                $styles['borderSize'] = self::mapBorderWidth($value);
                 break;
             case 'border-style':
                 $styles['borderStyle'] = self::mapBorderStyle($value);

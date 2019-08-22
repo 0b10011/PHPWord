@@ -554,7 +554,7 @@ class DocumentTest extends \PHPUnit\Framework\TestCase
         $cell->addText('Test');
 
         $doc = TestHelperDOCX::getDocument($phpWord);
-        $this->assertEquals(Cell::DEFAULT_BORDER_COLOR, $doc->getElementAttribute('/w:document/w:body/w:tbl/w:tr/w:tc/w:tcPr/w:tcBorders/w:top', 'w:color'));
+        $this->assertEquals('000000', $doc->getElementAttribute('/w:document/w:body/w:tbl/w:tr/w:tc/w:tcPr/w:tcBorders/w:top', 'w:color'));
     }
 
     /**

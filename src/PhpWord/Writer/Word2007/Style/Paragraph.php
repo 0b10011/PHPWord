@@ -33,6 +33,8 @@ use PhpOffice\PhpWord\Writer\Word2007\Element\ParagraphAlignment;
  */
 class Paragraph extends AbstractStyle
 {
+    use Border;
+
     /**
      * Without w:pPr
      *
@@ -185,9 +187,6 @@ class Paragraph extends AbstractStyle
 
     /**
      * Writes paragraph borders
-     * @todo Implement space
-     * @todo Implement shadow
-     * @todo Implement between
      * @see http://officeopenxml.com/WPborders.php
      */
     private function writeBorders(XMLWriter $xmlWriter, ParagraphStyle $style)
@@ -198,54 +197,10 @@ class Paragraph extends AbstractStyle
 
         $xmlWriter->startElement('w:pBdr');
 
-        $this->writeBorder(
-            $xmlWriter,
-            'top',
-            $style->getBorderTopStyle(),
-            $style->getBorderTopSize(),
-            new Absolute(null),
-            $style->getBorderTopColor(),
-            false
-        );
-        $this->writeBorder(
-            $xmlWriter,
-            'bottom',
-            $style->getBorderBottomStyle(),
-            $style->getBorderBottomSize(),
-            new Absolute(null),
-            $style->getBorderBottomColor(),
-            false
-        );
-        $this->writeBorder(
-            $xmlWriter,
-            'left',
-            $style->getBorderLeftStyle(),
-            $style->getBorderLeftSize(),
-            new Absolute(null),
-            $style->getBorderLeftColor(),
-            false
-        );
-        $this->writeBorder(
-            $xmlWriter,
-            'right',
-            $style->getBorderRightStyle(),
-            $style->getBorderRightSize(),
-            new Absolute(null),
-            $style->getBorderRightColor(),
-            false
-        );
+        foreach ($style->getBorders() as $side => $border) {
+            $this->writeBorder($xmlWriter, $side, $border);
+        }
 
-        $xmlWriter->endElement();
-    }
-
-    private function writeBorder(XMLWriter $xmlWriter, string $side, BorderStyle $style, Absolute $size, Absolute $space, BasicColor $color, bool $shadow)
-    {
-        $xmlWriter->startElement('w:' . $side);
-        $xmlWriter->writeAttribute('w:val', $style->getStyle());
-        $xmlWriter->writeAttributeIf($size->isSpecified(), 'w:sz', max(2, min(96, $size->toInt('eop'))));
-        $xmlWriter->writeAttributeIf($space->isSpecified(), 'w:space', $space->toInt('pt'));
-        $xmlWriter->writeAttribute('w:color', $color->toHexOrName() ?? 'auto');
-        $xmlWriter->writeAttribute('w:shadow', $shadow ? 'true' : 'false');
         $xmlWriter->endElement();
     }
 

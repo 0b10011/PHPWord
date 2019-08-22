@@ -27,8 +27,10 @@ use PhpOffice\PhpWord\Style\Lengths\Length;
 /**
  * Table cell style
  */
-class Cell extends Border
+class Cell extends AbstractStyle
 {
+    use Border;
+
     /**
      * Vertical alignment constants
      *
@@ -82,13 +84,6 @@ class Cell extends Border
      */
     const VMERGE_RESTART = 'restart';
     const VMERGE_CONTINUE = 'continue';
-
-    /**
-     * Default border color
-     *
-     * @const string
-     */
-    const DEFAULT_BORDER_COLOR = '000000';
 
     /**
      * Vertical align (top, center, both, bottom)
@@ -293,17 +288,5 @@ class Cell extends Border
         $this->width = $value;
 
         return $this;
-    }
-
-    /**
-     * Get default border color
-     *
-     * @deprecated 0.10.0
-     *
-     * @codeCoverageIgnore
-     */
-    public function getDefaultBorderColor()
-    {
-        return self::DEFAULT_BORDER_COLOR;
     }
 }
