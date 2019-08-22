@@ -230,9 +230,11 @@ class TextBox extends Image
     /**
      * Set border color.
      */
-    public function setBorderColor(BasicColor $value)
+    public function setBorderColor(BasicColor $value): self
     {
         $this->borderColor = $value;
+
+        return $this;
     }
 
     /**
