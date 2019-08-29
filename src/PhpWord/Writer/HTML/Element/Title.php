@@ -38,7 +38,8 @@ class Title extends AbstractElement
             return '';
         }
 
-        $tag = 'h' . $this->element->getDepth();
+        // Clamp to h1 through h6
+        $tag = 'h' . max(1, min(6, $this->element->getDepth()));
 
         $text = $this->element->getText();
         if (is_string($text)) {

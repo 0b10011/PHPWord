@@ -146,4 +146,44 @@ class HTMLTest extends AbstractWebServerEmbeddedTest
         $this->assertFileExists($file);
         unlink($file);
     }
+
+    public function testTitle()
+    {
+        $file = __DIR__ . '/../_files/temp.html';
+
+        $phpWord = new PhpWord();
+        Settings::setOutputEscapingEnabled(true);
+
+        $docProps = $phpWord->getDocInfo();
+        $docProps->setTitle('HTML Test');
+
+        $phpWord->addTitleStyle(1, array('bold' => true));
+
+        $section = $phpWord->addSection();
+        $section->addTitle('Some text with a fake <tag>', 0);
+        $section->addTitle('Some text with a fake <tag>', 1);
+        $section->addTitle('Some text with a fake <tag>', 2);
+        $section->addTitle('Some text with a fake <tag>', 3);
+        $section->addTitle('Some text with a fake <tag>', 4);
+        $section->addTitle('Some text with a fake <tag>', 5);
+        $section->addTitle('Some text with a fake <tag>', 6);
+        $section->addTitle('Some text with a fake <tag>', 7);
+
+        $writer = new HTML($phpWord);
+
+        $writer->save($file);
+        $this->assertFileExists($file);
+        $html = file_get_contents($file);
+
+        $this->assertFalse(strpos($html, '<h0'), 'Level 0 title should be converted to `<h1>` as `<h0>` does not exist');
+        $this->assertInternalType('int', strpos($html, '<h1'), 'Level 1 title should be converted to `<h1>`');
+        $this->assertInternalType('int', strpos($html, '<h2'), 'Level 2 title should be converted to `<h2>`');
+        $this->assertInternalType('int', strpos($html, '<h3'), 'Level 3 title should be converted to `<h3>`');
+        $this->assertInternalType('int', strpos($html, '<h4'), 'Level 4 title should be converted to `<h4>`');
+        $this->assertInternalType('int', strpos($html, '<h5'), 'Level 5 title should be converted to `<h5>`');
+        $this->assertInternalType('int', strpos($html, '<h6'), 'Level 6 title should be converted to `<h6>`');
+        $this->assertFalse(strpos($html, '<h7'), 'Level 7 title should be converted to `<h6>` as `<h7>` does not exist');
+
+        unlink($file);
+    }
 }

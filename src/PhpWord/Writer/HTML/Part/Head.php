@@ -120,7 +120,8 @@ class Head extends AbstractPart
                 if ($style instanceof Font) {
                     $styleWriter = new FontStyleWriter($style);
                     if ($style->getStyleType() == 'title') {
-                        $name = str_replace('Heading_', 'h', $name);
+                        $level = max(1, min(6, (int) str_replace('Heading_', '', $name)));
+                        $name = 'h' . $level;
                     } else {
                         $name = '.' . $name;
                     }
