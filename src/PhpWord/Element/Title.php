@@ -18,6 +18,7 @@ declare(strict_types=1);
 
 namespace PhpOffice\PhpWord\Element;
 
+use InvalidArgumentException;
 use PhpOffice\Common\Text as CommonText;
 use PhpOffice\PhpWord\Style;
 
@@ -58,16 +59,19 @@ class Title extends AbstractElement
      * Create a new Title Element
      *
      * @param string|TextRun $text
-     * @param int $depth
      */
-    public function __construct($text, $depth = 1)
+    public function __construct($text, int $depth = 1)
     {
         if (is_string($text)) {
             $this->text = CommonText::toUTF8($text);
         } elseif ($text instanceof TextRun) {
             $this->text = $text;
         } else {
-            throw new \InvalidArgumentException('Invalid text, should be a string or a TextRun');
+            throw new InvalidArgumentException('Invalid text, should be a string or a TextRun');
+        }
+
+        if ($depth < 0) {
+            throw new InvalidArgumentException(sprintf('Depth must be 0 or greater. `%s` provided', $depth));
         }
 
         $this->depth = $depth;
@@ -89,10 +93,8 @@ class Title extends AbstractElement
 
     /**
      * Get depth
-     *
-     * @return int
      */
-    public function getDepth()
+    public function getDepth(): int
     {
         return $this->depth;
     }
