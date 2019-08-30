@@ -54,24 +54,32 @@ class Head extends AbstractPart
         $title = $docProps->getTitle();
         $title = ($title != '') ? $title : 'PHPWord';
 
-        $content = '';
+        $html = '';
 
-        $content .= '<head>' . PHP_EOL;
-        $content .= '<meta charset="UTF-8" />' . PHP_EOL;
-        $content .= '<title>' . $title . '</title>' . PHP_EOL;
-        foreach ($propertiesMapping as $key => $value) {
-            $value = ($value == '') ? $key : $value;
+        $html .= '<head>' . PHP_EOL;
+        $html .= '<meta charset="UTF-8" />' . PHP_EOL;
+        $html .= '<title>' . (Settings::isOutputEscapingEnabled() ? $this->escaper->escapeHtml($title) : $title) . '</title>' . PHP_EOL;
+        foreach ($propertiesMapping as $key => $name) {
+            $name = ($name == '') ? $key : $name;
             $method = 'get' . $key;
-            if ($docProps->$method() != '') {
-                $content .= '<meta name="' . $value . '"'
-                          . ' content="' . (Settings::isOutputEscapingEnabled() ? $this->escaper->escapeHtmlAttr($docProps->$method()) : $docProps->$method()) . '"'
-                          . ' />' . PHP_EOL;
-            }
-        }
-        $content .= $this->writeStyles();
-        $content .= '</head>' . PHP_EOL;
 
-        return $content;
+            $content = $docProps->$method();
+            if ($content === '') {
+                continue;
+            }
+
+            if (Settings::isOutputEscapingEnabled()) {
+                $content = $this->escaper->escapeHtmlAttr($content);
+            }
+
+            $html .= '<meta name="' . $name . '"'
+                      . ' content="' . $content . '"'
+                      . ' />' . PHP_EOL;
+        }
+        $html .= $this->writeStyles();
+        $html .= '</head>' . PHP_EOL;
+
+        return $html;
     }
 
     /**
@@ -81,7 +89,12 @@ class Head extends AbstractPart
      */
     private function writeStyles()
     {
-        $css = '<style>' . PHP_EOL;
+        // Stylesheets with the title "PHPWord Base Styles"
+        // are ignored during read
+        // so we can make the HTML document look nice
+        // without interfering with the styles
+        // when we import.
+        $css = '<style title="PHPWord Base Styles">' . PHP_EOL;
 
         // Default styles
         $defaultStyles = array(

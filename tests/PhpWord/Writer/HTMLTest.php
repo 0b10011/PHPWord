@@ -147,6 +147,28 @@ class HTMLTest extends AbstractWebServerEmbeddedTest
         unlink($file);
     }
 
+    public function testEscaping()
+    {
+        $file = __DIR__ . '/../_files/temp.html';
+
+        $phpWord = new PhpWord();
+        Settings::setOutputEscapingEnabled(true);
+
+        $docProps = $phpWord->getDocInfo();
+        $docProps->setTitle('"Test" & <hack>');
+
+        $writer = new HTML($phpWord);
+
+        $writer->save($file);
+        $this->assertFileExists($file);
+        $html = file_get_contents($file);
+
+        $this->assertInternalType('int', strpos($html, '<title>&quot;Test&quot; &amp; &lt;hack&gt;</title>'), 'Quotes, ampersand, and tag should be escaped in title value');
+        $this->assertInternalType('int', strpos($html, '<meta name="title" content="&quot;Test&quot;&#x20;&amp;&#x20;&lt;hack&gt;" />'), 'Quotes, ampersand, and tag should be escaped in attribute');
+
+        unlink($file);
+    }
+
     public function testTitle()
     {
         $file = __DIR__ . '/../_files/temp.html';

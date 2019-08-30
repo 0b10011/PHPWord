@@ -29,6 +29,7 @@ This release marked the addition of strict typing and return type declarations (
 - Fix HTML border-color parsing. @troosan #1551 #1570
 - Fixed specifying cell widths, background color, etc on `PhpOffice\PhpWord\Style\Cell` @0b10011 #1669
 - Escape arrays of replacements in `TemplateProcessor` @0b10011 #1669
+- Escape text provided for `<title>` when exporting to HTML @0b10011
 
 ### Miscellaneous
 -
