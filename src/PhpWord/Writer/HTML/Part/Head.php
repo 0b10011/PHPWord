@@ -98,7 +98,9 @@ class Head extends AbstractPart
 
         // Default styles
         $defaultStyles = array(
-            '*' => array(
+            // 'html' is used instead of '*' to ensure nested elements inherit from their parents.
+            // `h1 > span` should have the same font size as the `h1` parent.
+            'html' => array(
                 'font-family' => Settings::getDefaultFontName(),
                 'font-size'   => Settings::getDefaultFontSize()->toInt('pt') . 'pt',
             ),
