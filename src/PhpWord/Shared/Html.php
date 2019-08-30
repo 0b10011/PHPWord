@@ -32,6 +32,8 @@ use PhpOffice\PhpWord\SimpleType\NumberFormat;
 use PhpOffice\PhpWord\Style\BorderSide;
 use PhpOffice\PhpWord\Style\BorderStyle;
 use PhpOffice\PhpWord\Style\Colors\BasicColor;
+use PhpOffice\PhpWord\Style\Colors\Hex;
+use PhpOffice\PhpWord\Style\Colors\Rgb;
 use PhpOffice\PhpWord\Style\Image;
 use PhpOffice\PhpWord\Style\Lengths\Absolute;
 use PhpOffice\PhpWord\Style\Lengths\Length;
@@ -638,10 +640,8 @@ class Html
                 }
                 break;
             case 'border':
-                if (!$inherited && preg_match('/([0-9]+[^0-9]*)\s+(\#[a-fA-F0-9]+)\s+([a-z]+)/', $value, $matches)) {
-                    self::mapBorderColor($node, $styles, $matches[2]);
-                    self::mapBorderWidth($node, $styles, $matches[1]);
-                    self::mapBorderStyle($node, $styles, $matches[3]);
+                if (!$inherited) {
+                    self::mapBorder($node, $value, $styles);
                 }
                 break;
             case 'visibility':
@@ -650,6 +650,144 @@ class Html
                 $styles['hidden'] = $value === 'hidden' || ($styles['hidden'] ?? false);
                 break;
         }
+    }
+
+    protected function mapBorder(DOMNode $node, string $fullValue, array &$styles)
+    {
+        $values = self::readValues($fullValue);
+
+        foreach ($values as $value) {
+            if (array_key_exists($value, self::$borderStyles)) {
+                self::mapBorderStyle($node, $styles, $value);
+            } elseif (self::isValidBorderColor($value)) {
+                self::mapBorderColor($node, $styles, $value);
+            } elseif (self::isValidBorderWidth($value)) {
+                self::mapBorderWidth($node, $styles, $value);
+            } else {
+                trigger_error(sprintf('Invalid border value `%s`', $value), E_USER_WARNING);
+            }
+        }
+    }
+
+    protected static $rgbRegex;
+
+    protected static function getRgbRegex(): string
+    {
+        if (self::$rgbRegex === null) {
+            $clrNumber = '[1-2]?[0-9]{1,2}';
+            $clrPercent = '(?:100|[0-9]{1,2}(?:\.[0-9]+)?)\\%';
+            $clr = "((?:$clrNumber)|(?:$clrPercent))";
+            $sep = '[, ]\s*';
+            $alpha = '(?:[0-1]|0?\\.[0-9]+)';
+            self::$rgbRegex = "/^rgba?\\($clr$sep$clr$sep$clr(?:$sep$alpha)?\\)$/";
+        }
+
+        return self::$rgbRegex;
+    }
+
+    protected static $hslRegex;
+
+    protected static function getHslRegex(): string
+    {
+        if (self::$hslRegex === null) {
+            $hue = '(?:0|[1-2]?[1-9]?[0-9]|3[0-5][0-9]|360)';
+            $pct = '(?:100|[0-9]{1,2}(?:\.[0-9]+)?)\\%';
+            $sep = '[, ]\s*';
+            $alpha = '(?:[0-1]|0?\\.[0-9]+)';
+            self::$hslRegex = "/^hsla?\\(($hue)$sep($pct)$sep($pct)(?:$sep$alpha)?\\)$/";
+        }
+
+        return self::$hslRegex;
+    }
+
+    protected static function isValidBorderColor(string $color): bool
+    {
+        if (array_key_exists($color, self::$colorKeywords)) {
+            return true;
+        } elseif (Hex::isValid(ltrim($color, '#'))) {
+            return true;
+        } elseif (preg_match(self::getRgbRegex(), $color)) {
+            return true;
+        } elseif (preg_match(self::getHslRegex(), $color)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    protected static function isValidBorderWidth(string $size): bool
+    {
+        return array_key_exists($size, self::$namedWidths)
+            ?: self::cssToAbsolute($size)->isSpecified();
+    }
+
+    protected static function readValues(string $fullValue): array
+    {
+        $values = array();
+        $offset = 0;
+        while (true) {
+            $readValue = self::readNextValue($fullValue, $offset);
+            if ($readValue === null) {
+                break;
+            }
+            $values[] = $readValue;
+        }
+
+        return $values;
+    }
+
+    protected static function readNextValue(string $values, int &$offset)
+    {
+        $value = '';
+        $length = mb_strlen($values);
+        $afterSpace = false;
+        $depth = 0;
+        for ($i = 0; $i < $length; $i += 1) {
+            $ch = mb_substr($values, $offset, 1);
+            $offset += 1;
+            if ($ch === '') {
+                break;
+            } elseif (preg_match('/\\s/', $ch)) {
+                if ($depth > 0) {
+                    $value .= ' ';
+                } elseif ($value !== '') {
+                    $afterSpace = true;
+                }
+                continue;
+            } elseif ($ch === ',') {
+                if ($afterSpace) {
+                    break;
+                }
+                $value .= $ch;
+                continue;
+            } elseif ($ch === '(') {
+                $afterSpace = false;
+                $value .= $ch;
+                $depth += 1;
+                continue;
+            } elseif ($ch === ')' && $depth > 0) {
+                $value .= $ch;
+                $depth -= 1;
+                if ($depth === 0) {
+                    break;
+                }
+                continue;
+            } elseif (preg_match('/[0-9a-zA-Z%,#.]/', $ch)) {
+                if ($afterSpace) {
+                    $offset -= 1; // Backup one char
+                    break;
+                }
+
+                $value .= $ch;
+                continue;
+            }
+
+            if ($value !== '') {
+                break;
+            }
+        }
+
+        return $value === '' ? null : $value;
     }
 
     /**
@@ -753,6 +891,19 @@ class Html
         return $newElement;
     }
 
+    protected static $borderStyles = array(
+        'none'   => 'none',
+        'hidden' => 'none',
+        'dotted' => 'dotted',
+        'dashed' => 'dashed',
+        'solid'  => 'single',
+        'double' => 'double',
+        'groove' => 'threeDEngrave',
+        'ridge'  => 'threeDEmboss',
+        'inset'  => 'inset',
+        'outset' => 'outset',
+    );
+
     /**
      * Transforms a CSS border style into a word border style
      * @param mixed $styles
@@ -761,22 +912,9 @@ class Html
     {
         $cssStyles = self::expandBorderSides($node, $cssStyles);
 
-        $mapping = array(
-            'none'   => 'none',
-            'hidden' => 'none',
-            'dotted' => 'dotted',
-            'dashed' => 'dashed',
-            'solid'  => 'single',
-            'double' => 'double',
-            'groove' => 'threeDEngrave',
-            'ridge'  => 'threeDEmboss',
-            'inset'  => 'inset',
-            'outset' => 'outset',
-        );
-
         foreach ($cssStyles as $side => $cssStyle) {
             $existingBorder = self::getBorderSide($styles, $side);
-            $existingBorder->setStyle(new BorderStyle($mapping[$cssStyle] ?? 'single'));
+            $existingBorder->setStyle(new BorderStyle(self::$borderStyles[$cssStyle] ?? 'single'));
         }
     }
 
@@ -943,17 +1081,86 @@ class Html
             if (array_key_exists($cssColor, self::$colorKeywords)) {
                 $cssColor = self::$colorKeywords[$cssColor];
             }
-            $existingBorder->setColor(BasicColor::fromMixed(ltrim($cssColor, '#')));
+            if (preg_match(self::getRgbRegex(), $cssColor, $matches)) {
+                $colors = array($matches[1], $matches[2], $matches[3]);
+                foreach ($colors as &$color) {
+                    if (strpos($color, '%') !== false) {
+                        $color = (int) round((float) $color * 2.55);
+                    } else {
+                        $color = (int) $color;
+                    }
+                }
+                $color = new Rgb(...$colors);
+            } elseif (preg_match(self::getHslRegex(), $cssColor, $matches)) {
+                $hue = (float) ($matches[1]) / 360;
+                $sat = (float) ($matches[2]) / 100;
+                $light = (float) ($matches[3]) / 100;
+
+                $color = new Rgb(...self::hslToRgb($hue, $sat, $light));
+            } else {
+                $color = BasicColor::fromMixed(ltrim($cssColor, '#'));
+            }
+            $existingBorder->setColor($color);
         }
     }
+
+    /**
+     * @see https://www.w3.org/TR/css-color-3/#hsl-color
+     */
+    protected function hslToRgb(float $hue, float $sat, float $light)
+    {
+        $m2 = $light < .5 ? $light * ($sat + $light) : $light + $sat - $light * $sat;
+        $m1 = $light * 2 - $m2;
+
+        return array(
+            self::hueToRgb($m1, $m2, $hue + 1 / 3),
+            self::hueToRgb($m1, $m2, $hue),
+            self::hueToRgb($m1, $m2, $hue - 1 / 3),
+        );
+    }
+
+    protected function hueToRgb(float $m1, float $m2, float $hue): int
+    {
+        if ($hue < 0) {
+            $hue += 1;
+        } elseif ($hue > 1) {
+            $hue -= 1;
+        }
+
+        if ($hue * 6 < 1) {
+            return (int) round(($m1 + ($m2 - $m1) * $hue * 6) * 255);
+        } elseif ($hue * 2 < 1) {
+            return (int) round(($m2) * 255);
+        } elseif ($hue * 3 < 2) {
+            return (int) round(($m1 + ($m2 - $m1) * (2 / 3 - $hue) * 6) * 255);
+        }
+
+        return (int) round($m1 * 255);
+    }
+
+    protected static $namedWidths = array(
+        'thin'   => '1px',
+        'medium' => '3px',
+        'thick'  => '5px',
+    );
 
     protected static function mapBorderWidth(DOMNode $node, &$styles, string $cssSizes)
     {
         $cssSizes = self::expandBorderSides($node, $cssSizes);
-
         foreach ($cssSizes as $side => $cssSize) {
             $existingBorder = self::getBorderSide($styles, $side);
-            $existingBorder->setSize(self::cssToAbsolute($cssSize));
+
+            if (array_key_exists($cssSize, self::$namedWidths)) {
+                $cssSize = self::$namedWidths[$cssSize];
+            }
+
+            $absolute = self::cssToAbsolute($cssSize);
+
+            if (!$absolute->isSpecified()) {
+                $absolute = new Absolute(0);
+            }
+
+            $existingBorder->setSize($absolute);
         }
     }
 
@@ -970,7 +1177,7 @@ class Html
         }
 
         $sides = $sideMapping[$node->nodeName];
-        $values = explode(' ', $valuesString);
+        $values = self::readValues($valuesString);
         if (count($values) > count($sides)) {
             trigger_error(sprintf('Provided `%s` style `%s` had more than %d values', $node->nodeName, $valuesString, count($sides)), E_USER_WARNING);
             $values = array_slice($values, 0, count($sides));

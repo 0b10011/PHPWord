@@ -31,6 +31,7 @@ This release marked the addition of strict typing and return type declarations (
 - Escape arrays of replacements in `TemplateProcessor` @0b10011 #1669
 - Escape text provided for `<title>` when exporting to HTML @0b10011
 - Export `<h1>` instead of `<p class="Heading1">` for headings @0b10011 #1692
+- Add support for `rgb()`, `hsl()`, and any ordering of values in `border` when reading HTML @0b10011 #1636
 
 ### Miscellaneous
 -

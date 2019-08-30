@@ -27,6 +27,7 @@ use PhpOffice\PhpWord\SimpleType\LineSpacingRule;
 use PhpOffice\PhpWord\Style\BorderSide;
 use PhpOffice\PhpWord\Style\BorderStyle;
 use PhpOffice\PhpWord\Style\Colors\Hex;
+use PhpOffice\PhpWord\Style\Colors\Rgb;
 use PhpOffice\PhpWord\Style\Lengths\Absolute;
 use PhpOffice\PhpWord\Style\Paragraph;
 use PhpOffice\PhpWord\TestHelperDOCX;
@@ -238,6 +239,120 @@ HTML;
     /**
      * Test text-indent style
      */
+    public function testParagraphBorders()
+    {
+        $dpi = new HtmlDpi();
+        $styles = array(
+            ''       => null,
+            'none'   => new BorderStyle('none'),
+            'hidden' => new BorderStyle('none'),
+            'dotted' => new BorderStyle('dotted'),
+            'dashed' => new BorderStyle('dashed'),
+            'solid'  => new BorderStyle('single'),
+            'double' => new BorderStyle('double'),
+            'groove' => new BorderStyle('threeDEngrave'),
+            'ridge'  => new BorderStyle('threeDEmboss'),
+            'inset'  => new BorderStyle('inset'),
+            'outset' => new BorderStyle('outset'),
+        );
+        $colors = array(
+            '#000'    => new Hex('000000'),
+            '#000000' => new Hex('000000'),
+            '#fff'    => new Hex('ffffff'),
+            '#ffffff' => new Hex('ffffff'),
+            '#fFfFfF' => new Hex('ffffff'),
+            '#FFF'    => new Hex('ffffff'),
+
+            'rebeccapurple' => new Hex('663399'),
+
+            'rgb(0, 0, 0)'       => new Rgb(0, 0, 0),
+            'rgb(255, 255, 255)' => new Rgb(255, 255, 255),
+            'rgb(200, 200, 100)' => new Rgb(200, 200, 100),
+            'rgb(0 0 0)'         => new Rgb(0, 0, 0),
+            'rgb(200 200 100)'   => new Rgb(200, 200, 100),
+            'rgb(255 255 255)'   => new Rgb(255, 255, 255),
+
+            'rgb(0%, 0%, 0%)'          => new Rgb(0, 0, 0),
+            'rgb(78.4%, 78.4%, 39.2%)' => new Rgb(200, 200, 100),
+            'rgb(100%, 100%, 100%)'    => new Rgb(255, 255, 255),
+            'rgb(0% 0% 0%)'            => new Rgb(0, 0, 0),
+            'rgb(78.4% 78.4% 39.2%)'   => new Rgb(200, 200, 100),
+            'rgb(100% 100% 100%)'      => new Rgb(255, 255, 255),
+
+            'rgba(0%, 0%, 0%, 1)'          => new Rgb(0, 0, 0),
+            'rgba(78.4%, 78.4%, 39.2%, 1)' => new Rgb(200, 200, 100),
+            'rgba(100%, 100%, 100%, 1)'    => new Rgb(255, 255, 255),
+            'rgba(0% 0% 0% 1)'             => new Rgb(0, 0, 0),
+            'rgba(78.4% 78.4% 39.2% 1)'    => new Rgb(200, 200, 100),
+            'rgba(100% 100% 100% 1)'       => new Rgb(255, 255, 255),
+
+            'hsl(0, 0%, 100%)'      => new Rgb(255, 255, 255),
+            'hsl(60, 47.6%, 58.8%)' => new Rgb(200, 200, 100),
+            'hsl(0, 0%, 0%)'        => new Rgb(0, 0, 0),
+            'hsl(0 0% 100%)'        => new Rgb(255, 255, 255),
+            'hsl(60 47.6% 58.8%)'   => new Rgb(200, 200, 100),
+            'hsl(0 0% 0%)'          => new Rgb(0, 0, 0),
+
+            'hsla(0, 0%, 100%, 1)'      => new Rgb(255, 255, 255),
+            'hsla(60, 47.6%, 58.8%, 1)' => new Rgb(200, 200, 100),
+            'hsla(0, 0%, 0%, 1)'        => new Rgb(0, 0, 0),
+            'hsla(0 0% 100% 1)'         => new Rgb(255, 255, 255),
+            'hsla(60 47.6% 58.8% 1)'    => new Rgb(200, 200, 100),
+            'hsla(0 0% 0% 1)'           => new Rgb(0, 0, 0),
+        );
+        $dpi = new HtmlDpi();
+        $widths = array(
+            ''     => new Absolute(0),
+            '1px'  => Absolute::fromPixels($dpi, 1),
+            '15px' => Absolute::fromPixels($dpi, 15),
+
+            // Specification doesn't define exact thicknesses.
+            // These pixel values were taken from Firefox 68.
+            'thin'   => Absolute::fromPixels($dpi, 1),
+            'medium' => Absolute::fromPixels($dpi, 3),
+            'thick'  => Absolute::fromPixels($dpi, 5),
+        );
+        $borders = array();
+        foreach ($styles as $styleCss => $style) {
+            foreach ($colors as $colorCss => $color) {
+                foreach ($widths as $widthCss => $width) {
+                    $side = new BorderSide($width, $color, $style);
+                    $sides = array(
+                        'top'    => $side,
+                        'left'   => $side,
+                        'right'  => $side,
+                        'bottom' => $side,
+                    );
+                    $borders["border: $styleCss $colorCss $widthCss"] = $sides;
+                    $borders["border: $styleCss $widthCss $colorCss"] = $sides;
+                    $borders["border: $widthCss $styleCss $colorCss"] = $sides;
+                    $borders["border: $widthCss $colorCss $styleCss"] = $sides;
+                    $borders["border: $colorCss $widthCss $styleCss"] = $sides;
+                    $borders["border: $colorCss $styleCss $widthCss"] = $sides;
+                }
+            }
+        }
+
+        $phpWord = new \PhpOffice\PhpWord\PhpWord();
+        $section = $phpWord->addSection();
+        $key = -1;
+        foreach ($borders as $css => $borderSides) {
+            $key += 1;
+            Html::addHtml($section, '<p style="' . $css . '">test</p>');
+            foreach ($borderSides as $side => $border) {
+                $this->assertEquals($border, $section->getElement($key)->getParagraphStyle()->getBorder($side), "$side border width should match expectation for css `$css`");
+            }
+
+            // Clean up section to avoid exploding memory
+            foreach ($section->getElements() as $element) {
+                $section->removeElement($element);
+            }
+        }
+    }
+
+    /**
+     * Test text-indent style
+     */
     public function testParagraphBorderWidths()
     {
         $dpi = new HtmlDpi();
@@ -275,6 +390,11 @@ HTML;
             Html::addHtml($section, '<p style="' . $css . '">test</p>');
             foreach ($borderSides as $side => $border) {
                 $this->assertEquals($border, $section->getElement($key)->getParagraphStyle()->getBorder($side), "$side border width should match expectation for css `$css`");
+            }
+
+            // Clean up section to avoid exploding memory
+            foreach ($section->getElements() as $element) {
+                $section->removeElement($element);
             }
         }
     }
@@ -319,6 +439,11 @@ HTML;
             foreach ($borderSides as $side => $border) {
                 $this->assertEquals($border, $section->getElement($key)->getParagraphStyle()->getBorder($side), "$side border width should match expectation for css `$css`");
             }
+
+            // Clean up section to avoid exploding memory
+            foreach ($section->getElements() as $element) {
+                $section->removeElement($element);
+            }
         }
     }
 
@@ -361,6 +486,11 @@ HTML;
             Html::addHtml($section, '<p style="' . $css . '">test</p>');
             foreach ($borderSides as $side => $border) {
                 $this->assertEquals($border, $section->getElement($key)->getParagraphStyle()->getBorder($side), "$side border width should match expectation for css `$css`");
+            }
+
+            // Clean up section to avoid exploding memory
+            foreach ($section->getElements() as $element) {
+                $section->removeElement($element);
             }
         }
     }
