@@ -818,7 +818,19 @@ class Html
                     foreach ($styleattr as $attr) {
                         if (strpos($attr, ':')) {
                             list($k, $v) = explode(':', $attr);
-                            switch ($k) {
+                            switch (trim($k)) {
+                                case 'width':
+                                    $width = self::cssToAbsolute(trim($v));
+                                    if ($width->isSpecified()) {
+                                        $style['width'] = $width;
+                                    }
+                                    break;
+                                case 'height':
+                                    $height = self::cssToAbsolute(trim($v));
+                                    if ($height->isSpecified()) {
+                                        $style['height'] = $height;
+                                    }
+                                    break;
                                 case 'float':
                                     if (trim($v) == 'right') {
                                         $style['hPos'] = Image::POS_RIGHT;
